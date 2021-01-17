@@ -64,19 +64,19 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 Installation
 
 1). In the terminal, execute the commands:
-    composer require
-    npm install
+    `composer require`
+    `npm install`
     
 2). Create env file from env.example
 
-3). if necessary, execute the command in the terminal: php artisan key:generate
+3). if necessary, execute the command in the terminal: `php artisan key:generate`
 
 4). Go to addresses:
     https://you_domain/migrate
     https://you_domain/seed
 Or execute commands in terminal:
-    php artisan migrate
-    php artisan db:seed
+    `php artisan migrate`
+    `php artisan db:seed`
     
 Development
 
