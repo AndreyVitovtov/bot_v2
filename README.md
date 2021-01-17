@@ -1,4 +1,4 @@
-Installation
+<h2>Installation</h2>
 <br>
 1). In the terminal, execute the commands:
 <br>
@@ -21,7 +21,7 @@ Or execute commands in terminal:
     &nbsp;&nbsp;&nbsp;&nbsp;`php artisan migrate`  
     &nbsp;&nbsp;&nbsp;&nbsp;`php artisan db:seed`  
   
-Development 
+<h2>Development</h2> 
 Developer panel: https://you_domain/developer   
 Admin panel: https://you_domain/admin  
 Authorization data:  
