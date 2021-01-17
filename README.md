@@ -1,12 +1,12 @@
 <h2>Installation</h2>
 <br>
-1). In the terminal, execute the commands:
+1. In the terminal, execute the commands:
 <br>
-    &nbsp;&nbsp;&nbsp;&nbsp;`composer require`
+    ⋅⋅⋅`composer require`
 <br>
-    &nbsp;&nbsp;&nbsp;&nbsp;`npm install`
+    ⋅⋅⋅`npm install`
 <br>     
-2). Create env file from env.example
+2. Create env file from env.example
 <br>  
 3). if necessary, execute the command in the terminal:
     &nbsp;&nbsp;&nbsp;&nbsp;`php artisan key:generate`
