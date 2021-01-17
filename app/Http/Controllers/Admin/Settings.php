@@ -5,12 +5,12 @@ namespace App\Http\Controllers\Admin;
 
 
 use App\Http\Controllers\Controller;
-use App\models\Language;
-use App\models\SettingsButtons;
-use App\models\SettingsMain;
-use App\models\SettingsPages;
-use App\models\User;
-use App\models\Webhook;
+use App\Models\Language;
+use App\Models\SettingsButtons;
+use App\Models\SettingsMain;
+use App\Models\SettingsPages;
+use App\Models\User;
+use App\Models\Webhook;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;

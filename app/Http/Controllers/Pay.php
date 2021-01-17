@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\InvoiceRequest;
-use App\models\API\Payment\PayPal\PayPal;
-use App\models\API\Payment\QIWI;
-use App\models\API\Payment\WebMoney;
-use App\models\API\Payment\YandexMoney;
-use App\models\BotUsers;
-use App\models\Message;
-use App\models\PaymentData;
+use App\Models\API\Payment\PayPal\PayPal;
+use App\Models\API\Payment\QIWI;
+use App\Models\API\Payment\WebMoney;
+use App\Models\API\Payment\YandexMoney;
+use App\Models\BotUsers;
+use App\Models\Message;
+use App\Models\PaymentData;
 use Exception;
 use Illuminate\Http\Request;
 

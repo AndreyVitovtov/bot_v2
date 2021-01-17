@@ -1,10 +1,10 @@
 <?php
 
 
-namespace App\models\buttons\Traits;
+namespace App\Models\buttons\Traits;
 
 
-use App\models\SettingsButtons;
+use App\Models\SettingsButtons;
 
 trait ButtonsViber {
 

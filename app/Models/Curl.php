@@ -1,6 +1,6 @@
 <?php
 
-namespace App\models;
+namespace App\Models;
 
 class Curl {
     public function multiCurl($data, $url, $headers) {

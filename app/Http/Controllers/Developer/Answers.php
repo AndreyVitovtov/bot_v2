@@ -6,7 +6,7 @@ namespace App\Http\Controllers\Developer;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AddAnswerRequest;
-use App\models\Answer;
+use App\Models\Answer;
 use Illuminate\Http\Request;
 
 class Answers extends Controller {

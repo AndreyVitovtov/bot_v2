@@ -4,14 +4,14 @@
 namespace App\Http\Controllers\Bot\Traits;
 
 
-use App\models\BotUsers;
-use App\models\buttons\ButtonsFacebook;
-use App\models\buttons\ButtonsTelegram;
-use App\models\buttons\ButtonsViber;
-use App\models\buttons\InlineButtons;
-use App\models\ContactsModel;
-use App\models\ContactsType;
-use App\models\Language;
+use App\Models\BotUsers;
+use App\Models\buttons\ButtonsFacebook;
+use App\Models\buttons\ButtonsTelegram;
+use App\Models\buttons\ButtonsViber;
+use App\Models\buttons\InlineButtons;
+use App\Models\ContactsModel;
+use App\Models\ContactsType;
+use App\Models\Language;
 use App\Services\Contracts\BotService;
 use Illuminate\Support\Facades\Log;
 

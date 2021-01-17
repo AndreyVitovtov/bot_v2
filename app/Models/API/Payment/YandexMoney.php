@@ -1,10 +1,10 @@
 <?php
 
 
-namespace App\models\API\Payment;
+namespace App\Models\API\Payment;
 
 
-use App\models\PerformAction;
+use App\Models\PerformAction;
 
 class YandexMoney {
 //    const SECRET = "ASbiXBPRhMx3SRA54cSK4bEI";

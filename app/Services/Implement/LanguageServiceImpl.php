@@ -4,7 +4,7 @@
 namespace App\Services\Implement;
 
 
-use App\models\Language;
+use App\Models\Language;
 use App\Services\Contracts\LanguageService;
 
 class LanguageServiceImpl implements LanguageService {

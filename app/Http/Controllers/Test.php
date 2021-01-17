@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\models\API\Payment\QIWI;
-use App\models\PaymentData;
+use App\Models\API\Payment\QIWI;
+use App\Models\PaymentData;
 use Illuminate\Http\Request;
 
 class Test extends Controller {

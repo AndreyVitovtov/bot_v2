@@ -5,14 +5,14 @@
 //    use App\Http\Controllers\Bot\Traits\TelegramMethods;
     use App\Http\Controllers\Bot\Traits\Universal;
 //    use App\Http\Controllers\Bot\Traits\ViberMethods;
-    use App\models\Answer;
-    use App\models\API\Telegram;
-    use App\models\API\Viber;
-    use App\models\API\FacebookMessenger;
-    use App\models\BotUsers;
-    use App\models\Interaction;
-    use App\models\RefSystem;
-    use App\models\Visit;
+    use App\Models\Answer;
+    use App\Models\API\Telegram;
+    use App\Models\API\Viber;
+    use App\Models\API\FacebookMessenger;
+    use App\Models\BotUsers;
+    use App\Models\Interaction;
+    use App\Models\RefSystem;
+    use App\Models\Visit;
     use Exception;
 
 

@@ -4,9 +4,9 @@
 namespace App\Http\Controllers\Bot\Traits;
 
 
-use App\models\API\Telegram;
-use App\models\buttons\Buttons;
-use App\models\Visit;
+use App\Models\API\Telegram;
+use App\Models\buttons\Buttons;
+use App\Models\Visit;
 
 trait TelegramMethods {
 

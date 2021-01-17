@@ -4,8 +4,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\models\BotUsers;
-use App\models\Statistic;
+use App\Models\BotUsers;
+use App\Models\Statistic;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 
@@ -71,6 +71,14 @@ class Statistics extends Controller {
                 'Viber' => 0,
                 'Telegram' => 0
             ];
+        }
+        else {
+            if(!isset($messengers['Viber'])) {
+                $messengers['Viber'] = 0;
+            }
+            elseif(!isset($messengers['Telegram'])) {
+                $messengers['Telegram'] = 0;
+            }
         }
 
         //Статистика по доступу

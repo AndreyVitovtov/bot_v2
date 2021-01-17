@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 
 
 use App\Http\Controllers\Controller;
-use App\models\BotUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;

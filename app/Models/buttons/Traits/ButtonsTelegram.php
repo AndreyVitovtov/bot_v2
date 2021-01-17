@@ -1,6 +1,6 @@
 <?php
 
-namespace App\models\buttons\Traits;
+namespace App\Models\buttons\Traits;
 
 trait ButtonsTelegram {
 

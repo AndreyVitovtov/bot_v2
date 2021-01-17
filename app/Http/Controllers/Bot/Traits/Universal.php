@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Bot\Traits;
 
-use App\models\API\FacebookMessenger;
-use App\models\API\Telegram;
-use App\models\API\Viber;
-use App\models\BotUsers;
-use App\models\buttons\Buttons;
-use App\models\buttons\ButtonsFacebook;
-use App\models\buttons\ButtonsTelegram;
-use App\models\buttons\ButtonsViber;
-use App\models\Visit;
+use App\Models\API\FacebookMessenger;
+use App\Models\API\Telegram;
+use App\Models\API\Viber;
+use App\Models\BotUsers;
+use App\Models\buttons\Buttons;
+use App\Models\buttons\ButtonsFacebook;
+use App\Models\buttons\ButtonsTelegram;
+use App\Models\buttons\ButtonsViber;
+use App\Models\Visit;
 
 trait Universal {
     public function __construct() {

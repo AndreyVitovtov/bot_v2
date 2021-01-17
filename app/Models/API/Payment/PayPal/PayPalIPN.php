@@ -1,6 +1,6 @@
 <?php
 
-namespace App\models\API\Payment\PayPal;
+namespace App\Models\API\Payment\PayPal;
 
 use Exception;
 

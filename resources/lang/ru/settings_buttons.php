@@ -1,6 +1,6 @@
 <?php
 
-use App\models\SettingsButtons;
+use App\Models\SettingsButtons;
 
 $settingsButtons = SettingsButtons::all();
 $data = [];

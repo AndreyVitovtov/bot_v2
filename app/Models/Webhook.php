@@ -1,11 +1,11 @@
 <?php
 
 
-namespace App\models;
+namespace App\Models;
 
 
-use App\models\API\Telegram;
-use App\models\API\Viber;
+use App\Models\API\Telegram;
+use App\Models\API\Viber;
 
 class Webhook {
     public function set($params = []) {

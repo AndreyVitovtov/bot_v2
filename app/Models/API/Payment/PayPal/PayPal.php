@@ -1,9 +1,9 @@
 <?php
 
 
-namespace App\models\API\Payment\PayPal;
+namespace App\Models\API\Payment\PayPal;
 
-use App\models\PerformAction;
+use App\Models\PerformAction;
 
 class PayPal {
     private $facilitator;

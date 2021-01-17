@@ -4,7 +4,7 @@
 namespace App\Services\Implement;
 
 
-use App\models\RefSystem;
+use App\Models\RefSystem;
 use App\Services\Contracts\ReferralSystemService;
 
 class ReferralSystemImpl implements ReferralSystemService {

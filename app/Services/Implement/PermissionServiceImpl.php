@@ -4,7 +4,7 @@
 namespace App\Services\Implement;
 
 
-use App\models\Permission;
+use App\Models\Permission;
 use App\Services\Contracts\PermissionService;
 
 class PermissionServiceImpl implements PermissionService {

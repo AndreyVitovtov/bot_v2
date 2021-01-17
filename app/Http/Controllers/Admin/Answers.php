@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\models\Answer;
+use App\Models\Answer;
 use Illuminate\Http\Request;
 
 class Answers extends Controller {

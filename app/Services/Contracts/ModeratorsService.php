@@ -4,7 +4,7 @@
 namespace App\Services\Contracts;
 
 
-use App\models\Admin;
+use App\Models\Admin;
 
 interface ModeratorsService
 {

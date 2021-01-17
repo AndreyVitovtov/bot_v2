@@ -1,9 +1,9 @@
 <?php
 
-namespace App\models\buttons;
+namespace App\Models\buttons;
 
-use App\models\BotUsers;
-use App\models\Language;
+use App\Models\BotUsers;
+use App\Models\Language;
 use Illuminate\Database\Eloquent\Collection;
 
 class InlineButtons {

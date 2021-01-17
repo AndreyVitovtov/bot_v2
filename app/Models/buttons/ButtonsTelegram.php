@@ -1,10 +1,10 @@
 <?php
 
 
-namespace App\models\buttons;
+namespace App\Models\buttons;
 
 
-use App\models\BotUsers;
+use App\Models\BotUsers;
 
 class ButtonsTelegram {
 

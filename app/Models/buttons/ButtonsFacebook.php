@@ -1,12 +1,12 @@
 <?php
 
 
-namespace App\models\buttons;
+namespace App\Models\buttons;
 
 
-use App\models\Book;
-use App\models\Heading;
-use App\models\Recipe;
+use App\Models\Book;
+use App\Models\Heading;
+use App\Models\Recipe;
 
 class ButtonsFacebook {
     public static function main_menu() {

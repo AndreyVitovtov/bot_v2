@@ -1,14 +1,14 @@
 <?php
 
 
-namespace App\models;
+namespace App\Models;
 
 
-use App\models\API\FacebookMessenger;
-use App\models\API\Telegram;
-use App\models\API\Viber;
-use App\models\buttons\ButtonsTelegram;
-use App\models\buttons\ButtonsViber;
+use App\Models\API\FacebookMessenger;
+use App\Models\API\Telegram;
+use App\Models\API\Viber;
+use App\Models\buttons\ButtonsTelegram;
+use App\Models\buttons\ButtonsViber;
 
 class Message {
     private $tgm;

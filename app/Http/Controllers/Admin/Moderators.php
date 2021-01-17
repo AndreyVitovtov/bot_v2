@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\models\Admin;
-use App\models\Permission;
+use App\Models\Admin;
+use App\Models\Permission;
 use App\Services\Contracts\ModeratorsService;
 use App\Services\Contracts\PermissionService;
 use Exception;

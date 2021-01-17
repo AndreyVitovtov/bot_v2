@@ -1,6 +1,6 @@
 <?php
 
-use App\models\SettingsPages;
+use App\Models\SettingsPages;
 
 $settingsPages = SettingsPages::all();
 $data = [];

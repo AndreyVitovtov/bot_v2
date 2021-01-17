@@ -1,10 +1,10 @@
 <?php
 
 
-namespace App\models;
+namespace App\Models;
 
-use App\models\buttons\ButtonsTelegram;
-use App\models\buttons\ButtonsViber;
+use App\Models\buttons\ButtonsTelegram;
+use App\Models\buttons\ButtonsViber;
 use Illuminate\Support\Facades\DB;
 
 class Mailing {

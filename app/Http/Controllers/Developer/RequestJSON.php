@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Developer;
 
 use App\Http\Controllers\Controller;
-use App\models\API\Telegram;
-use App\models\API\Viber;
-use App\models\Curl;
-use App\models\SettingsMain;
+use App\Models\API\Telegram;
+use App\Models\API\Viber;
+use App\Models\Curl;
+use App\Models\SettingsMain;
 use Illuminate\Http\Request;
 
 class RequestJSON extends Controller {

@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models\API;
+namespace App\Models\API;
 
 class Viber {
     protected $token;

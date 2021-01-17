@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\models\Language;
+use App\Models\Language;
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 
 class Languages extends Controller {

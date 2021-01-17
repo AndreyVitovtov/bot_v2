@@ -4,7 +4,7 @@
 namespace App\Services\Implement;
 
 
-use App\models\ContactsModel;
+use App\Models\ContactsModel;
 use App\Services\Contracts\ContactService;
 
 class ContactServiceImpl implements ContactService {

@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Bot\Traits;
 
 
-use App\models\API\Viber;
-use App\models\BotUsers;
-use App\models\buttons\Buttons;
-use App\models\Visit;
+use App\Models\API\Viber;
+use App\Models\BotUsers;
+use App\Models\buttons\Buttons;
+use App\Models\Visit;
 
 trait ViberMethods {
 

@@ -4,8 +4,8 @@
 namespace App\Http\Controllers\Bot\Traits;
 
 
-use app\models\API\FacebookMessenger;
-use App\models\buttons\Buttons;
+use app\Models\API\FacebookMessenger;
+use App\Models\buttons\Buttons;
 
 trait FacebookMessengerMethods {
 

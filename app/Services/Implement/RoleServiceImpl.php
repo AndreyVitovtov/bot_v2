@@ -4,7 +4,7 @@
 namespace App\Services\Implement;
 
 
-use App\models\Role;
+use App\Models\Role;
 use App\Services\Contracts\RoleService;
 
 class RoleServiceImpl implements RoleService {

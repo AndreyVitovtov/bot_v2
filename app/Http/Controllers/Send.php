@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\models\Mailing;
+use App\Models\Mailing;
 
 class Send extends Controller {
 

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\models\City;
-use App\models\Subsection;
+use App\Models\City;
+use App\Models\Subsection;
 use Illuminate\Http\Request;
 
 class ApiController extends Controller {

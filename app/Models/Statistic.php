@@ -1,6 +1,6 @@
 <?php
 
-namespace App\models;
+namespace App\Models;
 
 class Statistic {
     public function __set($name, $value) {

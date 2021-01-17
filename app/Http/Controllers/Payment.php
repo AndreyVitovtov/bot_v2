@@ -4,12 +4,12 @@
 namespace App\Http\Controllers;
 
 
-use App\models\API\Payment\PayPal\PayPal;
-use App\models\API\Payment\QIWI;
-use App\models\API\Payment\WebMoney;
-use App\models\API\Payment\YandexMoney;
-use App\models\BotUsers;
-use App\models\PaymentData;
+use App\Models\API\Payment\PayPal\PayPal;
+use App\Models\API\Payment\QIWI;
+use App\Models\API\Payment\WebMoney;
+use App\Models\API\Payment\YandexMoney;
+use App\Models\BotUsers;
+use App\Models\PaymentData;
 
 class Payment extends Controller {
     private $paymentData;

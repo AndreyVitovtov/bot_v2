@@ -1,7 +1,7 @@
 <?php
 
 
-namespace App\models;
+namespace App\Models;
 
 class Visit {
     public function exists(string $date, int $id): ? array {

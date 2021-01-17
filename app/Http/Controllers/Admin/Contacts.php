@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Admin;
 
 
 use App\Http\Controllers\Controller;
-use App\models\ContactsModel;
-use App\models\ContactsType;
-use App\models\Message;
+use App\Models\ContactsModel;
+use App\Models\ContactsType;
+use App\Models\Message;
 use Illuminate\Http\Request;
 
 class Contacts extends Controller {

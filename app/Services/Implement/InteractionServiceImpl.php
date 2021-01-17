@@ -4,7 +4,7 @@
 namespace App\Services\Implement;
 
 
-use App\models\Interaction;
+use App\Models\Interaction;
 use App\Services\Contracts\InteractionService;
 
 class InteractionServiceImpl implements InteractionService {

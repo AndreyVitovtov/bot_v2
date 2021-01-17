@@ -4,7 +4,7 @@
 namespace App\Services\Implement;
 
 
-use App\models\BotUsers;
+use App\Models\BotUsers;
 use App\Services\Contracts\UserService;
 
 class UserServiceImpl implements UserService {

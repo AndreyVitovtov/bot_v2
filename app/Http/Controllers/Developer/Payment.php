@@ -5,8 +5,8 @@ namespace App\Http\Controllers\Developer;
 
 
 use App\Http\Controllers\Controller;
-use App\models\API\Payment\QIWI;
-use App\models\PaymentData;
+use App\Models\API\Payment\QIWI;
+use App\Models\PaymentData;
 use Illuminate\Http\Request;
 
 class Payment extends Controller {

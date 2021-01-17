@@ -4,9 +4,9 @@
 namespace App\Http\Controllers\Developer;
 
 
-use App\models\SettingsButtons;
-use App\models\SettingsMain;
-use App\models\SettingsPages;
+use App\Models\SettingsButtons;
+use App\Models\SettingsMain;
+use App\Models\SettingsPages;
 use Illuminate\Http\Request;
 
 class Settings {

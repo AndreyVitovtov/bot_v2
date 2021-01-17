@@ -4,7 +4,7 @@
 namespace App\Services\Implement;
 
 
-use App\models\Admin;
+use App\Models\Admin;
 use App\Services\Contracts\ModeratorsService;
 use Illuminate\Support\Facades\Hash;
 

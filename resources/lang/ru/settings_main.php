@@ -1,6 +1,6 @@
 <?php
 
-use App\models\SettingsMain;
+use App\Models\SettingsMain;
 
 $settingsMain = SettingsMain::all();
 $data = [];

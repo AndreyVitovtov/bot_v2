@@ -1,11 +1,11 @@
 <?php
 
 
-namespace App\models\API\Payment;
+namespace App\Models\API\Payment;
 
 
-use App\models\Curl;
-use App\models\PerformAction;
+use App\Models\Curl;
+use App\Models\PerformAction;
 use Exception;
 
 class QIWI {

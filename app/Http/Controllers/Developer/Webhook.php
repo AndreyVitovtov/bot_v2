@@ -4,8 +4,8 @@ namespace App\Http\Controllers\Developer;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SetWebhookRequest;
-use App\models\API\Viber;
-use App\models\API\Telegram;
+use App\Models\API\Viber;
+use App\Models\API\Telegram;
 
 class Webhook extends Controller {
     public function index() {

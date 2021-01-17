@@ -1,9 +1,9 @@
 <?php
 
-namespace App\models\buttons;
+namespace App\Models\buttons;
 
-use App\models\BotUsers;
-use App\models\SettingsButtons;
+use App\Models\BotUsers;
+use App\Models\SettingsButtons;
 
 class ButtonsViber {
     private $btnBg;
