@@ -20,12 +20,9 @@ Or execute commands in terminal:
     &nbsp;&nbsp;&nbsp;&nbsp;`php artisan migrate`  
     &nbsp;&nbsp;&nbsp;&nbsp;`php artisan db:seed`  
   
-Development
-<br>    
-Developer panel: https://you_domain/developer
-<br>    
-Admin panel: https://you_domain/admin
-<br>    
+Development 
+Developer panel: https://you_domain/developer   
+Admin panel: https://you_domain/admin  
 Authorization data:  
     &nbsp;&nbsp;&nbsp;&nbsp;`login: Admin`  
     &nbsp;&nbsp;&nbsp;&nbsp;`password: 12345`
