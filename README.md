@@ -8,11 +8,11 @@
 <br>     
 2. Create env file from env.example
 <br>  
-3). if necessary, execute the command in the terminal:
+3. if necessary, execute the command in the terminal:
     &nbsp;&nbsp;&nbsp;&nbsp;`php artisan key:generate`
 <br>
 <br>
-4). Go to addresses:
+4. Go to addresses:
 <br>
     &nbsp;&nbsp;&nbsp;&nbsp;`https://you_domain/migrate`
     <br>
@@ -22,8 +22,10 @@ Or execute commands in terminal:
     &nbsp;&nbsp;&nbsp;&nbsp;`php artisan db:seed`  
   
 <h2>Development</h2> 
-Developer panel: https://you_domain/developer   
-Admin panel: https://you_domain/admin  
+Developer panel: https://you_domain/developer
+<br>
+Admin panel: https://you_domain/admin
+<br>
 Authorization data:  
     &nbsp;&nbsp;&nbsp;&nbsp;`login: Admin`  
     &nbsp;&nbsp;&nbsp;&nbsp;`password: 12345`
