@@ -29,3 +29,4 @@ Admin panel: https://you_domain/admin
 Authorization data:  
     &nbsp;&nbsp;&nbsp;&nbsp;`login: Admin`  
     &nbsp;&nbsp;&nbsp;&nbsp;`password: 12345`
+ 
