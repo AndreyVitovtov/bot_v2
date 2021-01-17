@@ -11,8 +11,9 @@ Installation
 3). if necessary, execute the command in the terminal: `php artisan key:generate`  
   
 4). Go to addresses:
-    &nbsp;&nbsp;&nbsp;&nbsp;https://you_domain/migrate  
-    &nbsp;&nbsp;&nbsp;&nbsp;https://you_domain/seed  
+<br>
+    &nbsp;&nbsp;&nbsp;&nbsp;`https://you_domain/migrate`
+    &nbsp;&nbsp;&nbsp;&nbsp;`https://you_domain/seed`  
 Or execute commands in terminal:  
     &nbsp;&nbsp;&nbsp;&nbsp;`php artisan migrate`  
     &nbsp;&nbsp;&nbsp;&nbsp;`php artisan db:seed`  
