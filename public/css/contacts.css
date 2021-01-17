@@ -1,0 +1,11 @@
+.contacts textarea {
+    width: calc(100% - 15px);
+    height: 100px;
+    resize: none;
+    padding: 5px;
+}
+
+.contacts a {
+    color: #3c8dbc;
+    text-decoration: none;
+}
