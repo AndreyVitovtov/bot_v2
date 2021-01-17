@@ -11,6 +11,7 @@ Installation
 3). if necessary, execute the command in the terminal:
     &nbsp;&nbsp;&nbsp;&nbsp;`php artisan key:generate`
 <br>
+<br>
 4). Go to addresses:
 <br>
     &nbsp;&nbsp;&nbsp;&nbsp;`https://you_domain/migrate`
