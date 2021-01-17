@@ -1,13 +1,11 @@
 Installation
 <br>
-<br>
 1). In the terminal, execute the commands:
 <br>
     &nbsp;&nbsp;&nbsp;&nbsp;`composer require`
 <br>
     &nbsp;&nbsp;&nbsp;&nbsp;`npm install`
-<br>    
-<br>    
+<br>     
 2). Create env file from env.example
 <br>
 <br>    
