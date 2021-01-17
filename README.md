@@ -2,9 +2,9 @@
 <br>
 1. In the terminal, execute the commands:
 <br>
-    ⋅⋅`composer require`
+    &nbsp;&nbsp;&nbsp;&nbsp;`composer require`
 <br>
-    ⋅⋅`npm install`
+    &nbsp;&nbsp;&nbsp;&nbsp;`npm install`
 <br>     
 2. Create env file from env.example
 <br>  
