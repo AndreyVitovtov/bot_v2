@@ -1,4 +1,4 @@
-## Installation
+#### Installation
 <br>
 1). In the terminal, execute the commands:
 <br>
@@ -21,7 +21,7 @@ Or execute commands in terminal:
     &nbsp;&nbsp;&nbsp;&nbsp;`php artisan migrate`  
     &nbsp;&nbsp;&nbsp;&nbsp;`php artisan db:seed`  
   
-## Development
+#### Development
 Developer panel: https://you_domain/developer
 <br>
 Admin panel: https://you_domain/admin
