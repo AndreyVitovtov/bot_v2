@@ -7,10 +7,8 @@ Installation
     &nbsp;&nbsp;&nbsp;&nbsp;`npm install`
 <br>     
 2). Create env file from env.example
-<br>
-<br>    
-3). if necessary, execute the command in the terminal: `php artisan key:generate`
-<br>    
+<br>  
+3). if necessary, execute the command in the terminal: `php artisan key:generate`  
 <br>    
 4). Go to addresses:
 <br>    
@@ -24,11 +22,9 @@ Or execute commands in terminal:
 <br>    
     &nbsp;&nbsp;&nbsp;&nbsp;`php artisan db:seed`
 <br>    
-<br>    
-<br>    
+<br>     
 Development
 <br>    
-<br>
 Developer panel: https://you_domain/developer
 <br>    
 Admin panel: https://you_domain/admin
