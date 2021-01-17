@@ -1,18 +1,18 @@
 Installation
 <br>
-1. In the terminal, execute the commands:
+1). In the terminal, execute the commands:
 <br>
     &nbsp;&nbsp;&nbsp;&nbsp;`composer require`
 <br>
     &nbsp;&nbsp;&nbsp;&nbsp;`npm install`
 <br>     
-2. Create env file from env.example
+2). Create env file from env.example
 <br>  
-3. if necessary, execute the command in the terminal:
+3). if necessary, execute the command in the terminal:
     &nbsp;&nbsp;&nbsp;&nbsp;`php artisan key:generate`
 <br>
 <br>
-4. Go to addresses:
+4). Go to addresses:
 <br>
     &nbsp;&nbsp;&nbsp;&nbsp;`https://you_domain/migrate`
     <br>
