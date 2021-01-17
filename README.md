@@ -9,7 +9,8 @@ Installation
 2). Create env file from env.example
 <br>  
 3). if necessary, execute the command in the terminal: 
-    &nbsp;&nbsp;&nbsp;&nbsp;`php artisan key:generate`  
+    &nbsp;&nbsp;&nbsp;&nbsp;`php artisan key:generate`
+<br>
 4). Go to addresses:
 <br>
     &nbsp;&nbsp;&nbsp;&nbsp;`https://you_domain/migrate`
@@ -18,15 +19,13 @@ Installation
 Or execute commands in terminal:  
     &nbsp;&nbsp;&nbsp;&nbsp;`php artisan migrate`  
     &nbsp;&nbsp;&nbsp;&nbsp;`php artisan db:seed`  
-<br>     
+  
 Development
 <br>    
 Developer panel: https://you_domain/developer
 <br>    
 Admin panel: https://you_domain/admin
 <br>    
-Authorization data:
-<br>    
-    &nbsp;&nbsp;&nbsp;&nbsp;`login: Admin`
-<br>    
+Authorization data:  
+    &nbsp;&nbsp;&nbsp;&nbsp;`login: Admin`  
     &nbsp;&nbsp;&nbsp;&nbsp;`password: 12345`
