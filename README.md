@@ -9,7 +9,6 @@ Installation
 2). Create env file from env.example
 <br>  
 3). if necessary, execute the command in the terminal:
-
     &nbsp;&nbsp;&nbsp;&nbsp;`php artisan key:generate`
 <br>
 4). Go to addresses:
