@@ -1,4 +1,4 @@
-Installation
+<h2>Installation</h2>
 <br>
 1). In the terminal, execute the commands:
 <br>
