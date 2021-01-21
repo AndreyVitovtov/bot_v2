@@ -256,7 +256,7 @@ trait Universal {
             }
             else {
                 $data = [
-                    'message_id' => $request->message_token,
+                    'message_id' => $request->message_token ?? null,
                     'data' => null
                 ];
             }

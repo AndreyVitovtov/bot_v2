@@ -8,7 +8,7 @@ use App\Models\BotUsers;
 
 class ButtonsTelegram {
 
-    public static function main_menu($userId) {
+    public static function main($userId = null) {
 //        $user = BotUsers::find($userId);
 
         return [

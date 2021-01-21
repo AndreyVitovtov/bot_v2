@@ -29,6 +29,21 @@
     'url' => '/developer/answers'])
 @endcomponent
 @component('menu.menu-rolled', [
+    'nameItem' => 'menumenu',
+    'icon' => 'icon-th',
+    'name' => 'Меню',
+    'items' => [[
+            'name' => 'Список',
+            'menu' => 'menu-list',
+            'url' => '/developer/menu/list'
+        ],[
+           'name' => 'Добавить',
+           'menu' => 'menu-add',
+           'url' => '/developer/menu/add'
+        ]
+    ]])
+@endcomponent
+@component('menu.menu-rolled', [
     'nameItem' => 'payment',
     'icon' => 'icon-money-2',
     'name' => 'developer_pay',

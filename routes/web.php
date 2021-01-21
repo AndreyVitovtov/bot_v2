@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\Settings;
 use App\Http\Controllers\Admin\Statistics;
 use App\Http\Controllers\Admin\Users;
 use App\Http\Controllers\Bot\RequestHandler;
+use App\Http\Controllers\Developer\Menu;
 use App\Http\Controllers\Developer\Permissions;
 use App\Http\Controllers\Developer\RequestJSON;
 use App\Http\Controllers\Developer\Webhook;
@@ -233,7 +234,18 @@ Route::group(['middleware' => 'auth', 'prefix'=>'developer'], function() {
         Route::get('/send', [RequestJSON::class, 'send'])->name('send-request-get');
         Route::post('/get/response', [RequestJSON::class, 'getResponse'])->name('get-response');
     });
+
+    Route::prefix('/menu')->group(function () {
+        Route::get('/list', [Menu::class, 'list'])->name('menu-list');
+        Route::get('/add', [Menu::class, 'add'])->name('menu-add');
+//        Route::match(['get', 'post'], '/save', [Menu::class, 'save'])->name('menu-save');
+        Route::get('/get', [Menu::class, 'get'])->name('menu-get');
+        Route::get('/delete', [Menu::class, 'delete'])->name('menu-delete');
+        Route::get('/edit/save', [Menu::class, 'editSave'])->name('menu-edit-save');
+    });
 });
+
+Route::match(['get', 'post'], 'developer/menu/save', [Menu::class, 'save'])->name('menu-save');
 
 Route::get('logout', [LoginController::class, 'logout']);
 

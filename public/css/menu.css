@@ -1,0 +1,127 @@
+:active, :hover, :focus {
+    outline: 0;
+    outline-offset: 0;
+}
+
+.flex {
+    display: flex;
+}
+
+.menu-bot {
+    width: 500px;
+    display: inline-block;
+}
+
+.block-buttons-bot {
+    display: inline-block;
+    margin-left: auto;
+}
+
+.add {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    background-color: #3C8DBC;
+    text-align: center;
+    margin: 5px;
+    color: #fff;
+    font-size: 20px;
+    line-height: 30px;
+    cursor: pointer;
+    transition: 0.2s;
+    border-radius: 3px;
+}
+
+.add:hover {
+    background-color: #2f6d92;
+}
+
+.str {
+    width: 80%;
+    display: inline-block;
+}
+
+.buttons {
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+}
+
+.button-bot {
+    height: 30px;
+    line-height: 30px;
+    display: inline-block;
+    background-color: #f1f1f1;
+    text-align: center;
+    margin: 0 5px;
+    border: solid 1px #f1f1f1;
+    border-radius: 3px;
+    flex-basis: 100%;
+}
+
+.button-bot input[type="text"] {
+    border: 0;
+    text-align: center;
+    background-color: #f1f1f1;
+    font-weight: 600;
+}
+
+.button-bot:hover .del-button {
+    display: block;
+}
+
+.del-button {
+    position: absolute;
+    display: none;
+    background-color: #ff8179;
+    width: 30px;
+    color: #fff;
+    transition: 0.2s;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+.del-button:hover {
+    background-color: #ff4e4c;
+}
+
+.del-str {
+    background-color: #ff8179;
+}
+
+.del-str:hover {
+    background-color: #ff4e4c;
+}
+
+.block-name-button {
+    margin-bottom: 10px;
+}
+
+.button-red {
+    background-color: #ff4e4c;
+    border-color: #ff4e4c;
+}
+
+.button-red:hover {
+    background-color: #ff374b;
+}
+
+@media (max-device-width: 768px) {
+    .flex {
+        display: block;
+    }
+
+    .menu-bot {
+        width: 100%;
+    }
+
+    .str {
+        width: 70%;
+    }
+}
+
+@media (max-device-width: 320px) {
+    .str {
+        width: 60%;
+    }
+}

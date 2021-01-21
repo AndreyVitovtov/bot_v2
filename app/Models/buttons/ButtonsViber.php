@@ -17,7 +17,7 @@ class ButtonsViber {
         $this->btnSize = $viewButtons->size_text;
     }
 
-    private function button($columns, $rows, $actionBody, $text, $silent = "false") {
+    public function button($columns, $rows, $actionBody, $text, $silent = "false") {
         return [
             'Columns' => $columns,
             'Rows' => $rows,

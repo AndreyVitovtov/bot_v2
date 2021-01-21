@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 class SettingsButtons extends Model {
     public $table = 'settings_buttons';
     public $timestamps = false;
-    public $fillable = [
+    protected $fillable = [
         'name',
         'text',
         'menu',
