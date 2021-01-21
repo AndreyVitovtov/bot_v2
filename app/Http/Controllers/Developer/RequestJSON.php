@@ -52,6 +52,12 @@ class RequestJSON extends Controller {
                 'value' => trim($request['token'])
             ]);
             $response = ($messenger->setWebhook(url('bot/index')));
+
+            $main = SettingsMain::all('prefix', 'value');
+            foreach($main as $r) {
+                $res[$r['prefix']] = $r['value'];
+            }
+            file_put_contents(public_path("json/main.json"), json_encode($res));
         }
         else {
             $headers = [];
