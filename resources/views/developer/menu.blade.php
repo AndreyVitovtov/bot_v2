@@ -31,13 +31,13 @@
 @component('menu.menu-rolled', [
     'nameItem' => 'menumenu',
     'icon' => 'icon-th',
-    'name' => 'Меню',
+    'name' => 'menu',
     'items' => [[
-            'name' => 'Список',
+            'name' => 'menu_list',
             'menu' => 'menu-list',
             'url' => '/developer/menu/list'
         ],[
-           'name' => 'Добавить',
+           'name' => 'menu_add',
            'menu' => 'menu-add',
            'url' => '/developer/menu/add'
         ]

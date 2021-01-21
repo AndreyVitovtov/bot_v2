@@ -62,4 +62,7 @@ return [
 
     'request' => 'Request',
     'send_request' => 'Send request',
+    'menu' => 'Menu',
+    'menu_list' => 'List',
+    'menu_add' => 'Add',
 ];
