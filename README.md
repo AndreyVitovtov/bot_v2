@@ -17,7 +17,7 @@ Installation
     &nbsp;&nbsp;&nbsp;&nbsp;`https://you_domain/migrate`
     <br>
     &nbsp;&nbsp;&nbsp;&nbsp;`https://you_domain/seed`  
-Or execute commands in terminal:  
+&nbsp;&nbsp;&nbsp;&nbsp;Or execute commands in terminal:  
     &nbsp;&nbsp;&nbsp;&nbsp;`php artisan migrate`  
     &nbsp;&nbsp;&nbsp;&nbsp;`php artisan db:seed`  
 <br>
