@@ -74,9 +74,6 @@ class Mailing {
 
         $handle = fopen(public_path()."/txt/log.txt", "a");
 
-        $buttonsViber = new ButtonsViber();
-        $buttonsTelegram = new ButtonsTelegram();
-
         foreach($usersChank as $uc) {
             $data = [];
             foreach($uc as $user) {

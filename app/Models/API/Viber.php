@@ -203,7 +203,7 @@ class Viber {
         return $this->makeRequest("https://chatapi.viber.com/pa/send_message", $data);
     }
 
-    public function sendCarusel($chat, $rich_media, $buttons): string {
+    public function sendCarousel($chat, $rich_media, $buttons): string {
         $data = [
             'receiver' => $chat,
             'type' => 'rich_media',

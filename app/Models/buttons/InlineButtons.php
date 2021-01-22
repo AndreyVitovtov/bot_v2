@@ -2,27 +2,9 @@
 
 namespace App\Models\buttons;
 
-use App\Models\BotUsers;
 use App\Models\Language;
-use Illuminate\Database\Eloquent\Collection;
 
 class InlineButtons {
-    public static function termsOfUse() {
-        return [
-            [
-                [
-                    "text" => "Условия использования",
-                    "callback_data" => "termsOfUse"
-                ]
-            ],
-            [
-                [
-                    "text" => "Принимаю",
-                    "callback_data" => "confirming"
-                ]
-            ]
-        ];
-    }
 
     public static function contacts() {
         return [
@@ -47,6 +29,19 @@ class InlineButtons {
     }
 
     public static function languages() {
-        return "";
+        $languages = [
+            'text' => DEFAULT_LANGUAGE,
+            'callback_data' => 'lang__0'
+        ];
+        $lang = Language::all()->toArray();
+        foreach ($lang as $l) {
+            $languages[] = [
+                'text' => $l['name'],
+                'callback_data' => 'lang__' . $l['code']
+            ];
+        }
+        return [$languages];
     }
+
+
 }

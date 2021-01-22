@@ -186,39 +186,71 @@
             ];
         }
 
-        public function send(string $message, array $params = [], array $n = []): string {
+        public function send(string $message, array $buttons = [], bool $inline = false, array $params = [
+            'input' => 'hidden'
+        ], array $n = []): string {
             $message = $this->valueSubstitution($message, "pages", $n);
-            $params = $this->valueSubstitutionArray($params, $n);
+            $buttons = $this->valueSubstitutionArray($buttons, $n);
+            if($inline) {
+                $params['inlineButtons'] = $buttons;
+            }
+            else {
+                $params['buttons'] = $buttons;
+            }
+
+            if(MESSENGER == 'Facebook') {
+                $params = [
+                    'keyboard' => $buttons
+                ];
+            }
             return $this->bot->sendMessage($this->chat, $message, $params);
         }
 
-        public function sendTo(string $chat, string $message, array $params = [], array $n = []): string {
+        public function sendTo(
+            string $chat,
+            string $message,
+            array $buttons = [],
+            bool $inline = false,
+            array $params = [],
+            array $n = []
+        ): string {
             $message = $this->valueSubstitution($message, "pages", $n);
-            $params = $this->valueSubstitutionArray($params, $n);
+            $buttons = $this->valueSubstitutionArray($buttons, $n);
+            if($inline) {
+                $params['inlineButtons'] = $buttons;
+            }
+            else {
+                $params['buttons'] = $buttons;
+            }
+
+            if(MESSENGER == 'Facebook') {
+                $params = [
+                    'keyboard' => $buttons
+                ];
+            }
             return $this->bot->sendMessage($chat, $message, $params);
         }
 
-        public function sendCarusel($params, array $n = []): string {
-            $params = $this->valueSubstitutionArray($params, $n);
-            if(!isset($params['columns'])) {
-                $params['columns'] = 6;
-            }
-            if(!isset($params['rows'])) {
-                $params['rows'] = 7;
-            }
+        public function sendCarousel(
+            array $richMedia,
+            array $params = [
+                'columns' => 6,
+                'rows' => 7
+            ],
+            array $buttons = [],
+            array $n = []
+        ): string {
+            $buttons = $this->valueSubstitutionArray($buttons, $n);
+
             $richMedia = [
                 'Type' => 'rich_media',
-                'ButtonsGroupColumns' => $params['columns'],
-                'ButtonsGroupRows' => $params['rows'],
+                'ButtonsGroupColumns' => $params['columns'] ?? 6,
+                'ButtonsGroupRows' => $params['rows'] ?? 7,
                 'BgColor' => '#FFFFFF',
-                'Buttons' => $params['richMedia']
+                'Buttons' => $richMedia
             ];
 
-            if(!isset($params['buttons'])) {
-                $params['buttons'] = [];
-            }
-
-            return $this->bot->sendCarusel($this->chat, $richMedia, $params['buttons']);
+            return $this->bot->sendCarousel($this->chat, $richMedia, $buttons ?? []);
         }
 
         private function valueSubstitution($str, $type, $n = []) {

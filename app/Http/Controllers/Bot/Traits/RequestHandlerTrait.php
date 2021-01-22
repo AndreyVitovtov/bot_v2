@@ -9,15 +9,17 @@ use App\Models\buttons\ButtonsFacebook;
 use App\Models\buttons\ButtonsTelegram;
 use App\Models\buttons\ButtonsViber;
 use App\Models\buttons\InlineButtons;
+use App\Models\buttons\Menu;
+use App\Models\buttons\RichMedia;
 use App\Models\ContactsModel;
 use App\Models\ContactsType;
 use App\Models\Language;
 use App\Services\Contracts\BotService;
-use Illuminate\Support\Facades\Log;
 
 trait RequestHandlerTrait {
     private $messenger;
     private $botService;
+    private $richMedia;
 
     public function __construct(BotService $botService) {
         $this->botService = $botService;
@@ -54,7 +56,7 @@ trait RequestHandlerTrait {
         elseif($this->messenger == "Telegram") {
             return new ButtonsTelegram();
         }
-        elseif($this->messenger == "Facebook") {
+        else {
             return new ButtonsFacebook();
         }
     }
@@ -75,9 +77,7 @@ trait RequestHandlerTrait {
                 $this->startRef($context);
             }
 
-            $this->send("{greeting}", [
-                'buttons' => $this->buttons()->start()
-            ]);
+            $this->send("{greeting}", Menu::start());
         }
         else {
             $this->callMethodIfExists();
@@ -107,7 +107,7 @@ trait RequestHandlerTrait {
             }
         }
 
-        $this->select_country();
+       //TODO: execute start method
 
 //        $this->send("{welcome}", [
 //            'buttons' => $this->buttons()->main_menu($this->getUserId())
@@ -118,19 +118,15 @@ trait RequestHandlerTrait {
         if(MESSENGER == "Viber") {
             $languages = Language::all();
             $count = $languages->count()+1;
-            $this->send("{choose_language}", [
-                'buttons' => $this->buttons()->main_menu($this->getUserId())
-            ]);
-            $this->sendCarusel([
-                'rows' => $count < 7 ? $count : 7,
-                'richMedia' => $this->buttons()->languages($languages),
-                'buttons' => $this->buttons()->back()
-            ]);
+            $this->send("{choose_language}", Menu::main());
+            $this->sendCarousel(
+                RichMedia::languages(),
+                ['rows' => $count < 7 ? $count : 7],
+                Menu::back()
+            );
         }
         elseif(MESSENGER == "Telegram") {
-            $this->send("{choose_language}", [
-                'inlineButtons' => InlineButtons::languages()
-            ]);
+            $this->send("{choose_language}", InlineButtons::languages(), true);
         }
     }
 
@@ -138,37 +134,27 @@ trait RequestHandlerTrait {
         $user = BotUsers::find($this->getUserId());
         $user->language = $code;
         $user->save();
-        $this->send('{language_saved}', [
-            'buttons' => $this->buttons()->main_menu($this->getUserId())
-        ]);
+        $this->send('{language_saved}', Menu::main());
     }
 
     public function contacts() {
         $this->setInteraction('contacts_select_topic');
 
-        $this->send("{send_support_message}", [
-            'buttons' => $this->buttons()->back()
-        ]);
+        $this->send("{send_support_message}", Menu::back());
 
         if(MESSENGER == "Facebook") {
-            $this->send("{select_topic}", [
-                'keyboard' => ButtonsFacebook::contacts()
-            ]);
+            $this->send("{select_topic}", ButtonsFacebook::contacts());
         }
         elseif(MESSENGER == "Telegram") {
-            $this->send("{select_topic}", [
-                'inlineButtons' => InlineButtons::contacts()
-            ]);
+            $this->send("{select_topic}", InlineButtons::contacts(), true);
         }
         else {
-            $this->send("{select_topic}", [
-                'buttons' => $this->buttons()->back()
-            ]);
-            $this->sendCarusel([
-                'rows' => 4,
-                'richMedia' => $this->buttons()->contacts(),
-                'buttons' => $this->buttons()->back()
-            ]);
+            $this->send("{select_topic}", Menu::back());
+            $this->sendCarousel(
+                RichMedia::contacts(),
+                ['rows' => 4],
+                Menu::back()
+            );
         }
     }
 
@@ -178,10 +164,7 @@ trait RequestHandlerTrait {
             $topic == "access" ||
             $topic == "advertising" ||
             $topic == "offers") {
-            $this->send("{send_message}", [
-                'buttons' => $this->buttons()->back(),
-                'input' => 'regular'
-            ]);
+            $this->send("{send_message}", Menu::back(), true);
             $this->delInteraction();
             $this->setInteraction('contacts_send_message', [
                 'topic' => $topic
@@ -202,26 +185,20 @@ trait RequestHandlerTrait {
         $contacts->time = date("H:i:s");
         $contacts->save();
 
-        $this->send("{message_sending}", [
-            'buttons' => $this->buttons()->main_menu($this->getUserId())
-        ]);
+        $this->send("{message_sending}", Menu::main());
         $this->delInteraction();
     }
 
     public function main_menu() {
         $this->delInteraction();
-        $this->send("{main_menu}", [
-            'buttons' => $this->buttons()->main_menu($this->getUserId())
-        ]);
+        $this->send("{main_menu}", Menu::main());
     }
 
     public function back() {
 //        $this->delMessage();
         $this->delInteraction();
 
-        $this->send("{main_menu}", [
-            'buttons' => $this->buttons()->main_menu($this->getUserId())
-        ]);
+        $this->send("{main_menu}", Menu::main());
         exit;
     }
 
@@ -249,9 +226,7 @@ trait RequestHandlerTrait {
 //            $user->access_free = '1';
 //            $user->save();
 //
-//            $this->sendTo($user->chat, "{got_free_access}", [
-//                'buttons' => $this->buttons()->main_menu($id)
-//            ], [
+//            $this->sendTo($user->chat, "{got_free_access}", Menu::main(), false, [], [
 //                'count' => COUNT_INVITES_ACCESS
 //            ]);
 //        }

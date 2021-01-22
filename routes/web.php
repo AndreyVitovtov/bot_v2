@@ -146,10 +146,6 @@ Route::group(['middleware' => 'auth', 'prefix'=>'admin'], function() {
         Route::get('/buttons/{lang}', [Settings::class, 'buttons'])->name('settings-buttons-lang');
     });
 
-//    Route::prefix('add')->group(function () {
-//        Route::get('/menu', [Add::class, 'menu'])->name('add-menu');
-//    });
-
     Route::group(['prefix' => 'payment', 'middleware' => 'access:payment'], function () {
         Route::get('/qiwi', [\App\Http\Controllers\Admin\Payment::class, 'qiwi'])->name('admin-qiwi');
         Route::post('/qiwi/save', [\App\Http\Controllers\Admin\Payment::class, 'qiwiSave'])
@@ -236,14 +232,12 @@ Route::group(['middleware' => 'auth', 'prefix'=>'developer'], function() {
     Route::prefix('/menu')->group(function () {
         Route::get('/list', [Menu::class, 'list'])->name('menu-list');
         Route::get('/add', [Menu::class, 'add'])->name('menu-add');
-//        Route::match(['get', 'post'], '/save', [Menu::class, 'save'])->name('menu-save');
+        Route::match(['get', 'post'], '/save', [Menu::class, 'save'])->name('menu-save');
         Route::get('/get', [Menu::class, 'get'])->name('menu-get');
         Route::get('/delete', [Menu::class, 'delete'])->name('menu-delete');
         Route::get('/edit/save', [Menu::class, 'editSave'])->name('menu-edit-save');
     });
 });
-
-Route::match(['get', 'post'], 'developer/menu/save', [Menu::class, 'save'])->name('menu-save');
 
 Route::get('logout', [LoginController::class, 'logout']);
 

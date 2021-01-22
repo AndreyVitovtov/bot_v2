@@ -3,7 +3,9 @@
 namespace App\Models\buttons;
 
 /**
- * @method static main(string $param)
+ * @method static main($param = [])
+ * @method static start()
+ * @method static back()
  */
 class Menu {
     public static function __callStatic(string $name, array $arguments) {
