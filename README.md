@@ -20,7 +20,10 @@ Installation
 Or execute commands in terminal:  
     &nbsp;&nbsp;&nbsp;&nbsp;`php artisan migrate`  
     &nbsp;&nbsp;&nbsp;&nbsp;`php artisan db:seed`  
-  
+<br>
+<br>
+5). Add to cron task scheduler ``` * * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1 ```
+
 Development
 <br>
 Developer panel: https://you_domain/developer
