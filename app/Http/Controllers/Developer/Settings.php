@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Developer;
 use App\Models\SettingsButtons;
 use App\Models\SettingsMain;
 use App\Models\SettingsPages;
+use Dejurin\GoogleTranslateForFree;
 use Illuminate\Http\Request;
 
 class Settings {
@@ -49,6 +50,15 @@ class Settings {
         $fills = $request->input();
         unset($fills['_token']);
 
+        if(empty($fills['name_us'])) {
+            $fills['name_us'] = GoogleTranslateForFree::translate(
+                'ru',
+                'us',
+                $fills['name'],
+                5
+            );
+        }
+
         $settingsMain = new SettingsMain();
         $settingsMain->fill($fills);
         $settingsMain->save();
@@ -82,6 +92,16 @@ class Settings {
 
     public function settingsPagesAdd(Request $request) {
         $fills = $request->input();
+
+        if(empty($fills['description_us'])) {
+            $fills['description_us'] = GoogleTranslateForFree::translate(
+                'ru',
+                'us',
+                $fills['description'],
+                5
+            );
+        }
+
         $text = base64_encode($fills['text']);
         unset($fills['_token']);
         unset($fills['text']);
@@ -116,6 +136,15 @@ class Settings {
         $text = base64_encode($fills['text']);
         unset($fills['_token']);
         unset($fills['text']);
+
+        if(empty($fills['menu_us']) && !empty($fills['menu'])) {
+            $fills['menu_us'] = GoogleTranslateForFree::translate(
+                'ru',
+                'us',
+                $fills['menu'],
+                5
+            );
+        }
 
         $settingsPages = new SettingsButtons();
         $settingsPages->fill($fills);
@@ -165,6 +194,15 @@ class Settings {
         $value = $request->post('value');
         $type = $request->post('type');
 
+        if(empty($name_us)) {
+            $name_us = GoogleTranslateForFree::translate(
+                'ru',
+                'us',
+                $name,
+                5
+            );
+        }
+
         $settingsMain = SettingsMain::find($id);
         $settingsMain->name = $name;
         $settingsMain->name_us = $name_us;
@@ -201,6 +239,11 @@ class Settings {
         $text = $request->post('text');
         $description = $request->post('description');
         $description_us = $request->post('description_us');
+
+        if(empty($description_us)) {
+            $description_us = GoogleTranslateForFree::translate('ru', 'en', $description, 5);
+        }
+
         $settingsPages = SettingsPages::find($id);
         $settingsPages->name = $name;
         $settingsPages->text = base64_encode($text);
