@@ -17,10 +17,12 @@ Installation
     &nbsp;&nbsp;&nbsp;&nbsp;`https://you_domain/migrate`
     <br>
     &nbsp;&nbsp;&nbsp;&nbsp;`https://you_domain/seed`  
-Or execute commands in terminal:  
+&nbsp;&nbsp;&nbsp;&nbsp;Or execute commands in terminal:  
     &nbsp;&nbsp;&nbsp;&nbsp;`php artisan migrate`  
     &nbsp;&nbsp;&nbsp;&nbsp;`php artisan db:seed`  
-  
+<br>
+5). Add to cron task scheduler ``` * * * * * cd /path-to-your-project && php artisan schedule:run >> /dev/null 2>&1 ```
+
 Development
 <br>
 Developer panel: https://you_domain/developer
