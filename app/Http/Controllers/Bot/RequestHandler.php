@@ -9,8 +9,5 @@ class RequestHandler extends BaseRequestHandler {
 
     use RequestHandlerTrait;
 
-    public function get_id() {
-        dd(Menu::test());
-    }
     // TODO: bot commands
 }

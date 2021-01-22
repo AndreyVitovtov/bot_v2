@@ -100,17 +100,8 @@ class ButtonsViber {
         ];
     }
 
-    public function main_menu($userId) {
-//        $user = BotUsers::find($userId);
-
-//        if($user->access == '1') {
-           return [
-               $this->button(3, 1, 'search_ads', '{search_ads}'),
-               $this->button(3, 1, 'create_ad', '{create_ad}'),
-               $this->button(3, 1, 'my_ads', '{my_ads}'),
-               $this->button(3, 1, 'contacts', '{contacts}'),
-               $this->button(6, 1, 'edit_country', '{edit_country}')
-           ];
+    public function main($userId = null) {
+           return [];
     }
 
     public function back() {

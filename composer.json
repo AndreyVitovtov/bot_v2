@@ -15,7 +15,8 @@
         "laravel/framework": "^8.12",
         "laravel/tinker": "^2.5",
         "ext-json": "*",
-        "dejurin/php-google-translate-for-free": "^1.0"
+        "dejurin/php-google-translate-for-free": "^1.0",
+      "ext-curl": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

@@ -9,17 +9,10 @@ use App\Models\BotUsers;
 class ButtonsTelegram {
 
     public static function main($userId = null) {
-//        $user = BotUsers::find($userId);
-
-        return [
-            ["{search_ads}", "{create_ad}"],
-            ["{my_ads}", "{contacts}"],
-            ["{edit_country}"]
-        ];
+        return [];
     }
 
-    public static function start()
-    {
+    public static function start() {
         return [
             ["start"]
         ];
@@ -33,10 +26,13 @@ class ButtonsTelegram {
 
     public function getPhone() {
         return [
-            [[
-                'text' => '{send_phone}',
-                'request_contact' => true
-            ], "{back}"]
+            [
+                [
+                    'text' => '{send_phone}',
+                    'request_contact' => true
+                ],
+                "{back}"
+            ]
         ];
     }
 

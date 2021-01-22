@@ -5,6 +5,7 @@ namespace App\Models;
 
 use App\Models\buttons\ButtonsTelegram;
 use App\Models\buttons\ButtonsViber;
+use App\Models\buttons\Menu;
 use Illuminate\Support\Facades\DB;
 
 class Mailing {
@@ -81,8 +82,8 @@ class Mailing {
             foreach($uc as $user) {
                 if($task->type == "text") {
                     if($user->messenger == "Telegram") {
-                        $mainMenuTelegram = $buttonsTelegram->main_menu($user->id);
-                        $mainMenuTelegram = $this->valueSubstitutionArray($mainMenuTelegram);
+                        $menu = Menu::main('Telegram');
+                        $menu = $this->valueSubstitutionArray($menu);
 
                         $data[] = [
                             'key' => $user->chat,
@@ -94,7 +95,7 @@ class Mailing {
                                 'parse_mode' => 'HTML',
                                 'disable_web_page_preview' => true,
                                 'reply_markup' => [
-                                    'keyboard' => $mainMenuTelegram,
+                                    'keyboard' => $menu,
                                     'resize_keyboard' => true,
                                     'one_time_keyboard' => false,
                                     'parse_mode' => 'HTML',
@@ -104,8 +105,8 @@ class Mailing {
                         ];
                     }
                     elseif($user->messenger == "Viber") {
-                        $mainMenuViber = $buttonsViber->main_menu($user->id);
-                        $mainMenuViber = $this->valueSubstitutionArray($mainMenuViber);
+                        $menu = Menu::main('Viber');
+                        $menu = $this->valueSubstitutionArray($menu);
 
                         $data[] = [
                             'key' => $user->chat,
@@ -120,7 +121,7 @@ class Mailing {
                                     'Type' => 'keyboard',
                                     'InputFieldState' => 'hidden',
                                     'DefaultHeight' => 'false',
-                                    'Buttons' => $mainMenuViber
+                                    'Buttons' => $menu
                                 ]
                             ]
                         ];
@@ -143,8 +144,8 @@ class Mailing {
                 }
                 elseif($task->type == "img") {
                     if($user->messenger == "Telegram") {
-                        $mainMenu = $buttonsTelegram->main_menu($user->id);
-                        $mainMenu = $this->valueSubstitutionArray($mainMenu);
+                        $menu = Menu::main('Viber');
+                        $menu = $this->valueSubstitutionArray($menu);
 
                         $data[] = [
                             'key' => $user->chat,
@@ -156,7 +157,7 @@ class Mailing {
                                 'caption' => $task->text,
                                 'parse_mode' => 'Markdown',
                                 'reply_markup' => [
-                                    'keyboard' => $mainMenu,
+                                    'keyboard' => $menu,
                                     'resize_keyboard' => true,
                                     'one_time_keyboard' => false,
                                     'parse_mode' => 'HTML',
@@ -166,8 +167,8 @@ class Mailing {
                         ];
                     }
                     elseif($user->messenger == "Viber") {
-                        $mainMenu = $buttonsViber->main_menu($user->id);
-                        $mainMenu = $this->valueSubstitutionArray($mainMenu);
+                        $menu = Menu::main('Viber');
+                        $menu = $this->valueSubstitutionArray($menu);
 
                         $data[] = [
                             'key' => $user->chat,
@@ -183,7 +184,7 @@ class Mailing {
                                     'Type' => 'keyboard',
                                     'InputFieldState' => 'hidden',
                                     'DefaultHeight' => 'false',
-                                    'Buttons' => $mainMenu
+                                    'Buttons' => $menu
                                 ]
                             ]
                         ];
@@ -217,7 +218,7 @@ class Mailing {
         return json_encode([
             'status' => 'success',
             'message' => 'Mailing finished',
-            'response' => json_encode($res)
+            'response' => json_encode($res ?? [])
         ]);
     }
 

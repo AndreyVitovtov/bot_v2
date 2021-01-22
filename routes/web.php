@@ -21,7 +21,6 @@ use App\Http\Controllers\Seed;
 use App\Http\Controllers\Send;
 use App\Http\Controllers\Test;
 use App\Http\Controllers\Admin\Locale;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -46,7 +45,6 @@ Route::get('/admin', function () {
 require __DIR__.'/auth.php';
 
 Route::get('test', [Test::class, 'index'])->name('test');
-
 
 Route::get('migrate', [Migrate::class, 'index'])->name('migrate');
 Route::get('migrate/rollback', [Migrate::class, 'rollback'])->name('migrate-rollback');
