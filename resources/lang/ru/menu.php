@@ -59,10 +59,13 @@ return [
     'developer_settings_pages' => 'Страницы',
     'developer_settings_buttons' => 'Кнопки',
     'developer_permissions' => 'Привилегии',
+    'developer_admin_menu' => 'Меню админ панель',
+    'developer_admin_menu_add' => 'Добавить',
+    'developer_admin_menu_list' => 'Список',
 
     'request' => 'Запрос',
     'send_request' => 'Отправить запрос',
-    'menu' => 'Меню',
+    'menu' => 'Меню бота',
     'menu_list' => 'Список',
     'menu_add' => 'Добавить',
 ];

@@ -59,10 +59,13 @@ return [
     'developer_settings_pages' => 'Pages',
     'developer_settings_buttons' => 'Buttons',
     'developer_permissions' => 'Permissions',
+    'developer_admin_menu' => 'Menu admin panel',
+    'developer_admin_menu_add' => 'Add',
+    'developer_admin_menu_list' => 'List',
 
     'request' => 'Request',
     'send_request' => 'Send request',
-    'menu' => 'Menu',
+    'menu' => 'Menu bot',
     'menu_list' => 'List',
     'menu_add' => 'Add',
 ];

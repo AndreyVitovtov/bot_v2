@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\Statistics;
 use App\Http\Controllers\Admin\Users;
 use App\Http\Controllers\Bot\RequestHandler;
 use App\Http\Controllers\Developer\Menu;
+use App\Http\Controllers\Developer\MenuAdmin;
 use App\Http\Controllers\Developer\Permissions;
 use App\Http\Controllers\Developer\RequestJSON;
 use App\Http\Controllers\Developer\Webhook;
@@ -110,7 +111,7 @@ Route::group(['middleware' => 'auth', 'prefix'=>'admin'], function() {
 
     Route::group(['prefix' => 'answers', 'middleware' => 'access:answers'], function () {
         Route::get('/list', [Answers::class, 'list'])->name('answers');
-        Route::get('/add', [Answers::class, 'add']);
+        Route::get('/add', [Answers::class, 'add'])->name('answers-add');
         Route::post('/edit', [Answers::class, 'edit']);
         Route::post('/save', [Answers::class, 'save']);
         Route::post('/delete', [Answers::class, 'delete']);
@@ -236,6 +237,9 @@ Route::group(['middleware' => 'auth', 'prefix'=>'developer'], function() {
         Route::get('/get', [Menu::class, 'get'])->name('menu-get');
         Route::get('/delete', [Menu::class, 'delete'])->name('menu-delete');
         Route::get('/edit/save', [Menu::class, 'editSave'])->name('menu-edit-save');
+        Route::get('/admin/add', [MenuAdmin::class, 'index'])->name('menu-admin-add');
+        Route::post('/admin/save', [MenuAdmin::class, 'save'])->name('menu-admin-save');
+        Route::get('/admin/list', [MenuAdmin::class, 'list'])->name('menu-admin-list');
     });
 });
 

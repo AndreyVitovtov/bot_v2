@@ -87,7 +87,7 @@
             </div>
         </div>
         <footer>
-            Copyright © 2020 <a href="https://vitovtov.info" target="_blank">vitovtov.info</a>
+            Copyright © 2021 <a href="https://vitovtov.top" target="_blank">vitovtov.top</a>
         </footer>
     </section>
 </main>
