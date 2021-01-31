@@ -271,3 +271,6 @@ Route::match(['get', 'post'], 'register', function() {
 Route::match(['get', 'post'], '/', function() {
     return redirect('/admin');
 });
+
+//TODO: Create an instance of the router class
+//$router = app()->make('router');
