@@ -19,7 +19,7 @@
                 <input type="text" name="str" id="search" value="@if(!empty($str)){{ $str }}@endif" autofocus>
             </div>
             <div class="block_buttons">
-                <input type="submit" value="@lang('pages.users_search_button')" class="button">
+                <input type="submit" value="@lang('pages.search')" class="button">
             </div>
         </div>
     </form>

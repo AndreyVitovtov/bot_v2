@@ -33,7 +33,7 @@
                     <input type="text" name="emoji" id="emoji">
                 </div>
                 <div class="block_buttons">
-                    <input type="submit" value="@lang('pages.languages_add_button')" class="button">
+                    <input type="submit" value="@lang('pages.add')" class="button">
                 </div>
             </div>
         </form>

@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\Settings;
 use App\Http\Controllers\Admin\Statistics;
 use App\Http\Controllers\Admin\Users;
 use App\Http\Controllers\Bot\RequestHandler;
+use App\Http\Controllers\Developer\Lang;
 use App\Http\Controllers\Developer\Menu;
 use App\Http\Controllers\Developer\MenuAdmin;
 use App\Http\Controllers\Developer\Permissions;
@@ -240,6 +241,24 @@ Route::group(['middleware' => 'auth', 'prefix'=>'developer'], function() {
         Route::get('/admin/add', [MenuAdmin::class, 'index'])->name('menu-admin-add');
         Route::post('/admin/save', [MenuAdmin::class, 'save'])->name('menu-admin-save');
         Route::get('/admin/list', [MenuAdmin::class, 'list'])->name('menu-admin-list');
+        Route::post('/admin/edit', [MenuAdmin::class, 'edit'])->name('menu-admin-edit');
+        Route::post('/admin/edit/save', [MenuAdmin::class, 'editSave'])->name('menu-admin-edit-save');
+        Route::post('/admin/delete', [MenuAdmin::class, 'delete'])->name('menu-admin-delete');
+    });
+
+    Route::prefix('/lang')->group(function () {
+        Route::get('/menu/list', [Lang::class, 'menuList'])->name('lang-menu-list');
+        Route::get('/menu/add', [Lang::class, 'menuAdd'])->name('lang-menu-add');
+        Route::post('/menu/add/save', [Lang::class, 'menuAddSave'])->name('lang-menu-add-save');
+        Route::post('/menu/edit', [Lang::class, 'menuEdit'])->name('lang-menu-edit');
+        Route::post('/menu/edit/save', [Lang::class, 'menuEditSave'])->name('lang-menu-edit-save');
+        Route::post('/menu/delete', [Lang::class, 'menuDelete'])->name('lang-menu-delete');
+        Route::get('/pages/list', [Lang::class, 'pagesList'])->name('lang-pages-list');
+        Route::get('/pages/add', [Lang::class, 'pagesAdd'])->name('lang-pages-add');
+        Route::post('/pages/add/save', [Lang::class, 'pagesAddSave'])->name('lang-pages-add-save');
+        Route::post('/pages/edit', [Lang::class, 'pagesEdit'])->name('lang-pages-edit');
+        Route::post('/pages/edit/save', [Lang::class, 'pagesEditSave'])->name('lang-pages-edit-save');
+        Route::post('/pages/delete', [Lang::class, 'pagesDelete'])->name('lang-pages-delete');
     });
 });
 

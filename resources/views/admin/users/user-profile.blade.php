@@ -92,14 +92,14 @@
                 @csrf
                 <input type="hidden" name="id" value="{{ $profile->id }}">
                 <div>
-                    <label for="message">@lang('pages.users_message')</label>
+                    <label for="message">@lang('pages.message')</label>
                 </div>
                 <div>
                     <textarea name="message" id="message"></textarea>
                 </div>
                 <br>
                 <div>
-                    <input type="submit" value="@lang('pages.users_send')" class="button">
+                    <input type="submit" value="@lang('pages.send')" class="button">
                 </div>
             </form>
         </div>

@@ -79,7 +79,7 @@
         </select>
         <br>
         <br>
-        <input type="submit" value="Save" class="button">
+        <input type="submit" value="@lang('pages.add')" class="button">
     </form>
 
     <script>

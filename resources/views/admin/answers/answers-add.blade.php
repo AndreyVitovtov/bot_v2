@@ -27,7 +27,7 @@
                 <input type="text" name="answer" id="answer">
             </div>
             <div class="block_buttons">
-                <input type="submit" value="@lang('pages.answers_add_send')" class="button">
+                <input type="submit" value="@lang('pages.add')" class="button">
             </div>
         </div>
     </form>

@@ -56,7 +56,7 @@
             </div>
 
             <div class="block_buttons">
-                <button class="button">@lang('pages.mailing_send')</button>
+                <button class="button">@lang('pages.send')</button>
                 <div>
                     <a href="/admin/mailing/analize">
                         <div class="button">

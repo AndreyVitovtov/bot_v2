@@ -27,7 +27,7 @@
                     </div>
                     <br>
                     <div>
-                        <input type="submit" value="@lang('pages.languages_go')" class="button">
+                        <input type="submit" value="@lang('pages.go')" class="button">
                     </div>
                 </form>
             </div>
@@ -39,13 +39,13 @@
                             №
                         </td>
                         <td>
-                            @lang('pages.settings_pages_text')
+                            @lang('pages.text')
                         </td>
                         <td>
-                            @lang('pages.settings_pages_description')
+                            @lang('pages.description')
                         </td>
                         <td>
-                            @lang('pages.settings_pages_edit')
+                            @lang('pages.edit')
                         </td>
                     </tr>
                     @foreach($fields as $field)

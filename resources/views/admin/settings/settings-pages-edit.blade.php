@@ -16,12 +16,12 @@
         <input type="hidden" name="id" value="{{ $page->id }}">
         <div class="settings">
             <div>
-                <label for="text">@lang('pages.settings_edit_page_text')</label>
+                <label for="text">@lang('pages.text')</label>
                 <input type="text" name="text" value="{{ base64_decode($page->text) }}" id="text">
             </div>
             <input type="hidden" name="lang" value="{{ $lang }}">
             <div class="block_buttons">
-                <input type="submit" value="@lang('pages.settings_edit_page_save')" class="button">
+                <input type="submit" value="@lang('pages.save')" class="button">
             </div>
         </div>
     </form>

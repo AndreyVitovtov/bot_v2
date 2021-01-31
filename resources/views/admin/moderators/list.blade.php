@@ -14,7 +14,7 @@
         <table>
             <tr>
                 <td>@lang('pages.moderators')</td>
-                <td>@lang('pages.moderators_actions')</td>
+                <td>@lang('pages.actions')</td>
             </tr>
             @foreach($moderators as $moderator)
                 <tr>

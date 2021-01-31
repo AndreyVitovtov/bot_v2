@@ -14,24 +14,24 @@
         <form action="/admin/settings/save" method="POST">
             @csrf
             <div>
-                <label for="name">@lang('pages.settings_admin_name')</label>
+                <label for="name">@lang('pages.name')</label>
                 <input type="text" name="name" id="name" value="{{ Auth::user()->name }}">
             </div>
             <div>
-                <label for="login">@lang('pages.settings_admin_login')</label>
+                <label for="login">@lang('pages.login')</label>
                 <input type="text" name="login" id="login" value="{{ Auth::user()->login }}">
             </div>
             <div>
-                <label for="password">@lang('pages.settings_admin_new_password')</label>
+                <label for="password">@lang('pages.new_password')</label>
                 <input type="password" name="password" id="password">
             </div>
             <div>
-                <label for="confirm_password">@lang('pages.settings_admin_confirm_password')</label>
+                <label for="confirm_password">@lang('pages.confirm_password')</label>
                 <input type="password" name="confirm_password" id="confirm_password">
             </div>
             <br>
             <div>
-                <button class="button">@lang('pages.settings_admin_save')</button>
+                <button class="button">@lang('pages.save')</button>
             </div>
         </form>
     </div>

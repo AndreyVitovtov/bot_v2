@@ -32,7 +32,7 @@
                             @lang('pages.contacts_date')
                         </td>
                         <td>
-                            @lang('pages.contacts_actions')
+                            @lang('pages.actions')
                         </td>
                     </tr>
                     @foreach($contacts as $contact)
@@ -80,7 +80,7 @@
                     @csrf
                     <input type="hidden" name="data" class="data-form-delete-check">
                     <input type="hidden" name="type" value="{{ $type }}">
-                    <button type="submit" id="form-delete-check-submit" class="button">@lang('pages.contacts_delete_checked')</button>
+                    <button type="submit" id="form-delete-check-submit" class="button">@lang('pages.delete_checked')</button>
                 </form>
             </div>
         </div>

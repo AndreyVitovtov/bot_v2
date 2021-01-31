@@ -34,11 +34,11 @@
     'name' => 'menu',
     'items' => [
         [
-            'name' => 'menu_list',
+            'name' => 'list',
             'menu' => 'menu-list',
             'url' => '/developer/menu/list'
         ], [
-           'name' => 'menu_add',
+           'name' => 'add',
            'menu' => 'menu-add',
            'url' => '/developer/menu/add'
         ]
@@ -74,13 +74,38 @@
     'name' => 'developer_admin_menu',
     'items' => [
         [
-            'name' => 'developer_admin_menu_list',
+            'name' => 'list',
             'menu' => 'developeradminmenulist',
             'url' => '/developer/menu/admin/list'
         ], [
-            'name' => 'developer_admin_menu_add',
+            'name' => 'add',
             'menu' => 'developeradminmenuadd',
             'url' => '/developer/menu/admin/add'
+        ]
+    ]
+])@endcomponent
+
+@component('menu.menu-rolled', [
+    'nameItem' => 'developer_lang',
+    'icon' => 'icon-language-1',
+    'name' => 'developer_lang',
+    'items' => [
+        [
+            'name' => 'developer_lang_menu_list',
+            'menu' => 'developerlangmenulist',
+            'url' => '/developer/lang/menu/list'
+        ], [
+            'name' => 'developer_lang_menu_add',
+            'menu' => 'developerlangmenuadd',
+            'url' => '/developer/lang/menu/add'
+        ], [
+            'name' => 'developer_lang_pages_list',
+            'menu' => 'developerlangpageslist',
+            'url' => '/developer/lang/pages/list'
+        ], [
+            'name' => 'developer_lang_pages_add',
+            'menu' => 'developerlangpagesadd',
+            'url' => '/developer/lang/pages/add'
         ]
     ]
 ])@endcomponent

@@ -39,7 +39,7 @@
             </table>
         </div>
         <br>
-        <input type="submit" value="@lang('pages.moderators_permissions_save')" class="button">
+        <input type="submit" value="@lang('pages.save')" class="button">
     </form>
 @endsection
 

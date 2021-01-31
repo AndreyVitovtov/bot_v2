@@ -37,7 +37,7 @@
                     </div>
                 </div>
             </div>
-            <input type="submit" value="@lang('pages.settings_button_save')" class="button">
+            <input type="submit" value="@lang('pages.save')" class="button">
             @csrf
         </form>
         <br>
@@ -56,7 +56,7 @@
                 </select>
                 <br>
                 <br>
-                <input type="submit" value="@lang('pages.languages_go')" class="button">
+                <input type="submit" value="@lang('pages.go')" class="button">
             </form>
         </div>
         <br>
@@ -68,13 +68,13 @@
                             №
                         </td>
                         <td>
-                            @lang('pages.settings_button_text')
+                            @lang('pages.text')
                         </td>
                         <td>
-                            @lang('pages.settings_button_menu')
+                            @lang('pages.menu')
                         </td>
                         <td>
-                            @lang('pages.settings_button_edit')
+                            @lang('pages.edit')
                         </td>
                     </tr>
                     @foreach($fields as $field)

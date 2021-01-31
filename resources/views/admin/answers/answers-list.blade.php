@@ -25,7 +25,7 @@
                         @lang('pages.answers_answer')
                     </td>
                     <td>
-                        @lang('pages.answers_actions')
+                        @lang('pages.actions')
                     </td>
                 </tr>
                 @foreach($answers as $answer)

@@ -24,7 +24,7 @@
                 </div>
                 <br>
                 <div>
-                    <input type="submit" value="@lang('pages.payment_save')" class="button">
+                    <input type="submit" value="@lang('pages.save')" class="button">
                 </div>
             </form>
         </div>

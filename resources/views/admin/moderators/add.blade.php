@@ -14,20 +14,20 @@
     <form action="{{ route('moderators-save-add') }}" method="POST">
         @csrf
         <div>
-            <label for="login">@lang('pages.moderators-add-login'):</label>
+            <label for="login">@lang('pages.login'):</label>
             <input type="text" name="login" id="login">
         </div>
         <div>
-            <label for="password">@lang('pages.moderators-add-password'):</label>
+            <label for="password">@lang('pages.password'):</label>
             <input type="password" name="password" id="password">
         </div>
         <div>
-            <label for="name">@lang('pages.moderators-add-name'):</label>
+            <label for="name">@lang('pages.name'):</label>
             <input type="text" name="name" id="name">
         </div>
         <br>
         <div>
-            <input type="submit" value="@lang('pages.moderators-add-add')" class="button">
+            <input type="submit" value="@lang('pages.add')" class="button">
         </div>
     </form>
 @endsection

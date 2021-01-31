@@ -26,7 +26,7 @@
                     @lang('pages.languages_emoji')
                 </td>
                 <td>
-                    @lang('pages.languages_delete')
+                    @lang('pages.delete')
                 </td>
             </tr>
             @foreach($languages as $lang)

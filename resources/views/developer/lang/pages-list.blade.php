@@ -1,32 +1,36 @@
 @extends("developer.template")
 
 @section("title")
-    Menu admin panel
+    Тексты страниц
 @endsection
 
 @section("h3")
-    <h3>Menu admin panel</h3>
+    <h3>Тексты страниц</h3>
 @endsection
 
 @section("main")
     <table>
         <tr>
-            <td>@lang('pages.menu')</td>
+            <td>Key</td>
+            <td>Ru</td>
+            <td>Us</td>
             <td>@lang('pages.actions')</td>
         </tr>
-        @foreach($menus as $key => $menu)
+        @foreach($textsRu as $key => $text)
             <tr>
-                <td style="text-align: left;">{{ ucfirst($menu['name']) }}</td>
+                <td style="text-align: left;">{{ $key }}</td>
+                <td>{{ $text }}</td>
+                <td>{{ $textsUs[$key] }}</td>
                 <td class="actions">
                     <div>
-                        <form action="{{ route('menu-admin-edit') }}" method="POST">
+                        <form action="{{ route('lang-pages-edit') }}" method="POST">
                             @csrf
                             <input type="hidden" name="key" value="{{ $key }}">
                             <button>
                                 <i class='icon-pen'></i>
                             </button>
                         </form>
-                        <form action="{{ route('menu-admin-delete') }}" method="POST">
+                        <form action="{{ route('lang-pages-delete') }}" method="POST">
                             @csrf
                             <input type="hidden" name="key" value="{{ $key }}">
                             <button>

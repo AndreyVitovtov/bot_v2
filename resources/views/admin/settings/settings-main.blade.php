@@ -22,7 +22,7 @@
                 </div>
             @endforeach
             <div class="block_buttons">
-                <input type="submit" value="@lang('pages.settings_main_save')" class="button">
+                <input type="submit" value="@lang('pages.save')" class="button">
             </div>
         </div>
     </form>
