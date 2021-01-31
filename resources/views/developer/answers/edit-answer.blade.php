@@ -1,11 +1,11 @@
 @extends("developer.template")
 
 @section("title")
-    Редактировать ответ
+    @lang('pages.edit_question')
 @endsection
 
 @section("h3")
-    <h3>Редактировать ответ</h3>
+    <h3>@lang('pages.edit_question')</h3>
 @endsection
 
 @section("main")
@@ -16,19 +16,19 @@
         <input type="hidden" name="id" value="{{ $answer->id }}">
         <div class="answers">
             <div>
-                <label for="question">Вариант вопроса, который может задать пользователь</label>
+                <label for="question">@lang('pages.answers_add_option_question')</label>
                 <input type="text" name="question" value="{{ $answer->question }}" id="question">
             </div>
             <div>
-                <label for="answer">Ответ бота</label>
+                <label for="answer">@lang('pages.answers_add_answer_bot')</label>
                 <input type="text" name="answer" value="{{ $answer->answer }}" id="answer">
             </div>
             <div>
-                <label for="method">Метод</label>
+                <label for="method">@lang('pages.method')</label>
                 <input type="text" name="method" value="{{ $answer->method }}" id="method">
             </div>
             <div class="block_buttons">
-                <input type="submit" value="Сохранить" class="button">
+                <input type="submit" value="@lang('pages.save')" class="button">
             </div>
         </div>
     </form>

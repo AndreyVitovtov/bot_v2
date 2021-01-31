@@ -1,11 +1,11 @@
 @extends("developer.template")
 
 @section("title")
-    Тексты страниц
+    @lang('pages.texts_pages')
 @endsection
 
 @section("h3")
-    <h3>Тексты страниц</h3>
+    <h3>@lang('pages.texts_pages')</h3>
 @endsection
 
 @section("main")

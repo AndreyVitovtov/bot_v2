@@ -1,17 +1,17 @@
 @extends("developer.template")
 
 @section("title")
-    Добавить меню бота
+    @lang('pages.add_menu_bot')
 @endsection
 
 @section("h3")
-    <h3>Добавить меню бота</h3>
+    <h3>@lang('pages.add_menu_bot')</h3>
 @endsection
 
 @section("main")
     <link rel="stylesheet" href="{{asset('css/menu.css')}}">
     <script src="{{asset('js/developer-panel/add-menu.js')}}"></script>
-    <label for="menu-name">Имя меню</label>
+    <label for="menu-name">@lang('pages.name_menu')</label>
     <input type="text" name="menu-name" id="menu-name">
     <br>
     <br>
@@ -40,5 +40,5 @@
     </div>
     <br>
     <br>
-    <div class="button save-menu">Сохранить</div>
+    <div class="button save-menu">@lang('pages.save')</div>
 @endsection

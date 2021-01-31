@@ -1,21 +1,21 @@
 @extends("developer.template")
 
 @section("title")
-    Страницы
+    @lang('pages.settings_pages')
 @endsection
 
 @section("h3")
-    <h3>Страницы</h3>
+    <h3>@lang('pages.settings_pages')</h3>
 @endsection
 
 @section("main")
     <table>
         <tr>
             <td>№</td>
-            <td>Имя</td>
-            <td>Текст</td>
-            <td>Описание</td>
-            <td>Действия</td>
+            <td>@lang('pages.name')</td>
+            <td>@lang('pages.text')</td>
+            <td>@lang('pages.description')</td>
+            <td>@lang('pages.actions')</td>
         </tr>
     @foreach($fields as $id => $field)
             <tr>
@@ -48,24 +48,24 @@
     <form action="/developer/settings/pages/add" method="POST">
         @csrf
         <div>
-            <label for="name">Имя</label>
+            <label for="name">@lang('pages.name')</label>
             <input type="text" name="name" id="name">
         </div>
         <div>
-            <label for="text">Текст</label>
+            <label for="text">@lang('pages.text')</label>
             <input type="text" name="text" id="text">
         </div>
         <div>
-            <label for="description">Описание</label>
+            <label for="description">@lang('pages.description')</label>
             <input type="text" name="description" id="description">
         </div>
         <div>
-            <label for="description_us">Описание на английском</label>
+            <label for="description_us">@lang('pages.description_us')</label>
             <input type="text" name="description_us" id="description_us">
         </div>
         <br>
         <div>
-            <button class="button">Добавить</button>
+            <button class="button">@lang('pages.add')</button>
         </div>
     </form>
 @endsection

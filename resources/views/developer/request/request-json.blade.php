@@ -1,7 +1,7 @@
 @extends("developer.template")
 
 @section("title")
-    Request
+    @lang('pages.request')
 @endsection
 
 @section("h3")
@@ -32,8 +32,8 @@
     @csrf
     <input type="hidden" name="data" value="{{ $json }}">
 </form>
-<button onclick="Copy()" class="button">Copy text</button>
-<button form="send_request" class="button">Send request</button>
+<button onclick="Copy()" class="button">@lang('pages.copy_text')</button>
+<button form="send_request" class="button">@lang('pages.send_request')</button>
 
 <script>
     let jsonFull = '{!! $jsonFull !!}';

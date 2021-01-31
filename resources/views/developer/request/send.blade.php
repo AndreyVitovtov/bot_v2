@@ -1,11 +1,11 @@
 @extends("developer.template")
 
 @section("title")
-    Request
+    @lang('pages.send_request')
 @endsection
 
 @section("h3")
-    <h3>Send request</h3>
+    <h3>@lang('pages.send_request')</h3>
 @endsection
 
 @section("main")
@@ -24,7 +24,7 @@
 
     <form action="{{ route('get-response') }}" method="POST">
         @csrf
-        <label>Headers</label>
+        <label>@lang('pages.headers')</label>
         <br>
         <div>
             <input type="checkbox" name="messenger" value="viber" id="viber"
@@ -35,7 +35,7 @@
             <label for="viber" class="cursor-pointer">Viber</label>
         </div>
         <br>
-        <label>Options</label>
+        <label>@lang('pages.options')</label>
         <br>
         <div>
             <input type="radio" name="options" value="none" class="options" id="none" checked>
@@ -64,7 +64,7 @@
             <input type="text" name="token" id="token">
         </div>
         <br>
-        <label>Method</label>
+        <label>@lang('pages.method')</label>
         <br>
         <div>
             <input type="radio" name="method" value="post" id="post"
@@ -89,7 +89,7 @@
         </div>
         <br>
         <div>
-            <label for="request">Request</label>
+            <label for="request">@lang('pages.request')</label>
             <textarea name="data" id="request">{{ $data }}</textarea>
         </div>
         <br>
@@ -98,7 +98,7 @@
     @if(isset($response) && $response != null)
         <br>
         <br>
-        <label>Response</label>
+        <label>@lang('pages.response')</label>
         <br>
         @if(substr($response, 0, 1) == '{')
             <div id="json-renderer" class="json-body"></div>

@@ -1,11 +1,11 @@
 @extends("developer.template")
 
 @section("title")
-    Edit menu admin panel
+    @lang('pages.edit_menu_admin_panel')
 @endsection
 
 @section("h3")
-    <h3>Edit menu admin panel</h3>
+    <h3>@lang('pages.edit_menu_admin_panel')</h3>
 @endsection
 
 @section("main")

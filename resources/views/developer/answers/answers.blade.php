@@ -1,11 +1,11 @@
 @extends("developer.template")
 
 @section("title")
-    Ответы
+    @lang('pages.answers')
 @endsection
 
 @section("h3")
-    <h3>Ответы</h3>
+    <h3>@lang('pages.answers')</h3>
 @endsection
 
 @section("main")
@@ -19,16 +19,16 @@
                         №
                     </td>
                     <td>
-                        Вопрос
+                        @lang('pages.answer')
                     </td>
                     <td>
-                        Ответ
+                        @lang('pages.question')
                     </td>
                     <td>
-                        Метод
+                        @lang('pages.method')
                     </td>
                     <td>
-                        Действия
+                        @lang('pages.actions')
                     </td>
                 </tr>
                 @foreach($answers as $answer)
@@ -71,20 +71,20 @@
         <form action="{!! route('add-answer') !!}" method="POST">
             @csrf
             <div>
-                <label for="question">Вопрос</label>
+                <label for="question">@lang('pages.answer')</label>
                 <input type="text" name="question" id="question">
             </div>
             <div>
-                <label for="answer">Ответ</label>
+                <label for="answer">@lang('pages.question')</label>
                 <input type="text" name="answer" id="answer">
             </div>
             <div>
-                <label for="method">Метод</label>
+                <label for="method">@lang('pages.method')</label>
                 <input type="text" name="method" id="method">
             </div>
             <br>
             <div>
-                <input type="submit" value="Добавить" class="button">
+                <input type="submit" value="@lang('pages.add')" class="button">
             </div>
         </form>
     </div>

@@ -1,11 +1,11 @@
 @extends("developer.template")
 
 @section("title")
-    Тексты меню
+    @lang('pages.menu_list')
 @endsection
 
 @section("h3")
-    <h3>Тексты меню</h3>
+    <h3>@lang('pages.menu_list')</h3>
 @endsection
 
 @section("main")

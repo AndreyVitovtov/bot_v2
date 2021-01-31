@@ -79,7 +79,7 @@ $(document).ready(function() {
 // 		$(this).addClass('active');
 // 	});
 
-//ПЕРЕХОД К ПУНКТУ МЕНЮ
+// ПЕРЕХОД К ПУНКТУ МЕНЮ
     $('body').on('click', 'main section.sidebar.rolled .item-menu', function() {
         // if( $(this).data("go") ) {
             $('.item-menu').removeClass('active');

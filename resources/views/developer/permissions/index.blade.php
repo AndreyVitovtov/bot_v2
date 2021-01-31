@@ -1,9 +1,11 @@
 @extends("developer.template")
 
-@section("title", "Привилегии")
+@section("title")
+    @lang('pages.permissions')
+@endsection
 
 @section("h3")
-    <h3>Привилегии</h3>
+    <h3>@lang('pages.permissions')</h3>
 @endsection
 
 @section("main")
@@ -11,10 +13,10 @@
     <table>
         <tr>
             <td>
-                Имя привилегии
+                @lang('pages.permission_name')
             </td>
             <td>
-                Удалить
+                @lang('pages.delete')
             </td>
         </tr>
     @foreach($permissions as $permission)
@@ -36,12 +38,12 @@
     <form action="{{ route('permission-add') }}" method="POST">
         @csrf
         <div>
-            <label for="">Имя привилегии:</label>
+            <label for="">@lang('pages.permission_name'):</label>
             <input type="text" name="permission">
         </div>
         <br>
         <div>
-            <input type="submit" value="Добавить" class="button">
+            <input type="submit" value="@lang('pages.add')" class="button">
         </div>
     </form>
 @endsection

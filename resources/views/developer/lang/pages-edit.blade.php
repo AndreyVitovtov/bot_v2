@@ -1,11 +1,11 @@
 @extends("developer.template")
 
 @section("title")
-    Изменить текст страниц
+    @lang('pages.edit_text_pages')
 @endsection
 
 @section("h3")
-    <h3>Изменить текст страниц</h3>
+    <h3>@lang('pages.edit_text_pages')</h3>
 @endsection
 
 @section("main")
@@ -13,15 +13,15 @@
         @csrf
         <input type="hidden" name="key" value="{{ $key }}">
         <div>
-            <label for="text_ru">Текст Ru</label>
+            <label for="text_ru">@lang('pages.text') Ru</label>
             <input type="text" name="textRu" value="{{ $textRu }}" id="text_ru">
         </div>
         <div>
-            <label for="text_us">Текст Us</label>
+            <label for="text_us">@lang('pages.text') Us</label>
             <input type="text" name="textUs" value="{{ $textUs }}" id="text_us">
         </div>
         <div>
-            <label for="key">Ключ</label>
+            <label for="key">@lang('pages.key')</label>
             <input type="text" name="newKey" value="{{ $key }}" id="key">
         </div>
         <br>
