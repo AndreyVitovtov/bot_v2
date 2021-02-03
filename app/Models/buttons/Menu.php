@@ -3,13 +3,14 @@
 namespace App\Models\buttons;
 
 /**
- * @method static main($param = [])
+ * @method static main($params = [])
  * @method static start()
  * @method static back()
+ * @method static test()
  */
 class Menu {
-    public static function __callStatic(string $name, array $arguments) {
-        $className = 'App\Models\buttons\Buttons' . (defined('MESSENGER') ? MESSENGER : $arguments['messenger']);
+    public static function __callStatic($name, $arguments) {
+        $className = 'App\Models\buttons\Buttons' . (defined('MESSENGER') ? MESSENGER : $arguments[0]['messenger']);
         if (method_exists($className, $name)) {
             $buttons = new $className;
             return $buttons->$name($arguments);

@@ -2,10 +2,10 @@
 
 namespace App\Models\buttons;
 
-use App\Models\buttons\extend\ButtonsViber;
+use App\Models\buttons\extend\AbstractButtonsViber;
 use App\Models\Language;
 
-class RichMediaButtons extends ButtonsViber {
+class RichMediaButtons extends AbstractButtonsViber {
 
     public function contacts() {
         return [
@@ -23,5 +23,33 @@ class RichMediaButtons extends ButtonsViber {
             $languages[] = $this->button(6, 1, 'lang__' . $l['code'], $l['name']);
         }
         return $languages;
+    }
+
+    public function get($messenger, $data, $page, $method, $count = [
+        'viber' => 38,
+        'telegram' => 8
+    ], $params = [
+        'id' => 'id',
+        'name' => 'name'
+    ]) {
+        if (is_string($data)) {
+            $data = $data::all()->toArray();
+        }
+
+        if ($messenger == 'Viber') {
+            $data = array_chunk($data, $count['viber']);
+            $countPages = count($data);
+            $viber = new ButtonsViber;
+            $buttons = [];
+            foreach ($data[$page - 1] as $d) {
+                $buttons[] = $viber->button(6, 1, $method . "__" . $d[$params['id']], $d[$params['name']]);
+            }
+
+            return $buttons;
+        } else {
+            $data = array_chunk($data, $count['telegram']);
+            $countPages = count($data);
+            return [];
+        }
     }
 }

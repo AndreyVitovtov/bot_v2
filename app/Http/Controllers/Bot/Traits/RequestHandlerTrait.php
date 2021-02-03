@@ -25,7 +25,7 @@ trait RequestHandlerTrait {
         $this->botService = $botService;
 
         $headers = getallheaders();
-        if(isset($_SERVER['HTTP_X_VIBER_CONTENT_SIGNATURE']) || isset($headers['VIBER'])) {
+        if(isset($_SERVER['HTTP_X_VIBER_CONTENT_SIGNATURE']) || isset($headers['Viber'])) {
             $this->messenger = "Viber";
         }
         elseif(isset($headers['Facebook-Api-Version'])) {
@@ -189,7 +189,7 @@ trait RequestHandlerTrait {
         $this->delInteraction();
     }
 
-    public function main_menu() {
+    public function main() {
         $this->delInteraction();
         $this->send("{main_menu}", Menu::main());
     }

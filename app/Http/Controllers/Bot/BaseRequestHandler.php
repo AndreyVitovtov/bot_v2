@@ -241,6 +241,7 @@
             array $n = []
         ): string {
             $buttons = $this->valueSubstitutionArray($buttons, $n);
+            $richMedia = $this->valueSubstitutionArray($richMedia, $n);
 
             $richMedia = [
                 'Type' => 'rich_media',

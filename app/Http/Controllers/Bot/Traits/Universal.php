@@ -10,6 +10,7 @@ use App\Models\buttons\Buttons;
 use App\Models\buttons\ButtonsFacebook;
 use App\Models\buttons\ButtonsTelegram;
 use App\Models\buttons\ButtonsViber;
+use App\Models\buttons\Menu;
 use App\Models\Visit;
 
 trait Universal {
@@ -214,7 +215,6 @@ trait Universal {
     public function getDataByType() {
         $request = json_decode($this->getRequest());
         if($this->messenger == "Viber") {
-
             if (empty($request)) return null;
             if ($this->type == "text") {
                 $data = [
@@ -384,7 +384,7 @@ trait Universal {
             }
             else {
                 $data = [
-                    'message_id' => $request->message->message_id,
+                    'message_id' => $request->message->message_id ?? null,
                     'data' => null
                 ];
             }
@@ -538,21 +538,15 @@ trait Universal {
 
     public function unknownTeam() {
         if($this->messenger == "Viber") {
-            $buttons = new ButtonsViber();
-
             if(substr($this->getBot()->getMessage(), 0, 4) == "http") return;
 
-            $this->send("{unknown_team}", [
-                'buttons' => $buttons->main_menu($this->userId)
-            ]);
+            $this->send("{unknown_team}", Menu::main());
         }
         elseif($this->messenger == "Facebook") {
             $this->send("{unknown_team}");
         }
         elseif($this->messenger == "Telegram") {
-            $this->send("{unknown_team}", [
-                'buttons' => ButtonsTelegram::main_menu($this->userId)
-            ]);
+            $this->send("{unknown_team}", Menu::main());
         }
     }
 

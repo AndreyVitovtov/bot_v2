@@ -103,7 +103,8 @@
         @if(substr($response, 0, 1) == '{')
             <div id="json-renderer" class="json-body"></div>
             <script>
-                let json = '{!! $response !!}';
+                let json = '{!! str_replace('OK', '', $response) !!}';
+                console.log(json);
                 $('#json-renderer').jsonBrowse(JSON.parse(json), {withQuotes: true});
             </script>
         @else

@@ -10,5 +10,8 @@ class RequestHandler extends BaseRequestHandler {
 
     use RequestHandlerTrait;
 
+    public function start() {
+        echo $this->send("dads", Menu::test());
+    }
     // TODO: bot commands
 }

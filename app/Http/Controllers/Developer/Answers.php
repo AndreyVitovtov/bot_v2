@@ -17,7 +17,7 @@ class Answers extends Controller {
         return $view;
     }
 
-    public function add(AddAnswerRequest $request) {
+    public function add(Request $request) {
         $answer = new Answer();
         $answer->question = $request->post('question');
         $answer->answer = $request->post('answer');
@@ -36,7 +36,7 @@ class Answers extends Controller {
         return $view;
     }
 
-    public function save(AddAnswerRequest $request) {
+    public function save(Request $request) {
         $answer = Answer::find($request->post('id'));
         $answer->update([
             'question' => $request->post('question'),

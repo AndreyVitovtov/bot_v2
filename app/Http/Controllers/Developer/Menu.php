@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Developer;
 
 
 use App\Http\Controllers\Controller;
-use App\models\SettingsButtons;
+use App\Models\SettingsButtons;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
