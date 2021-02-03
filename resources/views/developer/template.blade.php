@@ -34,7 +34,7 @@
 <body>
 <header>
     <section class="left-panel">
-        @lang('template.left_panel_panel')
+        @lang('pages.bot_name')
     </section>
     <section class="right-panel">
 {{--        <nav class="open-menu mob-hidden">--}}
