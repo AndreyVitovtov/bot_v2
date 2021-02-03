@@ -10,23 +10,17 @@
 
 @section("main")
     <link rel="stylesheet" href="{{asset('css/mailing.css')}}">
+    <script src="{{asset('https://www.gstatic.com/charts/loader.js')}}"></script>
+    <script src="{{asset('js/charts/Chart.js')}}"></script>
     <script>
-        let texts = {};
-
-        texts.mailing_messages_sent = '@lang('pages.mailing_messages_sent')';
-        texts.mailing_count_messages = '@lang('pages.mailing_count_messages')';
-        texts.mailing_successfully = '@lang('pages.mailing_successfully')';
-        texts.mailing_not_successful = '@lang('pages.mailing_not_successful')';
-
         let data = {!! json_encode($data) !!};
-
-            // console.log(data);
-            google.load('visualization', '1.0', {'packages': ['corechart'] });
-        // Установка функции обратного вызова для запуска отрисовки,
-        // по окончанию загрузки API визуализации.
-        google.setOnLoadCallback(function() {
-            drawChartAnalizeMailingLog(data, texts);
-        });
+        chart.options.colors = ['#3c8dbc', '#FF0000'];
+        chart.options.title = '@lang('pages.mailing_messages_sent')'+data.all
+        chart.data = [
+            ['', '@lang('pages.mailing_successfully')', '@lang('pages.mailing_not_successful')'],
+            ['@lang('pages.mailing_count_messages')', data.true, data.false]
+        ];
+        chart.drawBar('chart_div');
     </script>
 
     <div class="chart_analize_mailing_log">

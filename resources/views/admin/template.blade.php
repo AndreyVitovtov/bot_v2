@@ -13,7 +13,6 @@
     <script src="{{asset('js/jquery-3.4.1.min.js')}}"></script>
     <script src="{{asset('js/admin-panel/jquery.cookie.js')}}"></script>
     <script src="{{asset('js/admin-panel/common.js')}}"></script>
-    <script src="{{asset('js/admin-panel/drawChart.js')}}"></script>
     <script src="{{asset('https://www.gstatic.com/charts/loader.js')}}"></script>
 </head>
 <body>

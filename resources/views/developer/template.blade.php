@@ -14,7 +14,6 @@
     <script src="{{asset('js/jquery-3.4.1.min.js')}}"></script>
     <script src="{{asset('js/admin-panel/common.js')}}"></script>
     <script src="{{asset('js/admin-panel/jquery.cookie.js')}}"></script>
-    <script src="{{asset('js/admin-panel/drawChart.js')}}"></script>
     <script src="{{asset('https://www.gstatic.com/charts/loader.js')}}"></script>
     <script src="{{asset('js/admin-panel/jquery.json-browse.js')}}"></script>
 
@@ -33,17 +32,14 @@
 </head>
 <body>
 <header>
-    <section class="left-panel @if(isset($_COOKIE['rolled']) && $_COOKIE['rolled'] === 'true') rolled @endif">
-        @if(isset($_COOKIE['rolled']) && $_COOKIE['rolled'] === 'true')
-            @lang('template.panel_p')
-        @else
-            @lang('template.left_panel_panel')
-        @endif
+    <section class="left-panel">
+        @lang('template.left_panel_panel')
     </section>
-    <section class="right-panel @if(isset($_COOKIE['rolled']) && $_COOKIE['rolled'] === 'true') rolled @endif">
-        <nav class="open-menu mob-hidden">
-            <i class="icon-menu"></i>
-        </nav>
+    <section class="right-panel">
+{{--        <nav class="open-menu mob-hidden">--}}
+{{--            <i class="icon-menu"></i>--}}
+{{--        </nav>--}}
+        <div></div>
         <div class="right-panel-lang-user">
             <div class="languages">
                 <div>
@@ -89,7 +85,7 @@
     </section>
 </header>
 <main>
-    <section class="sidebar no-active @if(isset($_COOKIE['rolled']) && $_COOKIE['rolled'] === 'true') rolled @endif">
+    <section class="sidebar no-active">
         <div class="user-panel">
             <div class="avatar-user-panel"></div>
             <span>
