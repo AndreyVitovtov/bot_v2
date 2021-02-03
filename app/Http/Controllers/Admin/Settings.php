@@ -217,6 +217,16 @@ class Settings extends Controller {
             User::where('login', Auth::user()->login)->update(['login' => $params['login']]);
         }
 
+        if(!empty($params['name_bot'])) {
+            $textsRu = json_decode(file_get_contents(public_path('json/lang/ru/pages.json')), true);
+            $textsRu['bot_name'] = $params['name_bot'];
+            file_put_contents(public_path('json/lang/ru/pages.json'), json_encode($textsRu));
+
+            $textsUs = json_decode(file_get_contents(public_path('json/lang/us/pages.json')), true);
+            $textsUs['bot_name'] = $params['name_bot'];
+            file_put_contents(public_path('json/lang/us/pages.json'), json_encode($textsUs));
+        }
+
         return redirect()->to("/logout");
     }
 

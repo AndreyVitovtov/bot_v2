@@ -29,6 +29,10 @@
                 <label for="confirm_password">@lang('pages.confirm_password')</label>
                 <input type="password" name="confirm_password" id="confirm_password">
             </div>
+            <div>
+                <label for="name_bot">@lang('pages.name_bot')</label>
+                <input type="text" name="name_bot" value="@lang('pages.bot_name')" id="name_bot">
+            </div>
             <br>
             <div>
                 <button class="button">@lang('pages.save')</button>

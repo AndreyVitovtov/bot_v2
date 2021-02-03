@@ -23,9 +23,9 @@
 <header>
     <section class="left-panel @if(isset($_COOKIE['rolled']) && $_COOKIE['rolled'] === 'true') rolled @endif">
         @if(isset($_COOKIE['rolled']) && $_COOKIE['rolled'] === 'true')
-            @lang('template.panel_p')
+            {{ Lang::get('pages.bot_name')[0] }}
         @else
-            @lang('template.left_panel_panel')
+            @lang('pages.bot_name')
         @endif
     </section>
     <section class="right-panel @if(isset($_COOKIE['rolled']) && $_COOKIE['rolled'] === 'true') rolled @endif">
@@ -141,13 +141,13 @@
 
     function rolled() {
         if($('.sidebar').is('.rolled')) {
-            $('header .left-panel').html('@lang('template.left_panel_panel')');
+            $('header .left-panel').html('@lang('pages.bot_name')');
             $('main section.sidebar .menu-hidden.menu-active').show();
 
             $.cookie('rolled', 'false', {path: '/'});
         }
         else {
-            $('header .left-panel').html('@lang('template.panel_p')');
+            $('header .left-panel').html('{{ Lang::get('pages.bot_name')[0] }}');
             $('header .right-panel').css('width: calc( 100% - 50px )');
             $('main section.sidebar .menu-hidden.menu-active').hide();
 

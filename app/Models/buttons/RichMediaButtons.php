@@ -2,10 +2,10 @@
 
 namespace App\Models\buttons;
 
-use App\Models\buttons\extend\AbstractButtonsViber;
+use App\Models\buttons\extend\ButtonsViber;
 use App\Models\Language;
 
-class RichMediaButtons extends AbstractButtonsViber {
+class RichMediaButtons extends ButtonsViber {
 
     public function contacts() {
         return [
