@@ -12,10 +12,11 @@
     <link rel="stylesheet" href="{{asset('css/jquery.json-browse.css')}}">
     <link rel="shortcut icon" href="{{asset('img/favicon.ico')}}" type="image/x-icon">
     <script src="{{asset('js/jquery-3.4.1.min.js')}}"></script>
-    <script src="{{asset('js/admin-panel/common.js')}}"></script>
-    <script src="{{asset('js/admin-panel/jquery.cookie.js')}}"></script>
+    <script src="{{asset('js/common.js')}}"></script>
+    <script src="{{asset('js/jquery.cookie.js')}}"></script>
     <script src="{{asset('https://www.gstatic.com/charts/loader.js')}}"></script>
-    <script src="{{asset('js/admin-panel/jquery.json-browse.js')}}"></script>
+    <script src="{{asset('js/charts/Chart.js')}}"></script>
+    <script src="{{asset('js/jquery.json-browse.js')}}"></script>
 
     @if(isset($menuItem))
         <script>

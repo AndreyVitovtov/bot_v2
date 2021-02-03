@@ -68,13 +68,12 @@ class Chart {
 
 let chart = new Chart;
 
-// <script src="{{asset('https://www.gstatic.com/charts/loader.js')}}"></script>
-// <script src="{{asset('js/admin-panel/charts/Chart.js')}}"></script>
+
 
 // chart.data = [
 //     ['', 'Test1', 'Test2'],
 //     ['count', 100, 150]
 // ];
-// chart.drawBar('testBar');
-// chart.drawPie('testBar');
-// chart.drawColumn('testBar');
+// chart.drawBar('chartBar');
+// chart.drawPie('chartPie');
+// chart.drawColumn('chartColumn');

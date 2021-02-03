@@ -10,14 +10,6 @@
 
 @section("main")
     <link rel="stylesheet" href="{{asset('css/statistics.css')}}">
-    <script src="{{asset('https://www.gstatic.com/charts/loader.js')}}"></script>
-    <script src="{{asset('js/charts/Chart.js')}}"></script>
-    <script>
-        let statistics = {};
-        @foreach($statistics as $key => $value)
-            statistics['{{ $key }}'] = {!! json_encode($value) !!}
-        @endforeach
-    </script>
 
     @foreach($statistics as $key => $value)
         <div class="chart_statistics_2">
@@ -26,6 +18,10 @@
     @endforeach
 
     <script>
+        let statistics = {};
+        @foreach($statistics as $key => $value)
+            statistics['{{ $key }}'] = {!! json_encode($value) !!}
+        @endforeach
 
     //Messengers
         chart.options.title = "@lang('pages.statistics_count_users_messengers')";
