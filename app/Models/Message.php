@@ -7,8 +7,6 @@ namespace App\Models;
 use App\Models\API\FacebookMessenger;
 use App\Models\API\Telegram;
 use App\Models\API\Viber;
-use App\Models\buttons\ButtonsTelegram;
-use App\Models\buttons\ButtonsViber;
 use App\Models\buttons\Menu;
 
 class Message {
@@ -32,14 +30,12 @@ class Message {
     public function send($messenger, $chat, $message, $n = []) {
         $message = $this->valueSubstitution($message, 'pages', $n);
         if($messenger == "Telegram") {
-            $buttons = new ButtonsTelegram();
             $mainMenu = $this->valueSubstitutionArray(Menu::main(['messenger' => 'Telegram']));
             return $this->tgm->sendMessage($chat, $message, [
                 'buttons' => $mainMenu
             ]);
         }
         elseif($messenger == "Viber") {
-            $buttons = new ButtonsViber();
             $mainMenu = $this->valueSubstitutionArray(Menu::main(array('messenger' => 'Viber')));
             return $this->viber->sendMessage($chat, $message, [
                 'buttons' => $mainMenu
