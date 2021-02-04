@@ -14,6 +14,10 @@ class Answers extends Controller {
         $view = view('developer.answers.answers');
         $view->answers = Answer::all();
         $view->menuItem = "answers";
+        $menus = scandir(public_path('json/menu'));
+        unset($menus[0]);
+        unset($menus[1]);
+        $view->menus = $menus;
         return $view;
     }
 
@@ -22,6 +26,9 @@ class Answers extends Controller {
         $answer->question = $request->post('question');
         $answer->answer = $request->post('answer');
         $answer->method = $request->post('method');
+        if($request->post('menu') != 'null') {
+            $answer->menu = $request->post('menu');
+        }
         $answer->save();
 
         file_put_contents(public_path("json/answers.json"), Answer::all('question', 'answer', 'method')->toJson());
@@ -33,6 +40,10 @@ class Answers extends Controller {
         $view = view('developer.answers.edit-answer');
         $view->answer = Answer::find($request->post('id'));
         $view->menuItem = "answers";
+        $menus = scandir(public_path('json/menu'));
+        unset($menus[0]);
+        unset($menus[1]);
+        $view->menus = $menus;
         return $view;
     }
 
@@ -41,7 +52,8 @@ class Answers extends Controller {
         $answer->update([
             'question' => $request->post('question'),
             'answer' => $request->post('answer'),
-            'method' => $request->post('method')
+            'method' => $request->post('method'),
+            'menu' => ($request->post('menu') != 'null') ? $request->post('menu') : null
         ]);
 
         file_put_contents(public_path("json/answers.json"), Answer::all('question', 'answer', 'method')->toJson());

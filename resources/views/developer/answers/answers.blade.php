@@ -28,6 +28,9 @@
                         @lang('pages.method')
                     </td>
                     <td>
+                        @lang('pages.menu')
+                    </td>
+                    <td>
                         @lang('pages.actions')
                     </td>
                 </tr>
@@ -42,6 +45,9 @@
                         </td>
                         <td>
                             {{ $answer['method'] }}
+                        </td>
+                        <td>
+                            {{ $answer['menu'] }}
                         </td>
                         <td class="actions">
                             <div>
@@ -81,6 +87,15 @@
             <div>
                 <label for="method">@lang('pages.method')</label>
                 <input type="text" name="method" id="method">
+            </div>
+            <div>
+                <label for="menu">@lang('pages.menu')</label>
+                <select name="menu" id="menu">
+                    <option value="null">--</option>
+                    @foreach($menus as $menu)
+                        <option value="{{ str_replace('.json', '', $menu) }}">{{ str_replace('.json', '', $menu) }}</option>
+                    @endforeach
+                </select>
             </div>
             <br>
             <div>
