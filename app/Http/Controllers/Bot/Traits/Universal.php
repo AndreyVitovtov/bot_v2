@@ -107,6 +107,10 @@ trait Universal {
             $this->userId = $userId;
         }
         elseif($this->messenger == "Telegram") {
+            if(substr($this->chat, 0, 1) == '-') {
+                $this->userId = 0;
+                return;
+            }
             $botUsers = new BotUsers();
             $res = $botUsers->where('chat', $this->chat)->first();
             if(empty($res)) {
@@ -189,10 +193,14 @@ trait Universal {
                 'channel_post' => 'channel_post',
                 'location' => 'location',
                 'contact' => 'contact',
+                'reply_to_message' => 'reply_to_message',
                 'text' => 'text',
                 'document' => 'document',
                 'photo' => 'photo',
-                'bot_command' => 'entities'
+                'video' => 'video',
+                'bot_command' => 'entities',
+                'new_chat_participant' => 'new_chat_participant',
+                'left_chat_participant' => 'left_chat_participant'
             ];
 
             foreach($rules as $type => $rule) {
@@ -305,7 +313,6 @@ trait Universal {
         }
         elseif($this->messenger == "Telegram") {
             if(empty($request)) return null;
-
             if($this->type == "text") {
                 $data = [
                     'message_id' => $request->message->message_id,
@@ -352,10 +359,43 @@ trait Universal {
                     ]
                 ];
             }
+            elseif($this->type == "video") {
+                $data = [
+                    'message_id' => $request->message->message_id ?? null,
+                    'video' => [
+                        'duration' => $request->message->video->duration ?? null,
+                        'width' => $request->message->video->width ?? null,
+                        'height' => $request->message->video->height ?? null,
+                        'file_name' => $request->message->video->file_name ?? null,
+                        'mime_type' => $request->message->video->mime_type ?? null,
+                        'file_id' => $request->message->video->file_id ?? null,
+                        'file_unique_id' => $request->message->video->file_unique_id ?? null,
+                        'file_size' => $request->message->video->file_size ?? null
+                    ],
+                    'thumb' => [
+                        'file_id' => $request->message->video->thumb->file_id ?? null,
+                        'file_unique_id' => $request->message->video->thumb->file_unique_id ?? null,
+                        'file_size' => $request->message->video->thumb->file_size ?? null,
+                        'width' => $request->message->video->thumb->width ?? null,
+                        'height' => $request->message->video->thumb->height ?? null
+                    ]
+                ];
+            }
             elseif($this->type == "callback_query") {
                 $data = [
                     'message_id' => $request->callback_query->message->message_id,
-                    'data' => $request->callback_query->data
+                    'data' => $request->callback_query->data,
+                    'from' => [
+                        'id' => $request->callback_query->from->id,
+                        'first_name' => $request->callback_query->from->first_name ?? null,
+                        'last_name' => $request->callback_query->from->last_name ?? null,
+                        'username' => $request->callback_query->from->username ?? null
+                    ],
+                    'chat' => [
+                        'id' => $request->callback_query->message->chat->id,
+                        'title' => $request->callback_query->message->chat->title ?? null,
+                        'type' => $request->callback_query->message->chat->type
+                    ]
                 ];
             }
             elseif($this->type == "bot_command") {
@@ -382,18 +422,103 @@ trait Universal {
                     'phone' => $request->message->contact->phone_number
                 ];
             }
+            elseif($this->type == "new_chat_participant") {
+                $data = [
+                    'message_id' => $request->message->message_id ?? null,
+                    'from' => [
+                        'id' => $request->message->from->id ?? null,
+                        'first_name' => $request->message->from->first_name ?? null,
+                        'last_name' => $request->message->from->last_name ?? null,
+                        'username' => $request->message->from->username ?? null,
+                    ],
+                    'whom' => [
+                        'id' => $request->message->new_chat_participant->id,
+                        'first_name' => $request->message->new_chat_participant->first_name ?? null,
+                        'last_name' => $request->message->new_chat_participant->last_name ?? null,
+                        'username' => $request->message->new_chat_participant->username ?? null,
+                    ],
+                    'chat' => [
+                        'id' => $request->message->chat->id ?? null,
+                        'title' => $request->message->chat->title ?? null,
+                        'type' => $request->message->chat->type ?? null,
+                    ],
+                    'date' => $request->message->date ?? null
+                ];
+            }
+            elseif($this->type == 'left_chat_participant') {
+                $data = [
+                    'message_id' => $request->message->message_id ?? null,
+                    'from' => [
+                        'id' => $request->message->from->id ?? null,
+                        'first_name' => $request->message->from->first_name ?? null,
+                        'last_name' => $request->message->from->last_name ?? null,
+                        'username' => $request->message->from->username ?? null,
+                    ],
+                    'whom' => [
+                        'id' => $request->message->left_chat_participant->id,
+                        'first_name' => $request->message->left_chat_participant->first_name ?? null,
+                        'last_name' => $request->message->left_chat_participant->last_name ?? null,
+                        'username' => $request->message->left_chat_participant->username ?? null,
+                    ],
+                    'chat' => [
+                        'id' => $request->message->chat->id ?? null,
+                        'title' => $request->message->chat->title ?? null,
+                        'type' => $request->message->chat->type ?? null,
+                    ],
+                    'date' => $request->message->date ?? null
+                ];
+            }
+            elseif($this->type == 'reply_to_message') {
+                $data = [
+                    'message_id' => $request->message->message_id ?? null,
+                    'from' => [
+                        'id' => $request->message->from->id ?? null,
+                        'first_name' => $request->message->from->first_name ?? null,
+                        'last_name' => $request->message->from->last_name ?? null,
+                        'username' => $request->message->from->username ?? null
+                    ],
+                    'chat' => [
+                        'id' => $request->message->chat->id ?? null,
+                        'first_name' => $request->message->chat->first_name ?? null,
+                        'last_name' => $request->message->chat->last_name ?? null,
+                        'username' => $request->message->chat->username ?? null
+                    ],
+                    'reply_to_message' => [
+                        'message_id' => $request->message->reply_to_message->message_id ?? null,
+                        'from' => [
+                            'id' => $request->message->reply_to_message->from->id ?? null,
+                            'first_name' => $request->message->reply_to_message->from->first_name ?? null,
+                            'last_name' => $request->message->reply_to_message->from->last_name ?? null,
+                            'username' => $request->message->reply_to_message->from->username ?? null
+                        ],
+                        'chat' => [
+                            'id' => $request->message->reply_to_message->chat->id ?? null,
+                            'first_name' => $request->message->reply_to_message->chat->first_name ?? null,
+                            'last_name' => $request->message->reply_to_message->chat->last_name ?? null,
+                            'username' => $request->message->reply_to_message->chat->username ?? null,
+                        ],
+                        'forward_from' => [
+                            'id' => $request->message->reply_to_message->forward_from->id ?? null,
+                            'first_name' => $request->message->reply_to_message->forward_from->first_name ?? null,
+                            'last_name' => $request->message->reply_to_message->forward_from->last_name ?? null,
+                            'username' => $request->message->reply_to_message->forward_from->username ?? null,
+                        ],
+                        'text' => $request->message->reply_to_message->text ?? null,
+                    ],
+                    'text' => $request->message->text
+                ];
+            }
             else {
                 $data = [
                     'message_id' => $request->message->message_id ?? null,
                     'data' => null
                 ];
             }
-
             return $data;
         }
     }
 
-    public function saveFile($path = null, $name = null): ? string {
+    public function saveFile($path = null, $name = null, $folderName = null): ? string {
         $filePath = $this->getFilePath();
         if($this->messenger == "Telegram") {
             $ext = explode(".", $filePath);
@@ -407,8 +532,12 @@ trait Universal {
             $name = time().".".end($ext);
         }
 
+        if($folderName == null) {
+            $folderName = 'photo';
+        }
+
         if($path == null) {
-            if(copy($filePath, public_path()."/img/".$name)) return $name;
+            if(copy($filePath, public_path()."/".$folderName."/".$name)) return $name;
         }
         else {
             if(copy($filePath, $path.$name)) return $name;
@@ -512,14 +641,24 @@ trait Universal {
         return json_decode($this->getInteraction()['params'], $assoc === true ? true : false);
     }
 
-    public function getFilePath() {
+    public function getFilePath($thumb = false) {
         $data = $this->getDataByType();
-
         if($this->messenger == "Telegram") {
             if(isset($data['photo'][0]['file_id'])) {
                 return $this->getBot()->getFilePath($data['photo'][0]['file_id']);
             }
             else {
+                if($thumb) {
+                    if(isset($data['thumb']['file_id'])) {
+                        return $this->getBot()->getFilePath($data['thumb']['file_id']);
+                    }
+                }
+                else {
+                    if(isset($data['video']['file_id'])) {
+                        return $this->getBot()->getFilePath($data['video']['file_id']);
+                    }
+                }
+
                 return $this->getBot()->getFilePath($data['file_id']);
             }
         }

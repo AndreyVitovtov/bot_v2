@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Language;
+use App\Models\Seeder;
 use App\Models\SettingsButtons;
 use App\Models\SettingsMain;
 use App\Models\SettingsPages;
@@ -117,6 +118,8 @@ class Settings extends Controller {
         $webhook = new Webhook();
         $webhook->set($paramsWebhook);
 
+        Seeder::setMain();
+
         return redirect()->to("/admin/settings/main");
     }
 
@@ -156,6 +159,8 @@ class Settings extends Controller {
             $redirect = "/admin/settings/pages/".$lang;
         }
 
+        Seeder::setPages();
+
         return redirect()->to($redirect);
     }
 
@@ -193,6 +198,8 @@ class Settings extends Controller {
 
             $redirect = "/admin/settings/buttons/".$lang;
         }
+
+        Seeder::setButtons();
 
         return redirect()->to($redirect);
     }

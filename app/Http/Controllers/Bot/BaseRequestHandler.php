@@ -11,6 +11,7 @@
     use App\Models\API\FacebookMessenger;
     use App\Models\BotUsers;
     use App\Models\Interaction;
+    use App\Models\Language;
     use App\Models\RefSystem;
     use App\Models\Visit;
     use Exception;
@@ -28,6 +29,11 @@
         use Universal;
 
         public function getType() {
+            if((MESSENGER ?? null) == 'Telegram' && $this->type == 'document') {
+                if(preg_match('/("mime_type":"video)/m', $this->getRequest())) {
+                    return 'video';
+                }
+            }
             return $this->type;
         }
 
@@ -43,7 +49,7 @@
             return $this->chat;
         }
 
-        public function getUserId(): int {
+        public function getUserId(): ? int {
             if($this->userId) {
                 return $this->userId;
             }
@@ -61,10 +67,13 @@
         }
 
         public function callMethodIfExists(): void {
+            if(substr($this->getChat(), 0, 1) == '-') {
+                $this->methodFromGroupAndChat();
+                return;
+            }
             $nameCommand = $this->getMethodName();
-            if($nameCommand == null) return;
+//            if($nameCommand == null) return;
             if(substr($nameCommand, 0, 4) == "http") return;
-
             if(method_exists($this, $nameCommand)) {
                 try {
                     $this->$nameCommand();
@@ -256,10 +265,9 @@
 
         private function valueSubstitution($str, $type, $n = []) {
             $user = BotUsers::find($this->getUserId());
-            if($user->language != '0') {
-                if(file_exists(public_path()."/json/".$type."_".$user->language.".json")) {
-                    $type = $type."_".$user->language;
-                }
+            $language = Language::find($user->languages_id ?? 1);
+            if(file_exists(public_path()."/json/".$type."_".($language->code ?? 'ru').".json")) {
+                $type = $type."_".($language->code ?? 'ru');
             }
             if(preg_match_all('/{([^}]*)}/', $str, $matches)) {
                 $textName = file_get_contents(public_path("json/{$type}.json"));
@@ -345,8 +353,9 @@
 
         }
 
-        public function answerCallbackQuery($text) {
+        public function answerCallbackQuery($text, $n = []) {
             $callbackQueryId = $this->getCallbackQueryId();
+            $text = $this->valueSubstitution($text, "pages", $n);
             return $this->bot->answerCallbackQuery($callbackQueryId, $text);
         }
 
@@ -354,6 +363,13 @@
             $message = $this->valueSubstitution($message, "pages", $n);
             $inlineKeyboard = $this->valueSubstitutionArray($inlineKeyboard, $n);
             return $this->getBot()->editMessageText($this->getChat(), $messageId, $message, $inlineKeyboard);
+        }
+
+        public function editMessageReplyMarkup($chat, $messageId, $inlineButtons = []) {
+            $reply_markup = [
+                'inline_keyboard' => $inlineButtons
+            ];
+            return $this->bot->editMessageReplyMarkup($chat, $messageId, $reply_markup);
         }
 
         public function startRef($chat) {
@@ -415,5 +431,33 @@
 
         public function getMessage() {
             return $this->getBot()->getMessage();
+        }
+
+        public function getChatMember($idUser, $chat, $status = false) {
+            $result = json_decode($this->getBot()->getChatMember($idUser, $chat))->result->status ?? null;
+            if($status) {
+                return $result;
+            }
+            if($result == 'creator' || $result == 'administrator' || $result == 'member' || $result == 'restricted') {
+                return true;
+            }
+            return false;
+        }
+
+        public function getMessageId() {
+            return $this->getDataByType()['message_id'] ?? null;
+        }
+
+        public function forwardMessage($whomChat, $fromChat = null, $messageId = null) {
+            if((MESSENGER ?? null) == 'Telegram') {
+                return $this->getBot()->forwardMessage(
+                    $whomChat,
+                    $fromChat ?? $this->getChat(),
+                    $messageId ?? $this->getMessageId()
+                );
+            }
+            else {
+                return 'In developing';
+            }
         }
     }

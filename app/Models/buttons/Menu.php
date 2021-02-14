@@ -7,6 +7,7 @@ namespace App\Models\buttons;
  * @method static start()
  * @method static back()
  * @method static test()
+ * @method static competitions(array|null $competitions)
  */
 class Menu {
     public static function __callStatic($name, $arguments) {
@@ -17,7 +18,7 @@ class Menu {
         } else {
             $menu = [];
             if (file_exists($path = public_path('json/menu/' . $name . '.json'))) {
-                $messenger = (defined('MESSENGER') ? MESSENGER : $arguments['messenger']);
+                $messenger = (defined('MESSENGER') ? MESSENGER : $arguments[0]['messenger']);
                 $menu = json_decode(file_get_contents($path));
                 if ($messenger == 'Telegram') {
                     array_walk($menu, function (&$item) {

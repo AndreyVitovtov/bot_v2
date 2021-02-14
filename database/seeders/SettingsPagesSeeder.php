@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\SettingsPages;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
@@ -14,7 +15,7 @@ class SettingsPagesSeeder extends Seeder {
      */
     public function run() {
 
-        DB::table('settings_pages')->insert([
+        $data = [
             ["id" => "1","name" => "greeting","text" => "0J3QsNC20LzQuNGC0LUgU3RhcnQg8J+agCDQtNC70Y8g0L/RgNC+0LTQvtC70LbQtdC90LjRjw==","description" => "Приветствие","description_us" => "Greeting"],
             ["id" => "2","name" => "welcome","text" => "0J/RgNC40LLQtdGC0YHRgtCy0LjQtSDQsdC+0YLQsA==","description" => "Приветствие","description_us" => "Greeting"],
             ["id" => "3","name" => "main_menu","text" => "0JPQu9Cw0LLQvdC+0LUg0LzQtdC90Y4=","description" => "Главное меню","description_us" => "Main menu"],
@@ -35,6 +36,18 @@ class SettingsPagesSeeder extends Seeder {
             ["id" => "18","name" => "payment_purpose","text" => "0J3QsNC30L3QsNGH0LXQvdC40LU6","description" => "Назначение, страница Оплата","description_us" => "Purpose, page Payment"],
             ["id" => "19","name" => "payment_pay","text" => "0J7Qv9C70LDRgtC40YLRjA==","description" => "Оплатить, страница Оплата","description_us" => "Pay, page Payment"],
             ["id" => "20","name" => "payment_currency","text" => "UlVC","description" => "Валюта, страница Оплата","description_us" => "Currency, page Payment"]
-        ]);
+        ];
+
+        $dataFile = \App\Models\Seeder::getPages();
+
+        $seeder = (count($dataFile) > count($data)) ? $dataFile : $data;
+
+        DB::table('settings_pages_ru')->insert($seeder);
+
+        $settingsPages = SettingsPages::all();
+        foreach($settingsPages as $sp) {
+            $res[$sp->name] = base64_decode($sp->text);
+        }
+        file_put_contents(public_path("json/pages.json"), json_encode($res));
     }
 }

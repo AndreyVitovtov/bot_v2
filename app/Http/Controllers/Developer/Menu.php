@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Developer;
 
 
 use App\Http\Controllers\Controller;
+use App\Models\Seeder;
 use App\Models\SettingsButtons;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -85,6 +86,8 @@ class Menu extends Controller
         $settingsButtons = SettingsButtons::all('name', 'text');
         $this->settingsToJson($settingsButtons, "buttons");
 
+        Seeder::setButtons();
+
         return json_encode($names);
     }
 
@@ -115,6 +118,9 @@ class Menu extends Controller
         $menuName = $request->get('menuName');
         SettingsButtons::where('menu', $menuName)->delete();
         $menuPath = public_path() . '/json/menu/' . $menuName . ".json";
+
+        Seeder::setButtons();
+
         if (file_exists($menuPath)) {
             unlink($menuPath);
             return "{success}";
@@ -161,6 +167,8 @@ class Menu extends Controller
 
         $settingsButtons = SettingsButtons::all('name', 'text');
         $this->settingsToJson($settingsButtons, "buttons");
+
+        Seeder::setButtons();
 
         return json_encode($names);
     }

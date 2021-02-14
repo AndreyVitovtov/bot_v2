@@ -14,7 +14,9 @@ use App\Models\buttons\RichMedia;
 use App\Models\ContactsModel;
 use App\Models\ContactsType;
 use App\Models\Language;
+use App\Models\RefSystem;
 use App\Services\Contracts\BotService;
+use Illuminate\Support\Facades\Log;
 
 trait RequestHandlerTrait {
     private $messenger;
@@ -109,9 +111,7 @@ trait RequestHandlerTrait {
 
        //TODO: execute start method
 
-//        $this->send("{welcome}", [
-//            'buttons' => $this->buttons()->main_menu($this->getUserId())
-//        ]);
+        $this->send("{welcome}", Menu::main());
     }
 
     public function languages() {
@@ -195,40 +195,28 @@ trait RequestHandlerTrait {
     }
 
     public function back() {
-//        $this->delMessage();
         $this->delInteraction();
-
         $this->send("{main_menu}", Menu::main());
         exit;
     }
 
-//    public function group() {
-//        $this->send("{group}", [
-//            'inlineButtons' => InlineButtons::group()
-//        ]);
-//    }
-
-
-
-
-
     public function performAnActionRef($referrerId) {
         $this->userAccess($referrerId);
-//      $this->send("REF SYSTEM ".$chat);
+        $this->send("REF SYSTEM");
     }
 
-//    public function userAccess($id) {
-//        $count = RefSystem::where('referrer', $id)->count();
-//
-//        if($count == COUNT_INVITES_ACCESS) {
-//            $user = BotUsers::find($id);
-//            $user->access = '1';
-//            $user->access_free = '1';
-//            $user->save();
-//
-//            $this->sendTo($user->chat, "{got_free_access}", Menu::main(), false, [], [
-//                'count' => COUNT_INVITES_ACCESS
-//            ]);
-//        }
-//    }
+    public function userAccess($id) {
+        $count = RefSystem::where('referrer', $id)->count();
+
+        if($count == COUNT_INVITES_ACCESS ?? 0) {
+            $user = BotUsers::find($id);
+            $user->access = '1';
+            $user->access_free = '1';
+            $user->save();
+
+            $this->sendTo($user->chat, "{got_free_access}", Menu::main(), false, [], [
+                'count' => COUNT_INVITES_ACCESS ?? 0
+            ]);
+        }
+    }
 }

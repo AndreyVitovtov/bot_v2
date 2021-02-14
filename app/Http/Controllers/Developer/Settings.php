@@ -4,6 +4,7 @@
 namespace App\Http\Controllers\Developer;
 
 
+use App\Models\Seeder;
 use App\Models\SettingsButtons;
 use App\Models\SettingsMain;
 use App\Models\SettingsPages;
@@ -69,6 +70,8 @@ class Settings {
         }
         file_put_contents(public_path("json/main.json"), json_encode($res));
 
+        Seeder::setMain();
+
         return redirect()->to("developer/settings/main");
     }
 
@@ -86,6 +89,8 @@ class Settings {
             $res[$r['prefix']] = $r['value'];
         }
         file_put_contents(public_path("json/main.json"), json_encode($res));
+
+        Seeder::setMain();
 
         return redirect()->to("developer/settings/main");
     }
@@ -114,6 +119,8 @@ class Settings {
         $pages = SettingsPages::all('name', 'text');
         $this->settingsToJson($pages, "pages");
 
+        Seeder::setPages();
+
         return redirect()->to("developer/settings/pages");
     }
 
@@ -127,6 +134,8 @@ class Settings {
 
         $pages = SettingsPages::all('name', 'text');
         $this->settingsToJson($pages, "pages");
+
+        Seeder::setPages();
 
         return redirect()->to("developer/settings/pages");
     }
@@ -154,6 +163,8 @@ class Settings {
         $buttons = SettingsButtons::all('name', 'text');
         $this->settingsToJson($buttons, "buttons");
 
+        Seeder::setButtons();
+
         return redirect()->to("developer/settings/buttons");
     }
 
@@ -167,6 +178,8 @@ class Settings {
 
         $buttons = SettingsButtons::all('name', 'text');
         $this->settingsToJson($buttons, "buttons");
+
+        Seeder::setButtons();
 
         return redirect()->to("developer/settings/buttons");
     }
@@ -217,6 +230,8 @@ class Settings {
         }
         file_put_contents(public_path("json/main.json"), json_encode($res));
 
+        Seeder::setMain();
+
         return redirect()->to('/developer/settings/main');
     }
 
@@ -254,6 +269,8 @@ class Settings {
         $pages = SettingsPages::all('name', 'text');
         $this->settingsToJson($pages, "pages");
 
+        Seeder::setPages();
+
         return redirect()->to('/developer/settings/pages');
     }
 
@@ -285,6 +302,8 @@ class Settings {
 
         $buttons = SettingsButtons::all('name', 'text');
         $this->settingsToJson($buttons, "buttons");
+
+        Seeder::setButtons();
 
         return redirect()->to('/developer/settings/buttons');
     }
