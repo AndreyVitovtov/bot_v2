@@ -50,13 +50,13 @@ trait Universal {
             if(empty($res)) {
                 $name = $this->bot->getName();
                 if (empty($name['first_name'])) {
-                    $name['first_name'] = "test";
+                    $name['first_name'] = "No name";
                 }
                 if (empty($name['last_name'])) {
-                    $name['last_name'] = "test";
+                    $name['last_name'] = "No name";
                 }
                 if (empty($name['username'])) {
-                    $name['username'] = "test";
+                    $name['username'] = "No name";
                 }
 
                 $botUsers->chat = $this->chat;
@@ -81,13 +81,13 @@ trait Universal {
             if(empty($res)) {
                 $name = $this->bot->getName($this->chat);
                 if(empty($name['first_name'])) {
-                    $name['first_name'] = "test";
+                    $name['first_name'] = "No name";
                 }
                 if (empty($name['last_name'])) {
-                    $name['last_name'] = "test";
+                    $name['last_name'] = "No name";
                 }
                 if (empty($name['username'])) {
-                    $name['username'] = "test";
+                    $name['username'] = "No name";
                 }
 
                 $botUsers->chat = $this->chat;
@@ -116,13 +116,13 @@ trait Universal {
             if(empty($res)) {
                 $name = $this->bot->getName();
                 if(empty($name['first_name'])) {
-                    $name['first_name'] = "test";
+                    $name['first_name'] = "No name";
                 }
                 if(empty($name['last_name'])) {
-                    $name['last_name'] = "test";
+                    $name['last_name'] = "No name";
                 }
                 if(empty($name['username'])) {
-                    $name['username'] = "test";
+                    $name['username'] = "No name";
                 }
 
                 $botUsers->chat = $this->chat;

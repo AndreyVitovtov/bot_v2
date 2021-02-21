@@ -172,10 +172,17 @@
 
         private function getCommandFromMessage($message) {
             $user = $this->getUser();
+            $language = Language::where('id', $user->languages_id)->first();
+            if($language === null) {
+                $language = 'ru';
+            }
+            else {
+                $language = $language->code;
+            }
             $pathButtons = public_path()."/json/buttons.json";
             if($user->language != '0') {
-                if(file_exists(public_path()."/json/buttons_".$user->language.".json")) {
-                    $pathButtons = public_path()."/json/buttons_".$user->language.".json";
+                if(file_exists(public_path()."/json/buttons_".$language.".json")) {
+                    $pathButtons = public_path()."/json/buttons_".$language.".json";
                 }
             }
             $textsButtons = json_decode(file_get_contents($pathButtons), true);
@@ -404,7 +411,7 @@
         }
 
         public function delMessage() {
-            $params = json_decode($this->getInteraction()['params']);
+            $params = json_decode($this->getInteraction()['params'] ?? '{}');
             if(isset($params->messageId)) {
                 $this->deleteMessage($params->messageId, $this->getChat());
             }
