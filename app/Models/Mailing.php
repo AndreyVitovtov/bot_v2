@@ -3,8 +3,6 @@
 
 namespace App\Models;
 
-use App\Models\buttons\ButtonsTelegram;
-use App\Models\buttons\ButtonsViber;
 use App\Models\buttons\Menu;
 use Illuminate\Support\Facades\DB;
 
@@ -74,14 +72,13 @@ class Mailing {
 
         $handle = fopen(public_path()."/txt/log.txt", "a");
 
+        $text = new Text();
+
         foreach($usersChank as $uc) {
             $data = [];
             foreach($uc as $user) {
                 if($task->type == "text") {
                     if($user->messenger == "Telegram") {
-                        $menu = Menu::main('Telegram');
-                        $menu = $this->valueSubstitutionArray($menu);
-
                         $data[] = [
                             'key' => $user->chat,
                             'messenger' => $user->messenger,
@@ -92,7 +89,7 @@ class Mailing {
                                 'parse_mode' => 'HTML',
                                 'disable_web_page_preview' => true,
                                 'reply_markup' => [
-                                    'keyboard' => $menu,
+                                    'keyboard' => $text->valueSubstitutionArray($user, Menu::main('Telegram')),
                                     'resize_keyboard' => true,
                                     'one_time_keyboard' => false,
                                     'parse_mode' => 'HTML',
@@ -102,9 +99,6 @@ class Mailing {
                         ];
                     }
                     elseif($user->messenger == "Viber") {
-                        $menu = Menu::main('Viber');
-                        $menu = $this->valueSubstitutionArray($menu);
-
                         $data[] = [
                             'key' => $user->chat,
                             'messenger' => $user->messenger,
@@ -118,7 +112,7 @@ class Mailing {
                                     'Type' => 'keyboard',
                                     'InputFieldState' => 'hidden',
                                     'DefaultHeight' => 'false',
-                                    'Buttons' => $menu
+                                    'Buttons' => $text->valueSubstitutionArray($user, Menu::main('Viber'))
                                 ]
                             ]
                         ];
@@ -141,9 +135,6 @@ class Mailing {
                 }
                 elseif($task->type == "img") {
                     if($user->messenger == "Telegram") {
-                        $menu = Menu::main('Viber');
-                        $menu = $this->valueSubstitutionArray($menu);
-
                         $data[] = [
                             'key' => $user->chat,
                             'messenger' => $user->messenger,
@@ -154,7 +145,7 @@ class Mailing {
                                 'caption' => $task->text,
                                 'parse_mode' => 'Markdown',
                                 'reply_markup' => [
-                                    'keyboard' => $menu,
+                                    'keyboard' => $text->valueSubstitutionArray($user, Menu::main('Viber')),
                                     'resize_keyboard' => true,
                                     'one_time_keyboard' => false,
                                     'parse_mode' => 'HTML',
@@ -164,9 +155,6 @@ class Mailing {
                         ];
                     }
                     elseif($user->messenger == "Viber") {
-                        $menu = Menu::main('Viber');
-                        $menu = $this->valueSubstitutionArray($menu);
-
                         $data[] = [
                             'key' => $user->chat,
                             'messenger' => $user->messenger,
@@ -181,7 +169,7 @@ class Mailing {
                                     'Type' => 'keyboard',
                                     'InputFieldState' => 'hidden',
                                     'DefaultHeight' => 'false',
-                                    'Buttons' => $menu
+                                    'Buttons' => $text->valueSubstitutionArray($user, Menu::main('Viber'))
                                 ]
                             ]
                         ];
@@ -285,41 +273,5 @@ class Mailing {
         }
 
         return $result;
-    }
-
-    private function valueSubstitution($str, $type, $n = []) {
-        if(preg_match_all('/{([^}]*)}/', $str, $matches)) {
-            $textName = file_get_contents(public_path("json/{$type}.json"));
-            $textName = json_decode($textName, true);
-
-            foreach($matches[1] as $word) {
-                if(!empty($textName[$word])) {
-                    $text = $textName[$word];
-                    $str = str_replace("{".$word."}", stripcslashes($text), $str);
-                }
-            }
-        }
-        if(preg_match_all('/{{([^}]*)}}/', $str, $matches)) {
-            foreach($matches[1] as $word) {
-                if(isset($n[$word])) {
-                    $str = str_replace("{{".$word."}}", $n[$word], $str);
-                }
-            }
-        }
-        return $str;
-    }
-
-    private function valueSubstitutionArray($array, $n = []) {
-        $new_array = [];
-        foreach($array as $key => $item) {
-            if(is_array($item)) {
-                $new_array[$key] = $this->valueSubstitutionArray($item, $n);
-            }
-            else {
-                $new_array[$key] = $this->valueSubstitution($item, "buttons", $n);
-            }
-        }
-
-        return $new_array;
     }
 }
