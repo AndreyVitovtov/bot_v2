@@ -39,7 +39,7 @@ abstract class BaseRequestHandler {
     }
 
     public function getChat(): string {
-        return $this->chat;
+        return $this->chat ?? '-';
     }
 
     public function getUserId(): ? int {
