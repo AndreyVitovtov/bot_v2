@@ -42,7 +42,7 @@ class Mailing
             $db = $db->where('country', $task->country);
         }
 
-        $db = MailingParameters::apply($db);
+        $db = MailingParameters::apply($db, $task);
 
         $users = $db->limit($this->countUsers)
             ->offset($task->start)
