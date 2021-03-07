@@ -7,7 +7,8 @@ use App\Models\Language;
 
 class RichMediaButtons extends AbstractButtonsViber {
 
-    public function contacts() {
+    public function contacts(): array
+    {
         return [
             $this->button(6, 1, 'general', '{contacts_general}'),
             $this->button(6, 1, 'access', '{contacts_access}'),
@@ -16,40 +17,14 @@ class RichMediaButtons extends AbstractButtonsViber {
         ];
     }
 
-    public function languages() {
-        $languages = $this->button(6, 1, 'lang__0', DEFAULT_LANGUAGE);
-        $lang = Language::all()->toArray();
-        foreach ($lang as $l) {
-            $languages[] = $this->button(6, 1, 'lang__' . $l['code'], $l['name']);
+    public function languages(): array
+    {
+        $buttonsLanguages = [];
+        $languages = Language::all()->toArray();
+        foreach ($languages as $language) {
+            $buttonsLanguages[] = $this->button(6, 1, 'selectLanguage__' . $language['id'],
+                base64_decode($language['emoji']) . " " . $language['name']);
         }
-        return $languages;
-    }
-
-    public function get($messenger, $data, $page, $method, $count = [
-        'viber' => 38,
-        'telegram' => 8
-    ], $params = [
-        'id' => 'id',
-        'name' => 'name'
-    ]) {
-        if (is_string($data)) {
-            $data = $data::all()->toArray();
-        }
-
-        if ($messenger == 'Viber') {
-            $data = array_chunk($data, $count['viber']);
-            $countPages = count($data);
-            $viber = new ButtonsViber;
-            $buttons = [];
-            foreach ($data[$page - 1] as $d) {
-                $buttons[] = $viber->button(6, 1, $method . "__" . $d[$params['id']], $d[$params['name']]);
-            }
-
-            return $buttons;
-        } else {
-            $data = array_chunk($data, $count['telegram']);
-            $countPages = count($data);
-            return [];
-        }
+        return $buttonsLanguages;
     }
 }

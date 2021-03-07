@@ -2,15 +2,16 @@
 
 namespace App\Models\buttons;
 
+use App\Models\Answer;
+
 /**
  * @method static main($params = [])
  * @method static start()
  * @method static back()
- * @method static test()
- * @method static competitions(array|null $competitions)
  */
 class Menu {
-    public static function __callStatic($name, $arguments) {
+    public static function __callStatic($name, $arguments): array
+    {
         $className = 'App\Models\buttons\Buttons' . (defined('MESSENGER') ? MESSENGER : $arguments[0]['messenger']);
         if (method_exists($className, $name)) {
             $buttons = new $className;

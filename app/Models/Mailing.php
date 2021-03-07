@@ -6,20 +6,23 @@ namespace App\Models;
 use App\Models\buttons\Menu;
 use Illuminate\Support\Facades\DB;
 
-class Mailing {
+class Mailing
+{
 
     public $pathTask;
     public $countUsers;
     public $chatPathTask;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->pathTask = public_path('/json/mailing_task.json');
         $this->chatPathTask = public_path('/json/mailing_task_chat.json');
         $this->countUsers = 1800;
     }
 
-    public function send(): string {
-        if(! file_exists($this->pathTask)) return json_encode([
+    public function send(): string
+    {
+        if (!file_exists($this->pathTask)) return json_encode([
             'status' => 'fail',
             'message' => 'No task'
         ]);
@@ -27,7 +30,7 @@ class Mailing {
         $taskJson = file_get_contents($this->pathTask);
         $task = json_decode($taskJson);
 
-        if($task->performed == "true") return json_encode([
+        if ($task->performed == "true") return json_encode([
             'status' => 'fail',
             'message' => 'Mailing performed'
         ]);
@@ -35,11 +38,11 @@ class Mailing {
         $db = DB::table('users')
             ->where('messenger', 'LIKE', $task->messenger);
 
-        if($task->country !== 'all') {
+        if ($task->country !== 'all') {
             $db = $db->where('country', $task->country);
         }
 
-        //TODO: Mailing parameters
+        $db = MailingParameters::apply($db);
 
         $users = $db->limit($this->countUsers)
             ->offset($task->start)
@@ -47,20 +50,19 @@ class Mailing {
             ->toArray();
 
         $task->performed = "true";
-        if($task->count <= $this->countUsers) {
+        if ($task->count <= $this->countUsers) {
             $task->start = $task->count;
-        }
-        else {
+        } else {
             $task->start += $this->countUsers;
         }
         file_put_contents($this->pathTask, json_encode($task));
 
-        if(empty($users)) {
+        if (empty($users)) {
             unlink($this->pathTask);
-            if(isset($task->img)) {
+            if (isset($task->img)) {
                 $imgArr = explode("/", $task->img);
                 $imgName = end($imgArr);
-                unlink(public_path('/img/mailing/'.$imgName));
+                unlink(public_path('/img/mailing/' . $imgName));
             }
             return json_encode([
                 'status' => 'fail',
@@ -68,28 +70,27 @@ class Mailing {
             ]);
         }
 
-        $usersChank = array_chunk($users, COUNT_MAILING);
+        $usersChunk = array_chunk($users, (defined('COUNT_MAILING') ? COUNT_MAILING : 200));
 
-        $handle = fopen(public_path()."/txt/log.txt", "a");
+        $handle = fopen(public_path() . "/txt/log.txt", "a");
 
-        $text = new Text();
-
-        foreach($usersChank as $uc) {
+        foreach ($usersChunk as $uc) {
             $data = [];
-            foreach($uc as $user) {
-                if($task->type == "text") {
-                    if($user->messenger == "Telegram") {
+            foreach ($uc as $user) {
+                if ($task->type == "text") {
+                    if ($user->messenger == "Telegram") {
                         $data[] = [
                             'key' => $user->chat,
                             'messenger' => $user->messenger,
-                            'url' => "https://api.telegram.org/bot".TELEGRAM_TOKEN."/sendMessage",
+                            'url' => "https://api.telegram.org/bot" .
+                                (defined('TELEGRAM_TOKEN') ? TELEGRAM_TOKEN : null) . "/sendMessage",
                             'params' => [
                                 'text' => $task->text,
                                 'chat_id' => $user->chat,
                                 'parse_mode' => 'HTML',
                                 'disable_web_page_preview' => true,
                                 'reply_markup' => [
-                                    'keyboard' => $text->valueSubstitutionArray($user, Menu::main('Telegram')),
+                                    'keyboard' => Text::valueSubstitutionArray($user, Menu::main('Telegram')),
                                     'resize_keyboard' => true,
                                     'one_time_keyboard' => false,
                                     'parse_mode' => 'HTML',
@@ -97,8 +98,7 @@ class Mailing {
                                 ]
                             ]
                         ];
-                    }
-                    elseif($user->messenger == "Viber") {
+                    } elseif ($user->messenger == "Viber") {
                         $data[] = [
                             'key' => $user->chat,
                             'messenger' => $user->messenger,
@@ -112,16 +112,16 @@ class Mailing {
                                     'Type' => 'keyboard',
                                     'InputFieldState' => 'hidden',
                                     'DefaultHeight' => 'false',
-                                    'Buttons' => $text->valueSubstitutionArray($user, Menu::main('Viber'))
+                                    'Buttons' => Text::valueSubstitutionArray($user, Menu::main('Viber'))
                                 ]
                             ]
                         ];
-                    }
-                    elseif($user->messenger == "Facebook") {
+                    } elseif ($user->messenger == "Facebook") {
                         $data[] = [
                             'key' => $user->chat,
                             'messenger' => $user->messenger,
-                            'url' => "https://graph.facebook.com/v3.2/me/messages?access_token=".FACEBOOK_TOKEN,
+                            'url' => "https://graph.facebook.com/v3.2/me/messages?access_token=" .
+                                (defined('FACEBOOK_TOKEN') ? FACEBOOK_TOKEN : null),
                             'params' => [
                                 'recipient' => [
                                     'id' => $user->chat
@@ -132,20 +132,20 @@ class Mailing {
                             ]
                         ];
                     }
-                }
-                elseif($task->type == "img") {
-                    if($user->messenger == "Telegram") {
+                } elseif ($task->type == "img") {
+                    if ($user->messenger == "Telegram") {
                         $data[] = [
                             'key' => $user->chat,
                             'messenger' => $user->messenger,
-                            'url' => 'https://api.telegram.org/bot'.TELEGRAM_TOKEN.'/sendPhoto',
+                            'url' => 'https://api.telegram.org/bot' .
+                                (defined('TELEGRAM_TOKEN') ? TELEGRAM_TOKEN : null) . '/sendPhoto',
                             'params' => [
                                 'chat_id' => $user->chat,
                                 'photo' => $task->img,
                                 'caption' => $task->text,
                                 'parse_mode' => 'Markdown',
                                 'reply_markup' => [
-                                    'keyboard' => $text->valueSubstitutionArray($user, Menu::main('Viber')),
+                                    'keyboard' => Text::valueSubstitutionArray($user, Menu::main('Telegram')),
                                     'resize_keyboard' => true,
                                     'one_time_keyboard' => false,
                                     'parse_mode' => 'HTML',
@@ -153,8 +153,7 @@ class Mailing {
                                 ]
                             ]
                         ];
-                    }
-                    elseif($user->messenger == "Viber") {
+                    } elseif ($user->messenger == "Viber") {
                         $data[] = [
                             'key' => $user->chat,
                             'messenger' => $user->messenger,
@@ -169,7 +168,7 @@ class Mailing {
                                     'Type' => 'keyboard',
                                     'InputFieldState' => 'hidden',
                                     'DefaultHeight' => 'false',
-                                    'Buttons' => $text->valueSubstitutionArray($user, Menu::main('Viber'))
+                                    'Buttons' => Text::valueSubstitutionArray($user, Menu::main('Viber'))
                                 ]
                             ]
                         ];
@@ -179,7 +178,7 @@ class Mailing {
 
             $res = $this->multiCurl($data);
 
-            if(!is_array($res['response'])) {
+            if (!is_array($res['response'])) {
                 json_encode([
                     'status' => 'error',
                     'message' => 'No response',
@@ -187,11 +186,11 @@ class Mailing {
                 ]);
             }
 
-            foreach($res['response'] as $key => $response) {
-                fwrite($handle, $key."=>".$response."\n");
+            foreach ($res['response'] as $key => $response) {
+                fwrite($handle, $key . "=>" . $response . "\n");
             }
             unset($data);
-            sleep(SLEEP_MAILING);
+            sleep((defined('SLEEP_MAILING') ? SLEEP_MAILING : 2));
         }
 
         fclose($handle);
@@ -207,11 +206,12 @@ class Mailing {
         ]);
     }
 
-    private function multiCurl($data): array {
+    private function multiCurl($data): array
+    {
         $mh = curl_multi_init();
         $connectionArray = [];
 
-        foreach($data as $item) {
+        foreach ($data as $item) {
             $key = $item['key'];
             $data_string = json_encode($item['params']);
 
@@ -225,8 +225,8 @@ class Mailing {
                 'Content-Length: ' . mb_strlen($data_string),
             ];
 
-            if($item['messenger'] == "Viber") {
-                $headers[] = 'X-Viber-Auth-Token: ' . VIBER_TOKEN;
+            if ($item['messenger'] == "Viber") {
+                $headers[] = 'X-Viber-Auth-Token: ' . (defined('VIBER_TOKEN') ? VIBER_TOKEN : null);
             }
 
             curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
@@ -238,24 +238,23 @@ class Mailing {
 
         do {
             curl_multi_exec($mh, $running);
-        }
-        while($running > 0);
+        } while ($running > 0);
 
         $responseEmpty = [];
         $content = [];
         $httpCode = [];
         $url = [];
 
-        foreach($connectionArray as $key => $ch) {
+        foreach ($connectionArray as $key => $ch) {
             $content[$key] = curl_multi_getcontent($ch);
 
-            if(empty(curl_multi_getcontent($ch))) {
+            if (empty(curl_multi_getcontent($ch))) {
                 $responseEmpty[] = $key;
             }
 
-            $getinfo = curl_getinfo($ch);
-            $httpCode[$key] = $getinfo['http_code'];
-            $url[$key] = $getinfo['url'];
+            $getInfo = curl_getinfo($ch);
+            $httpCode[$key] = $getInfo['http_code'];
+            $url[$key] = $getInfo['url'];
             curl_multi_remove_handle($mh, $ch);
         }
 
@@ -268,7 +267,7 @@ class Mailing {
             "response" => $content
         ];
 
-        if(!empty($responseEmpty)) {
+        if (!empty($responseEmpty)) {
             $result['responseEmpty'] = $responseEmpty;
         }
 

@@ -4,7 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PaymentData extends Model {
+class PaymentData extends Model
+{
     protected $table = "payment_data";
     public $timestamps = false;
     public $fillable = [

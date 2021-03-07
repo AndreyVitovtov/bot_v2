@@ -3,7 +3,6 @@
 
 namespace App\Http\Controllers\Bot\Traits;
 
-
 use App\Models\BotUsers;
 use App\Models\buttons\ButtonsFacebook;
 use App\Models\buttons\ButtonsTelegram;
@@ -16,63 +15,63 @@ use App\Models\ContactsType;
 use App\Models\Language;
 use App\Models\RefSystem;
 use App\Services\Contracts\BotService;
-use Illuminate\Support\Facades\Log;
 
-trait RequestHandlerTrait {
+trait BasicMethods
+{
     private $messenger;
     private $botService;
     private $richMedia;
 
-    public function __construct(BotService $botService) {
+    public function __construct(BotService $botService)
+    {
         $this->botService = $botService;
 
         $headers = getallheaders();
-        if(isset($_SERVER['HTTP_X_VIBER_CONTENT_SIGNATURE']) || isset($headers['Viber'])) {
+        if (isset($_SERVER['HTTP_X_VIBER_CONTENT_SIGNATURE']) || isset($headers['Viber'])) {
             $this->messenger = "Viber";
-        }
-        elseif(isset($headers['Facebook-Api-Version'])) {
+        } elseif (isset($headers['Facebook-Api-Version'])) {
             $this->messenger = "Facebook";
-        }
-        else {
+        } else {
             $this->messenger = "Telegram";
         }
 
         define("MESSENGER", $this->messenger);
         parent::__construct();
 
-        if($this->messenger == "Facebook") {
+        if ($this->messenger == "Facebook") {
             $this->mark_seen();
             $this->typing_on();
             sleep(rand(1, 2));
         }
     }
 
-    public function getMessenger() {
+    public function getMessenger(): string
+    {
         return $this->messenger;
     }
 
-    public function buttons() {
-        if($this->messenger == "Viber") {
+    public function buttons()
+    {
+        if ($this->messenger == "Viber") {
             return new ButtonsViber();
-        }
-        elseif($this->messenger == "Telegram") {
+        } elseif ($this->messenger == "Telegram") {
             return new ButtonsTelegram();
-        }
-        else {
+        } else {
             return new ButtonsFacebook();
         }
     }
 
-    public function index() {
+    public function index()
+    {
         file_put_contents(public_path("json/request.json"), $this->getRequest());
 
-        if($this->getType() == "started") {
+        if ($this->getType() == "started") {
             $this->setUserId();
 
             $context = $this->getBot()->getContext();
-            if($context) {
+            if ($context) {
                 $context = str_replace(" ", "+", $context);
-                if($this->messenger == "Viber" && substr($context, -2) != "==") {
+                if ($this->messenger == "Viber" && substr($context, -2) != "==") {
                     $context .= "==";
                 }
 
@@ -80,12 +79,11 @@ trait RequestHandlerTrait {
             }
 
             $this->send("{greeting}", Menu::start());
-        }
-        else {
+        } else {
             $this->callMethodIfExists();
         }
 
-        return response('OK', 200)->header('Content-Type', 'text/plain');
+        return response('OK', '200')->header('Content-Type', 'text/plain');
 
 
 //TODO: ДОБАВИТЬ WEBHOOK FACEBOOK MESSENGER
@@ -95,72 +93,70 @@ trait RequestHandlerTrait {
 //        }
     }
 
-    public function start($params = null) {
-
+    public function start()
+    {
         $this->delInteraction();
-
         $this->setUserStart();
 
-        //FACEBOOK REFERRALS
-        if(MESSENGER == "Facebook") {
+        //Facebook referrals
+        if (MESSENGER == "Facebook") {
             $chat = $this->getBot()->getRef();
-            if($chat != null) {
+            if ($chat != null) {
                 $this->startRef($chat);
             }
         }
 
-       //TODO: execute start method
+        //TODO: execute start method
 
         $this->send("{welcome}", Menu::main());
     }
 
-    public function languages() {
-        if(MESSENGER == "Viber") {
-            $languages = Language::all();
-            $count = $languages->count()+1;
-            $this->send("{choose_language}", Menu::main());
+    public function selectLanguage($id) {
+        $this->delMessage();
+        $user = $this->getUser();
+        $user->languages_id = $id;
+        $user->save();
+        $language = Language::find($id);
+        $this->send('{language_selected}', Menu::main(), false, [], [
+            'lang' => mb_strtolower($language->name)
+        ]);
+        $this->send('{main_menu}', Menu::main());
+    }
+
+    public function changeLanguage() {
+        if (MESSENGER == 'Telegram') {
+            $res = $this->send('{select_language}', InlineButtons::languages(), true);
+            $this->setIdSendMessage($res);
+        } else {
+            $this->send('{select_language}', Menu::back());
             $this->sendCarousel(
-                RichMedia::languages(),
-                ['rows' => $count < 7 ? $count : 7],
-                Menu::back()
+                RichMedia::languages(), ['rows' => 4], Menu::back()
             );
         }
-        elseif(MESSENGER == "Telegram") {
-            $this->send("{choose_language}", InlineButtons::languages(), true);
-        }
     }
 
-    public function lang($code) {
-        $user = BotUsers::find($this->getUserId());
-        $user->language = $code;
-        $user->save();
-        $this->send('{language_saved}', Menu::main());
-    }
-
-    public function contacts() {
+    public function contacts()
+    {
         $this->setInteraction('contacts_select_topic');
 
         $this->send("{send_support_message}", Menu::back());
 
-        if(MESSENGER == "Facebook") {
+        if (MESSENGER == "Facebook") {
             $this->send("{select_topic}", ButtonsFacebook::contacts());
-        }
-        elseif(MESSENGER == "Telegram") {
+        } elseif (MESSENGER == "Telegram") {
             $this->send("{select_topic}", InlineButtons::contacts(), true);
-        }
-        else {
+        } else {
             $this->send("{select_topic}", Menu::back());
             $this->sendCarousel(
-                RichMedia::contacts(),
-                ['rows' => 4],
-                Menu::back()
+                RichMedia::contacts(), ['rows' => 4], Menu::back()
             );
         }
     }
 
-    public function contacts_select_topic() {
+    public function contactsSelectTopic()
+    {
         $topic = $this->getBot()->getMessage();
-        if($topic == "general" ||
+        if ($topic == "general" ||
             $topic == "access" ||
             $topic == "advertising" ||
             $topic == "offers") {
@@ -169,13 +165,13 @@ trait RequestHandlerTrait {
             $this->setInteraction('contacts_send_message', [
                 'topic' => $topic
             ]);
-        }
-        else {
+        } else {
             $this->contacts();
         }
     }
 
-    public function contacts_send_message($params) {
+    public function contactsSendMessage($params)
+    {
         $contactsType = ContactsType::where('type', $params['topic'])->first();
         $contacts = new ContactsModel();
         $contacts->contacts_type_id = $contactsType->id;
@@ -189,33 +185,37 @@ trait RequestHandlerTrait {
         $this->delInteraction();
     }
 
-    public function main() {
+    public function main()
+    {
         $this->delInteraction();
         $this->send("{main_menu}", Menu::main());
     }
 
-    public function back() {
+    public function back()
+    {
         $this->delInteraction();
         $this->send("{main_menu}", Menu::main());
         exit;
     }
 
-    public function performAnActionRef($referrerId) {
+    public function performAnActionRef($referrerId)
+    {
         $this->userAccess($referrerId);
         $this->send("REF SYSTEM");
     }
 
-    public function userAccess($id) {
+    public function userAccess($id)
+    {
         $count = RefSystem::where('referrer', $id)->count();
 
-        if($count == COUNT_INVITES_ACCESS ?? 0) {
+        if ($count == (defined('COUNT_INVITES_ACCESS') ? COUNT_INVITES_ACCESS : 0)) {
             $user = BotUsers::find($id);
             $user->access = '1';
             $user->access_free = '1';
             $user->save();
 
             $this->sendTo($user->chat, "{got_free_access}", Menu::main(), false, [], [
-                'count' => COUNT_INVITES_ACCESS ?? 0
+                'count' => (defined('COUNT_INVITES_ACCESS') ? COUNT_INVITES_ACCESS : 0)
             ]);
         }
     }

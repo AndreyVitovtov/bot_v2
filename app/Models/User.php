@@ -43,7 +43,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function setLocale($locale) {
+    public function setLocale($locale)
+    {
         $this->update([
             'language' => $locale
         ]);
@@ -51,29 +52,34 @@ class User extends Authenticatable
         return $this;
     }
 
-    public function role() {
-        return $this->belongsTo(Role::class,"roles_id");
+    public function role()
+    {
+        return $this->belongsTo(Role::class, "roles_id");
     }
 
-    public function hasRole($role) {
+    public function hasRole($role)
+    {
         return $this
             ->role()
             ->where("name", $role)
             ->exists();
     }
 
-    public function hasPermission($perm) {
+    public function hasPermission($perm)
+    {
         return $this->permissions()->where("name", $perm)->exists();
     }
 
-    public function getPermissions(): Collection {
+    public function getPermissions(): Collection
+    {
         /*** @var Role $role */
         $role = $this->role()->first();
-        if($role == null) return new Collection();
+        if ($role == null) return new Collection();
         return $role->permissions()->get();
     }
 
-    public function permissions() {
+    public function permissions()
+    {
         return $this->belongsToMany(Permission::class, 'admin_has_permissions', 'admin_id', 'permissions_id');
     }
 }

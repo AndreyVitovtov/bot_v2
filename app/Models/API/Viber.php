@@ -2,24 +2,28 @@
 
 namespace App\Models\API;
 
-class Viber {
+class Viber
+{
     protected $token;
-    private $request = null;
+    private $request;
 
-    public function __construct(string $token = null) {
+    public function __construct(string $token = null)
+    {
         $this->request = json_decode(file_get_contents('php://input'));
         if ($token === null) {
-            $this->token = defined(VIBER_TOKEN) ? VIBER_TOKEN : null;
+            $this->token = (defined('VIBER_TOKEN') ? VIBER_TOKEN : null);
         } else {
             $this->token = $token;
         }
     }
 
-    public function getContext(): ? string {
+    public function getContext(): ?string
+    {
         return $this->request->context ?? null;
     }
 
-    public function getId(): ? string {
+    public function getId(): ?string
+    {
         return (
             $this->request->sender->id ??
             $this->request->user->id ??
@@ -27,7 +31,8 @@ class Viber {
         );
     }
 
-    public function getName(): ? array {
+    public function getName(): ?array
+    {
         if (isset($this->request->sender->name)) {
             return [
                 'first_name' => $this->request->sender->name,
@@ -45,7 +50,8 @@ class Viber {
         }
     }
 
-    public function getCountry(): ? string {
+    public function getCountry(): ?string
+    {
         return (
             $this->request->user->country ??
             $this->request->sender->country ??
@@ -53,19 +59,23 @@ class Viber {
         );
     }
 
-    public function getRequest(): ? string {
+    public function getRequest(): ?string
+    {
         return json_encode($this->request);
     }
 
-    public function getMessage(): ? string {
+    public function getMessage(): ?string
+    {
         return $this->request->message->text ?? null;
     }
 
-    public function getTypeMessage(): ? string {
+    public function getTypeMessage(): ?string
+    {
         return $this->request->message->type ?? null;
     }
 
-    public function getAvatar(): ? string {
+    public function getAvatar(): ?string
+    {
         return (
             $this->request->sender->avatar ??
             $this->request->user->avatar ??
@@ -73,7 +83,8 @@ class Viber {
         );
     }
 
-    public function sendMessage(? string $chat, string $message, array $params = []): string {
+    public function sendMessage(?string $chat, string $message, array $params = []): string
+    {
         if (!empty($params['buttons'])) {
             $buttons = $params['buttons'];
 
@@ -101,7 +112,8 @@ class Viber {
         return $this->makeRequest("https://chatapi.viber.com/pa/send_message", $data);
     }
 
-    public function sendContact(? string $chat, string $name, string $phone, array $params = []) {
+    public function sendContact(?string $chat, string $name, string $phone, array $params = [])
+    {
         if (!empty($params['buttons'])) {
             $buttons = $params['buttons'];
 
@@ -141,7 +153,8 @@ class Viber {
         return $this->makeRequest("https://chatapi.viber.com/pa/send_message", $data);
     }
 
-    public function sendImage(? string $chat, string $image, ?string $text = null, array $params = []) {
+    public function sendImage(?string $chat, string $image, ?string $text = null, array $params = [])
+    {
         if (!empty($params['buttons'])) {
             $buttons = $params['buttons'];
 
@@ -170,7 +183,8 @@ class Viber {
         return $this->makeRequest("https://chatapi.viber.com/pa/send_message", $data);
     }
 
-    public function sendFile(? string $chat, string $media, $file_name, $size, array $params = []): string {
+    public function sendFile(?string $chat, string $media, $file_name, $size, array $params = []): string
+    {
         if (!empty($params['buttons'])) {
             $buttons = $params['buttons'];
 
@@ -203,7 +217,8 @@ class Viber {
         return $this->makeRequest("https://chatapi.viber.com/pa/send_message", $data);
     }
 
-    public function sendCarousel($chat, $rich_media, $buttons): string {
+    public function sendCarousel($chat, $rich_media, $buttons): string
+    {
         $data = [
             'receiver' => $chat,
             'type' => 'rich_media',
@@ -211,7 +226,7 @@ class Viber {
             'rich_media' => $rich_media
         ];
 
-        if(!empty($buttons)) {
+        if (!empty($buttons)) {
             $data['keyboard'] = [
                 "Type" => "keyboard",
                 'InputFieldState' => 'hidden',
@@ -222,7 +237,8 @@ class Viber {
         return $this->makeRequest("https://chatapi.viber.com/pa/send_message", $data);
     }
 
-    public function sendMessageBroadcast(array $arrId, string $message, array $params = []) {
+    public function sendMessageBroadcast(array $arrId, string $message, array $params = [])
+    {
         if (!empty($params['buttons'])) {
             $buttons = $params['buttons'];
 
@@ -259,13 +275,15 @@ class Viber {
         return $this->makeRequest("https://chatapi.viber.com/pa/broadcast_message", $data);
     }
 
-    public function getUserInfo($chat): string {
+    public function getUserInfo($chat): string
+    {
         return $this->makeRequest("https://chatapi.viber.com/pa/get_user_details", [
             'id' => $chat
         ]);
     }
 
-    public function setWebhook($url): string {
+    public function setWebhook($url): string
+    {
         return $this->makeRequest("https://chatapi.viber.com/pa/set_webhook", [
             "url" => $url,
             "event_types" => [
@@ -281,11 +299,13 @@ class Viber {
         ]);
     }
 
-    public function getWebhook(): string {
+    public function getWebhook(): string
+    {
         return '';
     }
 
-    private function makeRequest($url, $data) {
+    private function makeRequest($url, $data)
+    {
         $data_string = json_encode($data);
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");

@@ -3,8 +3,10 @@
 
 namespace App\Models;
 
-class PerformAction {
-    public static function pay($id, $amount, $context) {
+class PerformAction
+{
+    public static function pay($id, $amount, $context)
+    {
 
     }
 }

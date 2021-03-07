@@ -4,12 +4,9 @@
 namespace App\Models\buttons;
 
 
-use App\Models\Book;
-use App\Models\Heading;
-use App\Models\Recipe;
-
 class ButtonsFacebook {
-    public static function main_menu() {
+    public static function main_menu(): array
+    {
         return [
             [
                 'type' => 'postback',
@@ -27,7 +24,8 @@ class ButtonsFacebook {
         ];
     }
 
-    public function back() {
+    public function back(): array
+    {
         return [
             [
                 'type' => 'postback',
@@ -37,7 +35,8 @@ class ButtonsFacebook {
         ];
     }
 
-    public static function contacts() {
+    public static function contacts(): array
+    {
         return [
             [
                 'content_type' => 'text',
@@ -59,13 +58,8 @@ class ButtonsFacebook {
         ];
     }
 
-
-
-
-
-
-
-    private static function pagesButtons($res, $methodPages, $method, $name = 'name', $page) {
+    private static function pagesButtons($res, $methodPages, $method, $name = 'name', $page): array
+    {
         $count = 400;
         $buttons = [];
 

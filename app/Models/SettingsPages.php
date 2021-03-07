@@ -6,7 +6,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SettingsPages extends Model {
+class SettingsPages extends Model
+{
     public $table = "settings_pages";
     public $timestamps = false;
     public $fillable = [

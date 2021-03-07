@@ -3,19 +3,22 @@
 namespace App\Models\buttons\extend;
 
 class AbstractButtonsTelegram {
-    public function start() {
+    public function start(): array
+    {
         return [
             ["start"]
         ];
     }
 
-    public function back() {
+    public function back(): array
+    {
         return [
             ["{back}"]
         ];
     }
 
-    public function getPhone() {
+    public function getPhone(): array
+    {
         return [
             [
                 [
@@ -27,7 +30,8 @@ class AbstractButtonsTelegram {
         ];
     }
 
-    public function getLocation() {
+    public function getLocation(): array
+    {
         return [
             [
                 [

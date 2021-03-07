@@ -2,11 +2,10 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Text extends Model {
-    public function valueSubstitution($user, $str, $type, $n = []) {
+    public static function valueSubstitution($user, $str, $type, $n = []) {
         $language = Language::find($user->languages_id ?? 1);
         if(file_exists(public_path()."/json/".$type."_".($language->code ?? 'ru').".json")) {
             $type = $type."_".($language->code ?? 'ru');
@@ -32,14 +31,15 @@ class Text extends Model {
         return $str;
     }
 
-    public function valueSubstitutionArray($user, $array, $n = []) {
+    public static function valueSubstitutionArray($user, $array, $n = []): array
+    {
         $new_array = [];
         foreach($array as $key => $item) {
             if(is_array($item)) {
-                $new_array[$key] = $this->valueSubstitutionArray($user, $item, $n);
+                $new_array[$key] = self::valueSubstitutionArray($user, $item, $n);
             }
             else {
-                $new_array[$key] = $this->valueSubstitution($user, $item, "buttons", $n);
+                $new_array[$key] = self::valueSubstitution($user, $item, "buttons", $n);
             }
         }
 

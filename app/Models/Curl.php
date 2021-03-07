@@ -2,12 +2,14 @@
 
 namespace App\Models;
 
-class Curl {
-    public function multiCurl($data, $url, $headers) {
+class Curl
+{
+    public function multiCurl($data, $url, $headers): array
+    {
         $mh = curl_multi_init();
         $connectionArray = [];
 
-        foreach($data as $item) {
+        foreach ($data as $item) {
             $key = $item['key'];
             $data_string = json_encode($item['params']);
             $headers[] = 'Content-Length: ' . strlen($data_string);
@@ -24,17 +26,16 @@ class Curl {
         $running = null;
         do {
             curl_multi_exec($mh, $running);
-        }
-        while($running > 0);
+        } while ($running > 0);
 
         $responseEmpty = [];
         $content = [];
         $httpCode = [];
 
-        foreach($connectionArray as $key => $ch) {
+        foreach ($connectionArray as $key => $ch) {
             $content[$key] = curl_multi_getcontent($ch);
 
-            if(empty(curl_multi_getcontent($ch))) {
+            if (empty(curl_multi_getcontent($ch))) {
                 $responseEmpty[] = $key;
             }
 
@@ -53,19 +54,20 @@ class Curl {
             "response" => $content
         ];
 
-        if(!empty($responseEmpty)) {
+        if (!empty($responseEmpty)) {
             $result['responseEmpty'] = $responseEmpty;
         }
 
         return $result;
     }
 
-    public function POST($url, $params, $headers = null) {
+    public function POST($url, $params, $headers = null)
+    {
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
         curl_setopt($ch, CURLOPT_POSTFIELDS, $params);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        if($headers == null) {
+        if ($headers == null) {
             $headers = [
                 'Content-Type: application/json',
                 'Content-Length: ' . strlen($params)
@@ -78,7 +80,8 @@ class Curl {
         return $res;
     }
 
-    public function GET($url, $headers = []) {
+    public function GET($url, $headers = [])
+    {
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "GET");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -89,7 +92,8 @@ class Curl {
         return $res;
     }
 
-    public function PUT($url, $headers = null) {
+    public function PUT($url, $headers = null)
+    {
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
@@ -100,7 +104,8 @@ class Curl {
         return $res;
     }
 
-    public function DELETE($url, $headers) {
+    public function DELETE($url, $headers)
+    {
         $ch = curl_init($url);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'DELETE');
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
