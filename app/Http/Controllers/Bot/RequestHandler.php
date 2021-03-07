@@ -8,7 +8,8 @@ use App\Http\Controllers\Bot\Traits\BasicMethods;
 use App\Models\buttons\Menu;
 use App\Models\buttons\RichMedia;
 
-class RequestHandler extends BaseRequestHandler {
+class RequestHandler extends BaseRequestHandler
+{
 
     use BasicMethods;
     use MethodsFromGroupAndChat;
