@@ -15,7 +15,6 @@
                 <form action="{{ route('pages-go-lang') }}" method="GET">
                     <div>
                         <select name="lang" class="language-go">
-                            <option value="0">{{ DEFAULT_LANGUAGE }}</option>
                             @foreach($languages as $lang)
                                 <option value="{{ $lang->code }}"
                                     @if($lang->code === $l)

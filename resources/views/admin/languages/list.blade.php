@@ -45,6 +45,7 @@
                     </td>
                     <td class="actions">
                         <div>
+                            @if($lang->id != 1)
                             <form action="{{ route('languages-delete') }}" method="POST">
                                 @csrf
                                 <input type="hidden" name="id" value="{{ $lang->id }}">
@@ -52,6 +53,7 @@
                                     <i class='icon-trash-empty'></i>
                                 </button>
                             </form>
+                            @endif
                         </div>
                     </td>
                 </tr>
