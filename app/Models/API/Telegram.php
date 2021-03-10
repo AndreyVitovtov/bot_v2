@@ -168,6 +168,11 @@ class Telegram
         ]);
     }
 
+    public function deleteWebhook()
+    {
+        return $this->makeRequest('deleteWebhook');
+    }
+
     public function getWebhook(): string
     {
         return $this->makeRequest('getWebhookInfo', []);

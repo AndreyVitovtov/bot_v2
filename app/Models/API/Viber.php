@@ -299,6 +299,13 @@ class Viber
         ]);
     }
 
+    public function deleteWebhook()
+    {
+        return $this->makeRequest("https://chatapi.viber.com/pa/set_webhook", [
+            "url" => ""
+        ]);
+    }
+
     public function getWebhook(): string
     {
         return '';
