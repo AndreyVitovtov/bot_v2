@@ -62,7 +62,9 @@ class Mailing
             if (isset($task->img)) {
                 $imgArr = explode("/", $task->img);
                 $imgName = end($imgArr);
-                unlink(public_path('/img/mailing/' . $imgName));
+                if(file_exists(public_path('/img/mailing/' . $imgName))) {
+                    unlink(public_path('/img/mailing/' . $imgName));
+                }
             }
             return json_encode([
                 'status' => 'fail',
@@ -90,7 +92,9 @@ class Mailing
                                 'parse_mode' => 'HTML',
                                 'disable_web_page_preview' => true,
                                 'reply_markup' => [
-                                    'keyboard' => Text::valueSubstitutionArray($user, Menu::main('Telegram')),
+                                    'keyboard' => Text::valueSubstitutionArray($user, Menu::main(
+                                        ['messenger' => 'Telegram']
+                                    )),
                                     'resize_keyboard' => true,
                                     'one_time_keyboard' => false,
                                     'parse_mode' => 'HTML',
@@ -112,7 +116,9 @@ class Mailing
                                     'Type' => 'keyboard',
                                     'InputFieldState' => 'hidden',
                                     'DefaultHeight' => 'false',
-                                    'Buttons' => Text::valueSubstitutionArray($user, Menu::main('Viber'))
+                                    'Buttons' => Text::valueSubstitutionArray($user, Menu::main(
+                                        ['messenger' => 'Viber']
+                                    ))
                                 ]
                             ]
                         ];
@@ -145,7 +151,9 @@ class Mailing
                                 'caption' => $task->text,
                                 'parse_mode' => 'Markdown',
                                 'reply_markup' => [
-                                    'keyboard' => Text::valueSubstitutionArray($user, Menu::main('Telegram')),
+                                    'keyboard' => Text::valueSubstitutionArray($user, Menu::main(
+                                        ['messenger'=> 'Telegram']
+                                    )),
                                     'resize_keyboard' => true,
                                     'one_time_keyboard' => false,
                                     'parse_mode' => 'HTML',
@@ -168,7 +176,9 @@ class Mailing
                                     'Type' => 'keyboard',
                                     'InputFieldState' => 'hidden',
                                     'DefaultHeight' => 'false',
-                                    'Buttons' => Text::valueSubstitutionArray($user, Menu::main('Viber'))
+                                    'Buttons' => Text::valueSubstitutionArray($user, Menu::main(
+                                        ['messenger' => 'Viber']
+                                    ))
                                 ]
                             ]
                         ];
