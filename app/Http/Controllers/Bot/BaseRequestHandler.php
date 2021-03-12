@@ -125,6 +125,7 @@ class BaseRequestHandler
                 'location' => 'location',
                 'contact' => 'contact',
                 'reply_to_message' => 'reply_to_message',
+                'edited_message' => 'edited_message',
                 'text' => 'text',
                 'document' => 'document',
                 'photo' => 'photo',
@@ -417,6 +418,23 @@ class BaseRequestHandler
                         'text' => $request->message->reply_to_message->text ?? null,
                     ],
                     'text' => $request->message->text
+                ];
+            } elseif($this->type == 'edited_message') {
+                return [
+                    'message_id' => $request->edited_message->message_id,
+                    'from' => [
+                        'id' => $request->edited_message->from->id,
+                        'first_name' => $request->edited_message->from->first_name ?? null,
+                        'last_name' => $request->edited_message->from->last_name ?? null,
+                        'username' => $request->edited_message->from->username ?? null
+                    ],
+                    'chat' => [
+                        'id' => $request->edited_message->chat->id ?? null,
+                        'first_name' => $request->edited_message->chat->first_name ?? null,
+                        'last_name' => $request->edited_message->chat->last_name ?? null,
+                        'username' => $request->edited_message->chat->username ?? null,
+                    ],
+                    'text' => $request->edited_message->text
                 ];
             } else {
                 return [

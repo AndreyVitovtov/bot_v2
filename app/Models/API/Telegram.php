@@ -19,6 +19,7 @@ class Telegram
             $this->request->message->chat->id ??
             $this->request->callback_query->message->chat->id ??
             $this->request->channel_post->chat->id ??
+            $this->request->edited_message->chat->id ??
             null
         );
     }
@@ -324,6 +325,7 @@ class Telegram
         $rules = [
             'callback_query' => 'callback_query',
             'channel_post' => 'channel_post',
+            'edited_message' => 'edited_message',
             'text' => 'text',
             'document' => 'document',
             'photo' => 'photo',

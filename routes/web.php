@@ -14,6 +14,7 @@ use App\Http\Controllers\Developer\Menu;
 use App\Http\Controllers\Developer\MenuAdmin;
 use App\Http\Controllers\Developer\Permissions;
 use App\Http\Controllers\Developer\RequestJSON;
+use App\Http\Controllers\Developer\Todo;
 use App\Http\Controllers\Developer\Webhook;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Migrate;
@@ -259,6 +260,10 @@ Route::group(['middleware' => 'auth', 'prefix'=>'developer'], function() {
         Route::post('/pages/edit', [Lang::class, 'pagesEdit'])->name('lang-pages-edit');
         Route::post('/pages/edit/save', [Lang::class, 'pagesEditSave'])->name('lang-pages-edit-save');
         Route::post('/pages/delete', [Lang::class, 'pagesDelete'])->name('lang-pages-delete');
+    });
+
+    Route::prefix('/todo')->group(function() {
+        Route::get('/', [Todo::class, 'index'])->name('todo');
     });
 });
 

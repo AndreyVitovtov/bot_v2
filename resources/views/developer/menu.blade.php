@@ -4,6 +4,12 @@
    'menu' => 'admin',
    'url' => '/admin'
 ])@endcomponent
+@component('menu.menu-item', [
+   'name' => 'developer_todo',
+   'icon' => 'icon-list-alt',
+   'menu' => 'todo',
+   'url' => '/developer/todo'
+])@endcomponent
 {{--            @component('menu.menu-item', [--}}
 {{--                'name' => 'developer_webhook',--}}
 {{--                'icon' => 'icon-wind-1',--}}
