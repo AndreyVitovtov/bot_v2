@@ -223,13 +223,11 @@ class Telegram
 
     public function editMessageText($chat, $messageId, $text, $inlineKeyboard = null)
     {
-        $parse_mode = 'HTML';
-
         $data = [
             'text' => $text,
             'chat_id' => $chat,
             'message_id' => $messageId,
-            'parse_mode' => $parse_mode,
+            'parse_mode' => 'HTML',
             'disable_web_page_preview' => true
         ];
 
@@ -240,6 +238,21 @@ class Telegram
             ];
         }
         return $this->makeRequest('editMessageText', $data);
+    }
+
+    public function editMessageMedia($chat, $messageId, $media, $type, $caption = '')
+    {
+        $data = [
+            'chat_id' => $chat,
+            'message_id' => $messageId,
+            'media' => [
+                'type' => $type,
+                'media' => $media,
+                'caption' => $caption,
+                'parse_mode' => 'HTML'
+            ]
+        ];
+        return $this->makeRequest('editMessageMedia', $data);
     }
 
     public function sendDocument($chat, $document, $caption = "", $params = [])

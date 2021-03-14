@@ -9,7 +9,7 @@
 @endsection
 
 @section("main")
-    <div>
+    <div class="overflow-X-auto">
 
     </div>
 @endsection
