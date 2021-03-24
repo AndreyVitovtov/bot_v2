@@ -41,7 +41,9 @@ class Statistics extends Controller {
         }
 
         //Статистика по странам
-        $country = DB::select("SELECT country, COUNT(*) AS count FROM users WHERE country <> '' GROUP BY country");
+        $country = DB::select("SELECT country, COUNT(*) AS count FROM users WHERE country <> ''
+           AND start = 1
+           GROUP BY country");
         if(App::getLocale() == "ru") {
             $ISO = json_decode(file_get_contents(public_path("json/ISO_3166-1_alpha-2.json")), true);
         }
@@ -61,7 +63,7 @@ class Statistics extends Controller {
         }
 
         //Статистика по мессенджерам
-        $messenger = DB::select("SELECT messenger, COUNT(*) as count FROM users GROUP BY messenger");
+        $messenger = DB::select("SELECT messenger, COUNT(*) as count FROM users WHERE start = 1 GROUP BY messenger");
         $messengers = [];
         foreach($messenger as $m) {
             $messengers[$m->messenger] = $m->count;

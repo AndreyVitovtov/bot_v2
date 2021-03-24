@@ -113,7 +113,7 @@ trait BasicMethods
 
     public function unsubscribed()
     {
-        (new BotUsers)->where('chat', $this->getChat())->delete();
+        (new BotUsers)->where('chat', $this->getChat())->update(['start' => 0]);
         return response('OK', '200')->header('Content-Type', 'text/plain');
     }
 
