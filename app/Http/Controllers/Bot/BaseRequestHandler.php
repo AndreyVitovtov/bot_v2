@@ -930,7 +930,7 @@ class BaseRequestHandler
     public function setUserStart()
     {
         $botUsers = BotUsers::find($this->getUserId());
-        $botUsers->update(['start' => "1"]);
+        $botUsers->update(['start' => 1]);
     }
 
     public function delMessage()
