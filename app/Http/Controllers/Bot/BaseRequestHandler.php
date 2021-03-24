@@ -91,8 +91,13 @@ class BaseRequestHandler
             $this->type = $this->getTypeReq();
         } else {
             $request = json_decode($this->getRequest());
-            $arrProperties = $this->getProperties($request);
-            $this->type = $this->getTypeReq($arrProperties);
+
+            if(($request->my_chat_member->new_chat_member->status ?? '') === 'kicked') {
+                $this->type = 'unsubscribed';
+            } else {
+                $arrProperties = $this->getProperties($request);
+                $this->type = $this->getTypeReq($arrProperties);
+            }
         }
     }
 
@@ -524,6 +529,8 @@ class BaseRequestHandler
                 return "location";
             } elseif ($this->type == "contact") {
                 return "contact";
+            } elseif ($this->type == "unsubscribed") {
+                return "unsubscribed";
             } else {
                 return null;
             }

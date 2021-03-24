@@ -20,6 +20,7 @@ class Telegram
             $this->request->callback_query->message->chat->id ??
             $this->request->channel_post->chat->id ??
             $this->request->edited_message->chat->id ??
+            $this->request->my_chat_member->chat->id ??
             null
         );
     }

@@ -111,6 +111,12 @@ trait BasicMethods
         $this->send("{welcome}", Menu::main());
     }
 
+    public function unsubscribed()
+    {
+        (new BotUsers)->where('chat', $this->getChat())->delete();
+        return response('OK', '200')->header('Content-Type', 'text/plain');
+    }
+
     public function selectLanguage($id) {
         $this->delMessage();
         $user = $this->getUser();
@@ -218,10 +224,5 @@ trait BasicMethods
                 'count' => (defined('COUNT_INVITES_ACCESS') ? COUNT_INVITES_ACCESS : 0)
             ]);
         }
-    }
-
-    public function unsubscribed()
-    {
-        dd($this->getChat());
     }
 }
