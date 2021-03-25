@@ -13,8 +13,7 @@ class ReferralSystemImpl implements ReferralSystemService {
         $ref = new RefSystem();
         $ref->referrer = $r['referrer'];
         $ref->referral = $r['referral'];
-        $ref->date = date("Y-m-d");
-        $ref->time = date("H:i:s");
+        $ref->datetime = date("Y-m-d H:i:s");
         $ref->save();
     }
 

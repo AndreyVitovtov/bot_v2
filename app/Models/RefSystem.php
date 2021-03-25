@@ -15,7 +15,6 @@ class RefSystem extends Model
     public $fillable = [
         'referrer',
         'referral',
-        'date',
-        'time'
+        'datetime'
     ];
 }
