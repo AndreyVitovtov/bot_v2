@@ -113,7 +113,10 @@ trait BasicMethods
 
     public function unsubscribed()
     {
-        $this->getUser()->update(['start' => 0]);
+        (new BotUsers)->where('chat', $this->getChat())->update([
+            'start' => 0,
+            'unsubscribed' => 1
+        ]);
         return response('OK', '200')->header('Content-Type', 'text/plain');
     }
 
