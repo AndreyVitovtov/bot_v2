@@ -78,8 +78,27 @@ class Statistics extends Controller {
             if(!isset($messengers['Viber'])) {
                 $messengers['Viber'] = 0;
             }
-            elseif(!isset($messengers['Telegram'])) {
+            if(!isset($messengers['Telegram'])) {
                 $messengers['Telegram'] = 0;
+            }
+        }
+
+        $messenger = DB::select("SELECT messenger, COUNT(*) as count FROM users WHERE start = 0 GROUP BY messenger");
+        foreach($messenger as $m) {
+            $messengers[$m->messenger.'_U'] = $m->count;
+        }
+        if(empty($messengers)) {
+            $messengers = [
+                'Viber_U' => 0,
+                'Telegram_U' => 0
+            ];
+        }
+        else {
+            if(!isset($messengers['Viber_U'])) {
+                $messengers['Viber_U'] = 0;
+            }
+            if(!isset($messengers['Telegram_U'])) {
+                $messengers['Telegram_U'] = 0;
             }
         }
 

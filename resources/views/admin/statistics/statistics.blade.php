@@ -24,10 +24,17 @@
         @endforeach
 
     //Messengers
-        chart.options.title = "@lang('pages.statistics_count_users_messengers')";
+            chart.options.title = "@lang('pages.statistics_count_users_messengers')";
+        chart.options.colors = ['#0088cc', '#665CAC', '#4e8094', '#55516a'];
         chart.data = [
-            ['', 'Telegram', 'Viber'],
-            ["@lang('pages.statistics_users_count')", statistics.messengers.Telegram, statistics.messengers.Viber]
+            ['', 'Telegram', 'Viber', 'Unsubscribed Telegram', 'Unsubscribed Viber'],
+            [
+                "@lang('pages.statistics_users_count')",
+                statistics.messengers.Telegram,
+                statistics.messengers.Viber,
+                statistics.messengers.Telegram_U,
+                statistics.messengers.Viber_U,
+            ]
         ];
         chart.drawBar('chart_messengers');
 
