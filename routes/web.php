@@ -264,6 +264,11 @@ Route::group(['middleware' => 'auth', 'prefix'=>'developer'], function() {
 
     Route::prefix('/todo')->group(function() {
         Route::get('/', [Todo::class, 'index'])->name('todo');
+        Route::post('/add', [Todo::class, 'add'])->name('todo-add');
+        Route::post('/to/make', [Todo::class, 'toMake'])->name('todo-to-make');
+        Route::post('/to/work', [Todo::class, 'toWork'])->name('todo-to-work');
+        Route::post('/to/performed', [Todo::class, 'toPerformed'])->name('todo-to-performed');
+        Route::post('/delete', [Todo::class, 'delete'])->name('todo-delete');
     });
 });
 

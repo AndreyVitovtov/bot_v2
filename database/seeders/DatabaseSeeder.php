@@ -21,5 +21,6 @@ class DatabaseSeeder extends Seeder
         $this->call(SettingsPagesSeeder::class);
         $this->call(SettingsMainSeeder::class);
         $this->call(LanguagesSeeder::class);
+        $this->call(TodoStatusSeeder::class);
     }
 }

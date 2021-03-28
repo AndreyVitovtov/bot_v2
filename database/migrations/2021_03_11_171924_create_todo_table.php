@@ -17,7 +17,7 @@ class CreateTodoTable extends Migration
             $table->id();
             $table->string('title')->nullable();
             $table->text('text')->nullable();
-            $table->integer('status');
+            $table->bigInteger('status')->unsigned();
             $table->dateTime('datetime');
         });
     }

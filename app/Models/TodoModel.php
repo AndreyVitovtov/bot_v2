@@ -2,11 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @method static groupBy(string $string)
+ * @method static where(string $string, mixed $id)
+ * @property mixed|string title
+ * @property int|mixed status
+ * @property false|mixed|string datetime
  */
 class TodoModel extends Model
 {
@@ -19,4 +23,9 @@ class TodoModel extends Model
         'status',
         'datetime'
     ];
+
+    public function status(): BelongsTo
+    {
+        return $this->belongsTo(TodoStatusModel::class, 'status');
+    }
 }

@@ -63,7 +63,8 @@ class Statistics extends Controller {
         }
 
         //Статистика по мессенджерам
-        $messenger = DB::select("SELECT messenger, COUNT(*) as count FROM users WHERE start = 1 GROUP BY messenger");
+        $messenger = DB::select("SELECT messenger, COUNT(*) as count
+            FROM users WHERE start = 1 GROUP BY messenger");
         $messengers = [];
         foreach($messenger as $m) {
             $messengers[$m->messenger] = $m->count;
@@ -75,15 +76,12 @@ class Statistics extends Controller {
             ];
         }
         else {
-            if(!isset($messengers['Viber'])) {
-                $messengers['Viber'] = 0;
-            }
-            if(!isset($messengers['Telegram'])) {
-                $messengers['Telegram'] = 0;
-            }
+            $messengers['Viber'] = $messengers['Viber'] ?? 0;
+            $messengers['Telegram'] = $messengers['Telegram'] ?? 0;
         }
 
-        $messenger = DB::select("SELECT messenger, COUNT(*) as count FROM users WHERE start = 0 GROUP BY messenger");
+        $messenger = DB::select("SELECT messenger, COUNT(*) as count
+            FROM users WHERE unsubscribed = 1 GROUP BY messenger");
         foreach($messenger as $m) {
             $messengers[$m->messenger.'_U'] = $m->count;
         }
@@ -94,13 +92,14 @@ class Statistics extends Controller {
             ];
         }
         else {
-            if(!isset($messengers['Viber_U'])) {
-                $messengers['Viber_U'] = 0;
-            }
-            if(!isset($messengers['Telegram_U'])) {
-                $messengers['Telegram_U'] = 0;
-            }
+            $messengers['Viber_U'] = $messengers['Viber_U'] ?? 0;
+            $messengers['Telegram_U'] = $messengers['Telegram_U'] ?? 0;
         }
+
+        $messenger = DB::select("SELECT COUNT(*) as count
+            FROM users WHERE start = 0 AND unsubscribed = 0");
+
+        $messengers['not_start'] = $messenger[0]->count ?? 0;
 
         //Статистика по доступу
         $accessNo = DB::select("SELECT COUNT(*) AS count FROM users WHERE access = '0'");
