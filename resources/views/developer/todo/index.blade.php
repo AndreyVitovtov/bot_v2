@@ -27,9 +27,14 @@
             width: 150px;
             text-align: center;
         }
+
+        label i {
+            font-size: 19px;
+            color: #3c8dbc;
+        }
     </style>
 
-    <label>@lang('pages.to_do')</label>
+    <label><i class="icon-doc-alt"></i> @lang('pages.to_do')</label>
     <table>
         @php($todoNumber = 1)
         @foreach($todo as $t)
@@ -52,7 +57,7 @@
                         <form action="{{ route('todo-delete') }}" method="POST">
                             @csrf
                             <input type="hidden" name="id" value="{{ $t->id }}">
-                            <button><i class="icon-trash-8"></i></button>
+                            <button><i class="icon-trash-empty"></i></button>
                         </form>
                     </div>
                 </td>
@@ -61,8 +66,9 @@
             @endif
         @endforeach
     </table>
+    <hr>
     <br>
-    <label>@lang('pages.in_work')</label>
+    <label><i class="icon-fire-1"></i> @lang('pages.in_work')</label>
     <table>
         @php($workNumber = 1)
         @foreach($todo as $t)
@@ -85,7 +91,7 @@
                             <form action="{{ route('todo-delete') }}" method="POST">
                                 @csrf
                                 <input type="hidden" name="id" value="{{ $t->id }}">
-                                <button><i class="icon-trash-8"></i></button>
+                                <button><i class="icon-trash-empty"></i></button>
                             </form>
                         </div>
                     </td>
@@ -94,8 +100,9 @@
             @endif
         @endforeach
     </table>
+    <hr>
     <br>
-    <label>@lang('pages.performed')</label>
+    <label><i class="icon-flag-1"></i> @lang('pages.performed')</label>
     <table>
         @php($performedNumber = 1)
         @foreach($todo as $t)
@@ -118,7 +125,7 @@
                             <form action="{{ route('todo-delete') }}" method="POST">
                                 @csrf
                                 <input type="hidden" name="id" value="{{ $t->id }}">
-                                <button><i class="icon-trash-8"></i></button>
+                                <button><i class="icon-trash-empty"></i></button>
                             </form>
                         </div>
                     </td>
@@ -127,11 +134,12 @@
             @endif
         @endforeach
     </table>
+    <hr>
     <br>
     <br>
     <form action="{{ route('todo-add') }}" method="POST">
         @csrf
-        <label for="add_todo">@lang('pages.add')</label>
+        <label for="add_todo">@lang('pages.task')</label>
         <input type="text" name="title" autofocus>
         <br>
         <br>
