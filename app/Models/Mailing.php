@@ -36,7 +36,8 @@ class Mailing
         ]);
 
         $db = DB::table('users')
-            ->where('messenger', 'LIKE', $task->messenger);
+            ->join('messengers', 'users.messengers_id', '=', 'messengers.id')
+            ->where('messengers.name', 'LIKE', $task->messenger);
 
         if ($task->country !== 'all') {
             $db = $db->where('country', $task->country);
@@ -46,7 +47,7 @@ class Mailing
 
         $users = $db->limit($this->countUsers)
             ->offset($task->start)
-            ->get(['id', 'chat', 'messenger'])
+            ->get(['id', 'chat', 'messengers.name AS messenger'])
             ->toArray();
 
         $task->performed = "true";

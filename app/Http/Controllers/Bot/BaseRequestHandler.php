@@ -10,6 +10,7 @@ use App\Models\BotUsers;
 use App\Models\buttons\Menu;
 use App\Models\Interaction;
 use App\Models\Language;
+use App\Models\Messenger;
 use App\Models\RefSystem;
 use App\Models\Text;
 use App\Models\Visit;
@@ -69,13 +70,15 @@ class BaseRequestHandler
         $res = $botUsers->where('chat', $this->chat)->first();
         $this->user = $res;
         if (empty($res)) {
+            $messenger = Messenger::where('name', $this->messenger)->first();
+
             $name = ($this->messenger == "Facebook") ? $this->bot->getName($this->chat) : $this->bot->getName();
             $botUsers->chat = $this->chat;
             $botUsers->first_name = $name['first_name'] ?? "No name";
             $botUsers->last_name = $name['last_name'] ?? "No name";
             $botUsers->username = $name['username'] ?? "No name";
             $botUsers->country = ($this->messenger == "Viber") ? $this->bot->getCountry() : '';
-            $botUsers->messenger = $this->messenger;
+            $botUsers->messengers_id = $messenger->id;
             $botUsers->date = date("Y-m-d");
             $botUsers->time = date("H:i:s");
             $botUsers->save();

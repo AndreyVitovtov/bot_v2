@@ -76,48 +76,10 @@ class Users extends Controller {
         return redirect()->to("/admin/users/profile/".$request->post('id'));
     }
 
-    public function countChat(Request $request) {
-        $paymentCreateChat = new PaymentCreateChat();
-        $paymentCreateChat->users_id = $request->post('user_id');
-        $paymentCreateChat->amount = '0';
-        $paymentCreateChat->count = $request->post('count');
-        $paymentCreateChat->date = date('Y-m-d');
-        $paymentCreateChat->time = date('H:i:s');
-        $paymentCreateChat->save();
-
-        $user = BotUsers::find($request->post('user_id'));
-        $message = new Message();
-        $message->send($user->messenger, $user->chat, '{added_the_ability_to_create_chats}', [
-            'count' => $request->post('count')
-        ]);
-
-        return redirect()->to(url('admin/users/profile/'.$request->post('user_id')));
-    }
-
-    public function countMailing(Request $request) {
-        $paymentMailingChat = new PaymentMailingChat();
-        $paymentMailingChat->chats_id = $request->post('chat');
-        $paymentMailingChat->type = 'free';
-        $paymentMailingChat->amount = '0';
-        $paymentMailingChat->count = $request->post('count');
-        $paymentMailingChat->count = $request->post('count');
-        $paymentMailingChat->date = date('Y-m-d');
-        $paymentMailingChat->time = date('H:i:s');
-        $paymentMailingChat->save();
-
-        $user = BotUsers::find($request->post('user_id'));
-        $message = new Message();
-        $message->send($user->messenger, $user->chat, '{added_the_ability_to_make_additional_mailings}', [
-            'count' => $request->post('count')
-        ]);
-
-        return redirect()->to(url('admin/users/profile/'.$request->post('user_id')));
-    }
-
     public function sendMessage(Request $request) {
         $user = BotUsers::find($request->post('id'));
         $message = new Message();
-        $message->send($user->messenger, $user->chat, $request->post('message'));
+        $message->send($user->messenger->name, $user->chat, $request->post('message'));
 
         return redirect()->to(url('admin/users/profile/'.$request->post('id')));
     }

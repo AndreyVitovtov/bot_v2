@@ -15,12 +15,12 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property mixed|string last_name
  * @property mixed|string username
  * @property mixed|string|null country
- * @property mixed|string messenger
  * @property false|mixed|string date
  * @property false|mixed|string time
  * @property mixed id
  * @property mixed languages_id
  * @property mixed language
+ * @property mixed messengers_id
  */
 class BotUsers extends Model
 {
@@ -44,8 +44,13 @@ class BotUsers extends Model
         'language'
     ];
 
-    public function chats(): HasMany
+    public function language()
     {
-        return $this->hasMany(Chat::class, 'users_id');
+        return $this->belongsTo(Language::class, 'languages_id');
+    }
+
+    public function messenger()
+    {
+        return $this->belongsTo(Messenger::Class, 'messengers_id');
     }
 }

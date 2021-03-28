@@ -63,8 +63,9 @@ class Statistics extends Controller {
         }
 
         //Статистика по мессенджерам
-        $messenger = DB::select("SELECT messenger, COUNT(*) as count
-            FROM users WHERE start = 1 GROUP BY messenger");
+        $messenger = DB::select("SELECT messengers.name, COUNT(*) as count
+            FROM users JOIN messengers ON users.messengers_id = messengers.id
+            AND start = 1 GROUP BY messengers.name");
         $messengers = [];
         foreach($messenger as $m) {
             $messengers[$m->messenger] = $m->count;
@@ -80,8 +81,10 @@ class Statistics extends Controller {
             $messengers['Telegram'] = $messengers['Telegram'] ?? 0;
         }
 
-        $messenger = DB::select("SELECT messenger, COUNT(*) as count
-            FROM users WHERE unsubscribed = 1 GROUP BY messenger");
+        $messenger = DB::select("SELECT messengers.name, COUNT(*) as count
+            FROM users
+            JOIN messengers ON users.messengers_id = messengers.id
+            WHERE unsubscribed = 1 GROUP BY messengers.name");
         foreach($messenger as $m) {
             $messengers[$m->messenger.'_U'] = $m->count;
         }
