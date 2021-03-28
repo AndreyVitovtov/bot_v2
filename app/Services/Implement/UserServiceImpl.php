@@ -7,9 +7,11 @@ namespace App\Services\Implement;
 use App\Models\BotUsers;
 use App\Services\Contracts\UserService;
 
-class UserServiceImpl implements UserService {
+class UserServiceImpl implements UserService
+{
 
-    function create(array $u): int {
+    function create(array $u): int
+    {
         $user = new BotUsers();
         $user->chat = $u['chat'];
         $user->username = $u['username'];
@@ -18,7 +20,7 @@ class UserServiceImpl implements UserService {
         $user->date = date("Y-m-d");
         $user->time = date("H:i:s");
         $user->country = $u['country'];
-        $user->messenger = $u['messenger'];
+        $user->messengers_id = $u['messenger'];
         $user->save();
 
         return $user->id;

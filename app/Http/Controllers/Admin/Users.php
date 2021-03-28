@@ -5,14 +5,9 @@ namespace App\Http\Controllers\Admin;
 
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\UserDepositRequest;
-use App\Models\Bonus;
 use App\Models\BotUsers;
 use App\Models\Message;
-use App\Models\PaymentCreateChat;
-use App\Models\PaymentMailingChat;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class Users extends Controller {
     public function index() {

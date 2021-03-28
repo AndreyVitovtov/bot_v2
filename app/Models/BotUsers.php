@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 /**
  * @method static find(int|null $getUserId)
  * @method where(string $string, string|null $chat)
+ * @method static paginate(int $int)
  * @property mixed|string|null chat
  * @property mixed|string first_name
  * @property mixed|string last_name
@@ -21,6 +22,8 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property mixed languages_id
  * @property mixed language
  * @property mixed messengers_id
+ * @property mixed firstname
+ * @property mixed lastname
  */
 class BotUsers extends Model
 {

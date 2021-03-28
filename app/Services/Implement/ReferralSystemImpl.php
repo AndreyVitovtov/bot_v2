@@ -7,9 +7,11 @@ namespace App\Services\Implement;
 use App\Models\RefSystem;
 use App\Services\Contracts\ReferralSystemService;
 
-class ReferralSystemImpl implements ReferralSystemService {
+class ReferralSystemImpl implements ReferralSystemService
+{
 
-    function create(array $r): void {
+    function create(array $r): void
+    {
         $ref = new RefSystem();
         $ref->referrer = $r['referrer'];
         $ref->referral = $r['referral'];
@@ -17,7 +19,8 @@ class ReferralSystemImpl implements ReferralSystemService {
         $ref->save();
     }
 
-    function count($referrer): int {
+    function count($referrer): int
+    {
         return RefSystem::where('referrer', $referrer)->count();
     }
 }

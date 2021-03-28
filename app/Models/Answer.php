@@ -4,6 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @method static find(mixed $id)
+ * @method static where(string $string, mixed $id)
+ */
 class Answer extends Model
 {
     protected $table = "answers";

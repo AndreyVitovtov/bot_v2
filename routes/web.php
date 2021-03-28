@@ -77,7 +77,7 @@ Route::group(['middleware' => 'auth', 'prefix'=>'admin'], function() {
         Route::get('/', [Mailing::class, 'index'])->name('mailing');
         Route::post('/send', [Mailing::class, 'send']);
         Route::post('/cancel', [Mailing::class, 'cancel']);
-        Route::get('/analize', [Mailing::class, 'analize']);
+        Route::get('/analize', [Mailing::class, 'analize'])->name('mailing-analize');
         Route::get('/log', [Mailing::class, 'log']);
         Route::post('/mark-inactive-users', [Mailing::class, 'markInactiveUsers']);
     });

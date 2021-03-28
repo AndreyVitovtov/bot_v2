@@ -9,58 +9,57 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 
-class Mailing extends Controller{
-    public function index(Request $request) {
-        $view = view('admin.mailing.mailing');
-        $view->menuItem = "mailing";
-
-        if(file_exists(public_path()."/json/mailing_task.json")) {
-            $task = file_get_contents(public_path()."/json/mailing_task.json");
+class Mailing extends Controller
+{
+    public function index()
+    {
+        if (file_exists(public_path() . "/json/mailing_task.json")) {
+            $task = file_get_contents(public_path() . "/json/mailing_task.json");
             $task = json_decode($task, true);
             $disable = "disabled";
-        }
-        else {
+        } else {
             $task = "";
             $disable = "";
         }
-        $view->task = $task;
-        $view->disable = $disable;
+
         $res = DB::select("SELECT country FROM users WHERE country != '' GROUP BY country");
         $countries = [];
-        if(App::getLocale() == "ru") {
-            $ISO_3166_1_alpha_2 = json_decode(file_get_contents(public_path()."/json/ISO_3166-1_alpha-2.json"), true);
+        if (App::getLocale() == "ru") {
+            $ISO_3166_1_alpha_2 = json_decode(file_get_contents(public_path() . "/json/ISO_3166-1_alpha-2.json"), true);
+        } else {
+            $ISO_3166_1_alpha_2 = json_decode(file_get_contents(public_path() . "/json/ISO_3166-1_alpha-2_us.json"), true);
         }
-        else {
-            $ISO_3166_1_alpha_2 = json_decode(file_get_contents(public_path()."/json/ISO_3166-1_alpha-2_us.json"), true);
-        }
-        foreach($res as $c) {
+        foreach ($res as $c) {
             $countries[$c->country] = $ISO_3166_1_alpha_2[$c->country];
         }
 
-        $view->countries = $countries;
-        return $view;
+        return view('admin.mailing.mailing', [
+            'task' => $task,
+            'disable' => $disable,
+            'countries' => $countries,
+            'menuItem' => 'mailing'
+        ]);
     }
 
-    public function send(Request $request) {
+    public function send(Request $request)
+    {
         $params = $request->input();
 
         $task = [];
-        if($request->hasFile('image')) {
+        if ($request->hasFile('image')) {
             $file = $request->file('image');
-            $fileName = time().$file->getClientOriginalName();
+            $fileName = time() . $file->getClientOriginalName();
             $file->move(public_path('\img\mailing'), $fileName);
             $task['type'] = "img";
-            $task['img'] = url('/')."/img/mailing/".$fileName;
+            $task['img'] = url('/') . "/img/mailing/" . $fileName;
             $task['text'] = empty($params['text']) ? null : $params['text'];
-        }
-        else {
-            if(!empty($params['url_image'])) {
+        } else {
+            if (!empty($params['url_image'])) {
                 $task['type'] = "img";
                 $task['img'] = $params['url_image'];
                 $task['text'] = empty($params['text']) ? null : $params['text'];
-            }
-            else {
-                if(empty($params['text'])) {
+            } else {
+                if (empty($params['text'])) {
                     return redirect()->to("/admin/mailing");
                 }
                 $task['type'] = "text";
@@ -69,16 +68,17 @@ class Mailing extends Controller{
         }
 
         $db = DB::table('users')
-            ->where('messenger', 'LIKE', $params['messenger']);
+            ->join('messengers', 'users.messengers_id', '=', 'messengers.id')
+            ->where('messengers.name', 'LIKE', $params['messenger']);
 
-        if($params['country'] !== 'all') {
+        if ($params['country'] !== 'all') {
             $db = $db->where('country', $params['country']);
         }
 
         $count = $db->count();
 
-        if($count == 0) {
-            return redirect()->to("/admin/mailing");
+        if ($count == 0) {
+            return redirect()->to(route('mailing'));
         }
 
         $task['count'] = $count;
@@ -91,58 +91,52 @@ class Mailing extends Controller{
         file_put_contents(public_path('/json/mailing_task.json'), json_encode($task));
         file_put_contents(public_path('/txt/log.txt'), "");
 
-        return redirect()->to("/admin/mailing");
+        return redirect()->to(route('mailing'));
     }
 
-    public function cancel() {
+    public function cancel()
+    {
         $task = file_get_contents(public_path('/json/mailing_task.json'));
         $task = json_decode($task);
-        if(isset($task->img)) {
+        if (isset($task->img)) {
             $imgArr = explode("/", $task->img);
             $imgName = end($imgArr);
-            unlink(public_path('/img/mailing/'.$imgName));
+            unlink(public_path('/img/mailing/' . $imgName));
         }
         unlink(public_path('/json/mailing_task.json'));
-        return redirect()->to("/admin/mailing");
+        return redirect()->to(route('mailing'));
     }
 
-    public function analize() {
-        $view = view('admin.mailing.mailing-analize');
-        $view->menuItem = "mailing";
-
+    public function analize()
+    {
         $all = 0;
         $true = 0;
         $false = 0;
 
-        $fileLog = fopen(public_path()."/txt/log.txt", "r");
-        while(!feof($fileLog)) {
+        $fileLog = fopen(public_path("/txt/log.txt"), "r");
+        while (!feof($fileLog)) {
             $line = fgets($fileLog);
-            if($line != "") {
+            if ($line != "") {
                 $all++;
                 $arrLine = explode("=>", $line);
-                if(isset($arrLine[1])) {
+                if (isset($arrLine[1])) {
                     $arr = json_decode($arrLine[1], true);
-                    if(stripos($arrLine[0], "=") !== false) {
-                        if($arr['status'] == "0") {
+                    if (stripos($arrLine[0], "=") !== false) {
+                        if ($arr['status'] == "0") {
                             $true++;
-                        }
-                        else {
+                        } else {
                             $false++;
                         }
-                    }
-                    elseif(isset($arr['ok'])) {
-                        if($arr['ok'] == "true") {
+                    } elseif (isset($arr['ok'])) {
+                        if ($arr['ok'] == "true") {
                             $true++;
-                        }
-                        else {
+                        } else {
                             $false++;
                         }
-                    }
-                    else {
-                        if(isset($arr['error'])) {
+                    } else {
+                        if (isset($arr['error'])) {
                             $false++;
-                        }
-                        else {
+                        } else {
                             $true++;
                         }
                     }
@@ -151,53 +145,55 @@ class Mailing extends Controller{
         }
         fclose($fileLog);
 
-        $view->data = [
-            'all' => $all,
-            'true' => $true,
-            'false' => $false
-        ];
-        return $view;
+        return view('admin.mailing.mailing-analize', [
+            'data' => [
+                'all' => $all,
+                'true' => $true,
+                'false' => $false
+            ],
+            'menuItem' => 'mailing'
+        ]);
     }
 
-    public function log() {
-        if(file_exists(public_path()."/txt/log.txt")) {
-            $lines = file(public_path()."/txt/log.txt");
+    public function log()
+    {
+        if (file_exists(public_path() . "/txt/log.txt")) {
+            $lines = file(public_path() . "/txt/log.txt");
             $log = '';
-            foreach($lines as $line) {
+            foreach ($lines as $line) {
                 $line = str_replace("=>", "<i class='icon-right-small'></i>", $line);
                 $line = preg_replace('|[\s]+|s', ' ', $line);
-                $log .= $line."<br><br>";
+                $log .= $line . "<br><br>";
 
             }
-        }
-        else {
+        } else {
             $log = "";
         }
-        $view = view('admin.mailing.mailing-log');
-        $view->log = $log;
-        $view->menuItem = "mailing";
-        return $view;
+        return view('admin.mailing.mailing-log', [
+            'log' => $log,
+            'menuItem' => 'mailing'
+        ]);
     }
 
-    public function markInactiveUsers() {
-        $fileLog = fopen(public_path()."/txt/log.txt", "r");
+    public function markInactiveUsers()
+    {
+        $fileLog = fopen(public_path("/txt/log.txt"), "r");
         $count = 0;
         $ids = [];
         while (!feof($fileLog)) {
             $line = fgets($fileLog);
-            if($line != "") {
+            if ($line != "") {
                 $arrLine = explode("=>", $line);
                 if (isset($arrLine[1])) {
                     $arr = json_decode($arrLine[1], true);
 
-                    if(stripos($arrLine[0], "=") !== false) {
-                        if($arr['status'] != "0") {
+                    if (stripos($arrLine[0], "=") !== false) {
+                        if ($arr['status'] != "0") {
                             $count++;
                             $ids[] = trim($arrLine[0]);
                         }
-                    }
-                    elseif(isset($arr['ok'])) {
-                        if($arr['ok'] != "true") {
+                    } elseif (isset($arr['ok'])) {
+                        if ($arr['ok'] != "true") {
                             $count++;
                             $ids[] = trim($arrLine[0]);
                         }
@@ -211,6 +207,6 @@ class Mailing extends Controller{
             DB::table('users')->whereIn('chat', $ids[$key])->update(['active' => 0]);
         }
 
-        return redirect()->to("/admin/mailing/analize");
+        return redirect()->to(route('mailing-analize'));
     }
 }

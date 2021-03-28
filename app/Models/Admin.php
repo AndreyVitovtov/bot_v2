@@ -6,6 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
+/**
+ * @property mixed id
+ * @property mixed login
+ * @property mixed name
+ * @property mixed|string password
+ * @property int|mixed roles_id
+ * @method static find(int $id)
+ * @method static where(string $string, mixed $id, mixed $param)
+ */
 class Admin extends Model
 {
     protected $table = "admin";

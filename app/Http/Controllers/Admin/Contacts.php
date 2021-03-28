@@ -10,66 +10,75 @@ use App\Models\ContactsType;
 use App\Models\Message;
 use Illuminate\Http\Request;
 
-class Contacts extends Controller {
-    public function general() {
+class Contacts extends Controller
+{
+    public function general()
+    {
         $contactsType = ContactsType::where('type', 'general')->first();
-        $view = view('admin.contacts.contacts-list');
-        $view->contacts = ContactsModel::where('contacts_type_id', $contactsType->id)->paginate(15);
-        $view->type = 'general';
-        $view->menuItem = 'contactsgeneral';
-        return $view;
+        return view('admin.contacts.contacts-list', [
+            'contacts' => ContactsModel::where('contacts_type_id', $contactsType->id)->paginate(15),
+            'type' => 'general',
+            'menuItem' => 'contactsgeneral'
+        ]);
     }
 
-    public function access() {
+    public function access()
+    {
         $contactsType = ContactsType::where('type', 'access')->first();
-        $view = view('admin.contacts.contacts-list');
-        $view->contacts = ContactsModel::where('contacts_type_id', $contactsType->id)->paginate(15);
-        $view->type = 'access';
-        $view->menuItem = 'contactsaccess';
-        return $view;
+        return view('admin.contacts.contacts-list', [
+            'contacts' => ContactsModel::where('contacts_type_id', $contactsType->id)->paginate(15),
+            'type' => 'access',
+            'menuItem' => 'contactsaccess'
+        ]);
     }
 
-    public function advertising() {
+    public function advertising()
+    {
         $contactsType = ContactsType::where('type', 'adversting')->first();
-        $view = view('admin.contacts.contacts-list');
-        $view->contacts = ContactsModel::where('contacts_type_id', $contactsType->id)->paginate(15);
-        $view->type = "advertising";
-        $view->menuItem = 'contactsadvertising';
-        return $view;
+        return view('admin.contacts.contacts-list', [
+            'contacts' => ContactsModel::where('contacts_type_id', $contactsType->id)->paginate(15),
+            'type' => 'advertising',
+            'menuItem' => 'contactsadvertising'
+        ]);
     }
 
-    public function offers() {
+    public function offers()
+    {
         $contactsType = ContactsType::where('type', 'offers')->first();
-        $view = view('admin.contacts.contacts-list');
-        $view->contacts = ContactsModel::where('contacts_type_id', $contactsType->id)->paginate(15);
-        $view->type = 'offers';
-        $view->menuItem = 'contactsoffers';
-        return $view;
+        return view('admin.contacts.contacts-list', [
+            'contacts' => ContactsModel::where('contacts_type_id', $contactsType->id)->paginate(15),
+            'type' => 'offers',
+            'menuItem' => 'contactsoffers'
+        ]);
     }
 
-    public function answer(Request $request) {
-        $view = view('admin.contacts.contacts-answer');
+    public function answer(Request $request)
+    {
         $contact = ContactsModel::find($request->post('id'));
-        $view->contact = $contact;
-        $view->menuItem = 'contacts'.$contact->type->type;
-        return $view;
+        return view('admin.contacts.contacts-answer', [
+            'contact' => $contact,
+            'menuItem' => 'contacts' . $contact->type->type
+        ]);
     }
 
-    public function answerSend(Request $request) {
+    public function answerSend(Request $request)
+    {
         $message = new Message();
-        $res = $message->send($request->post('messenger'), $request->post('chat'), $request->post('text'));
-        return redirect(route('contacts-'.$request->post('type')));
+        $message->send($request->post('messenger'), $request->post('chat'), $request->post('text'));
+        return redirect(route('contacts-' . $request->post('type')));
     }
 
-    public function delete(Request $request) {
+    public function delete(Request $request)
+    {
         $contact = ContactsModel::find($request->post('id'));
         $type = $contact->type;
         $contact->delete();
-        return redirect(route('contacts-'.$type->type));
+        return redirect(route('contacts-' . $type->type));
     }
 
-    public function deleteCheck(Request $request) {
+    public function deleteCheck(Request $request)
+    {
         ContactsModel::whereIn('id', json_decode($request->post('data'), true))->delete();
-        return redirect(route('contacts-'.$request->post('type')));
+        return redirect(route('contacts-' . $request->post('type')));
     }
 }

@@ -7,9 +7,11 @@ namespace App\Services\Implement;
 use App\Models\Permission;
 use App\Services\Contracts\PermissionService;
 
-class PermissionServiceImpl implements PermissionService {
+class PermissionServiceImpl implements PermissionService
+{
 
-    function create(string $name): int {
+    function create(string $name): int
+    {
         $permission = new Permission();
         $permission->name = $name;
         $permission->save();
@@ -17,7 +19,8 @@ class PermissionServiceImpl implements PermissionService {
         return $permission->id;
     }
 
-    function delete(int $id): void {
+    function delete(int $id): void
+    {
         Permission::where('id', $id)->delete();
     }
 }

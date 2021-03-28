@@ -4,14 +4,15 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\BotUsers;
 use App\Models\Statistic;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\DB;
 
-class Statistics extends Controller {
+class Statistics extends Controller
+{
 
-    public function index () {
+    public function index()
+    {
 
 
         $view = view('admin.statistics.statistics');
@@ -24,15 +25,14 @@ class Statistics extends Controller {
 
         //Статистика по визитам
         $date = [];
-        for($i = 9; $i >= 0; $i--) {
+        for ($i = 9; $i >= 0; $i--) {
             $date[] = date("Y-m-d", mktime(0, 0, 0, date('m'), date('d') - $i, date('Y')));
         }
         $visits = [];
-        foreach($date as $d) {
-            if(isset($visitsArray[$d])) {
+        foreach ($date as $d) {
+            if (isset($visitsArray[$d])) {
                 $count = count($visitsArray[$d]);
-            }
-            else {
+            } else {
                 $count = 0;
             }
             $visits[] = [
@@ -44,19 +44,18 @@ class Statistics extends Controller {
         $country = DB::select("SELECT country, COUNT(*) AS count FROM users WHERE country <> ''
            AND start = 1
            GROUP BY country");
-        if(App::getLocale() == "ru") {
+        if (App::getLocale() == "ru") {
             $ISO = json_decode(file_get_contents(public_path("json/ISO_3166-1_alpha-2.json")), true);
-        }
-        else {
+        } else {
             $ISO = json_decode(file_get_contents(public_path("json/ISO_3166-1_alpha-2_us.json")), true);
         }
         $countries = [];
-        foreach($country as $c) {
+        foreach ($country as $c) {
             $countries[] = [
                 $ISO[$c->country], $c->count
             ];
         }
-        if(empty($countries)) {
+        if (empty($countries)) {
             $countries[] = [
                 'no users from countries', 1
             ];
@@ -67,16 +66,15 @@ class Statistics extends Controller {
             FROM users JOIN messengers ON users.messengers_id = messengers.id
             AND start = 1 GROUP BY messengers.name");
         $messengers = [];
-        foreach($messenger as $m) {
+        foreach ($messenger as $m) {
             $messengers[$m->messenger] = $m->count;
         }
-        if(empty($messengers)) {
+        if (empty($messengers)) {
             $messengers = [
                 'Viber' => 0,
                 'Telegram' => 0
             ];
-        }
-        else {
+        } else {
             $messengers['Viber'] = $messengers['Viber'] ?? 0;
             $messengers['Telegram'] = $messengers['Telegram'] ?? 0;
         }
@@ -85,16 +83,15 @@ class Statistics extends Controller {
             FROM users
             JOIN messengers ON users.messengers_id = messengers.id
             WHERE unsubscribed = 1 GROUP BY messengers.name");
-        foreach($messenger as $m) {
-            $messengers[$m->messenger.'_U'] = $m->count;
+        foreach ($messenger as $m) {
+            $messengers[$m->messenger . '_U'] = $m->count;
         }
-        if(empty($messengers)) {
+        if (empty($messengers)) {
             $messengers = [
                 'Viber_U' => 0,
                 'Telegram_U' => 0
             ];
-        }
-        else {
+        } else {
             $messengers['Viber_U'] = $messengers['Viber_U'] ?? 0;
             $messengers['Telegram_U'] = $messengers['Telegram_U'] ?? 0;
         }

@@ -14,6 +14,10 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
  * @property false|mixed|string date
  * @property false|mixed|string time
  * @property mixed contacts_type_id
+ * @property mixed id
+ * @method static where(string $string, int $id)
+ * @method static whereIn(string $string, array $ids)
+ * @method static find(int $id)
  */
 class ContactsModel extends Model
 {
