@@ -55,9 +55,12 @@ class BotsController extends Controller
 
             DB::commit();
         } catch (Exception $e) {
+            $message = $e;
             DB::rollBack();
         }
-        return redirect()->to(route('bots-list', ['message' => $res->status_message ?? $res->description ?? null]));
+        return redirect()->to(route('bots-list', [
+            'message' => $res->status_message ?? $res->description ?? $message ?? null
+        ]));
     }
 
     public function delete(Request $request): RedirectResponse
@@ -99,8 +102,11 @@ class BotsController extends Controller
 
             DB::commit();
         } catch (Exception $e) {
+            $message = $e;
             DB::rollBack();
         }
-        return redirect()->to(route('bots-list', ['message' => $res->status_message ?? $res->description ?? null]));
+        return redirect()->to(route('bots-list', [
+            'message' => $res->status_message ?? $res->description ?? $message ?? null
+        ]));
     }
 }

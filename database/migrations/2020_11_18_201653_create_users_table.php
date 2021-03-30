@@ -38,6 +38,7 @@ class CreateUsersTable extends Migration
             $table->integer('access_free')->default(0);
             $table->integer('languages_id')->unsigned()->nullable();
             $table->integer('unsubscribed')->default(0);
+            $table->bigInteger('bots_id')->unsigned();
 
             $table->index('languages_id');
 
@@ -59,6 +60,7 @@ class CreateUsersTable extends Migration
         {
             $table->dropForeign('messengers_id');
             $table->dropForeign('languages_id');
+            $table->dropForeign('bots_id');
         });
         Schema::dropIfExists($this->tableName);
     }

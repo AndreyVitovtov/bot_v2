@@ -64,7 +64,7 @@ Route::match(['get', 'post'], 'payment/paypal/handler', [Payment::class, 'paypal
 Route::match(['get', 'post'], 'payment/method/{messenger}/{id}/{amount?}/{purpose?}', [Pay::class, 'method']);
 Route::match(['post'], 'payment/invoice', [Pay::class, 'invoice'])->name('payment-invoice');
 
-Route::match(['get', 'post'], 'bot/index', [RequestHandler::class, 'index'])->name('bot-request-handler');
+Route::match(['get', 'post'], 'bot/index/{id?}', [RequestHandler::class, 'index'])->name('bot-request-handler');
 Route::get('bot/send/mailing', [Send::class, 'mailing']); // Рассылка (Каждые 2 минуты)
 
 Route::match(['get', 'post'], 'pay/handler', [Payment::class, 'handler']);

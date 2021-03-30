@@ -82,6 +82,16 @@
             <label for="get" class="cursor-pointer">GET</label>
         </div>
         <br>
+        <div id="bots" class="hidden">
+            <label for="bot">@lang('pages.bot')</label>
+            <select name="" id="select_bot">
+                <option value="">--</option>
+                @foreach($bots as $bot)
+                    <option value="{{ $bot->id }}">{{ $bot->name }}</option>
+                @endforeach
+            </select>
+        </div>
+        <br>
         <div>
             <label for="url">Url</label>
             <input type="text" name="url" value="{{ isset($url) ? $url : route('bot-request-handler') }}" id="url">
@@ -118,13 +128,14 @@
             $('#url').val(url);
             let radio = $(this).val();
             if(radio === 'webhook') {
-                $('#url').prop('disabled', true);
+                // $('#url').prop('disabled', true);
                 $('#get').prop('disabled', true);
                 $('#post').prop('disabled', true);
                 $('textarea').prop('disabled', true);
                 $('#options_webhook').toggle();
                 $('#token').focus();
-                $('#token').val('{{ $telegramToken }}');
+                $('#token').val('{{ $telegramToken ?? '' }}');
+                $('#bots').show();
             }
             else {
                 if($('div #options_webhook').is((':visible'))) {
@@ -144,16 +155,17 @@
                 $('#get').prop('checked', true);
                 $('textarea').prop('disabled', true);
                 $('#url').val('{{ url('') }}/'+radio);
+                $('#bots').hide();
             }
         });
 
         $('body').on('change', '.type', function() {
             let type = $(this).val();
             if(type == 'telegram') {
-                $('#token').val('{{ $telegramToken }}');
+                $('#token').val('{{ $telegramToken ?? '' }}');
             }
             else if(type == 'viber') {
-                $('#token').val('{{ $viberToken }}');
+                $('#token').val('{{ $viberToken ?? '' }}');
             }
             $('#token').focus();
         });
@@ -172,6 +184,12 @@
             else {
                 $('textarea').prop('disabled', false);
             }
+        });
+
+        $('body').on('change', '#select_bot', function() {
+            let val = $(this).val();
+            let url = '{{ url('bot/index/') }}/'+val;
+            $('#url').val(url);
         });
     </script>
 @endsection

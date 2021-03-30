@@ -15,6 +15,17 @@
         <form action="/admin/mailing/send" method="POST" enctype="multipart/form-data">
             @csrf
             <div>
+                <label for="bot">@lang('pages.choose_bot'):</label>
+            </div>
+            <div>
+                <select name="bot" id="bot">
+                    @foreach($bots as $bot)
+                        <option value="{{ $bot->id }}">{{ $bot->name }} ({{ $bot->messenger->name }},
+                            {{ base64_decode($bot->language->emoji) }} {{ $bot->language->name }})</option>
+                    @endforeach
+                </select>
+            </div>
+            <div>
                 <label>@lang('pages.mailing_select_country')</label>
             </div>
             <div>
@@ -41,19 +52,19 @@
             <div>
                 <input type="url" name="url_image" placeholder="@lang('pages.url_image')">
             </div>
-            <div>
-                <label>@lang('pages.mailing_messenger')</label>
-            </div>
-            <div>
-                <input type="radio" name="messenger" value="%" id="all_messenger" checked>
-                <label for="all_messenger">@lang('pages.mailing_all')</label>
+{{--            <div>--}}
+{{--                <label>@lang('pages.mailing_messenger')</label>--}}
+{{--            </div>--}}
+{{--            <div>--}}
+{{--                <input type="radio" name="messenger" value="%" id="all_messenger" checked>--}}
+{{--                <label for="all_messenger">@lang('pages.mailing_all')</label>--}}
 
-                <input type="radio" name="messenger" value="Viber" id="viber">
-                <label for="viber">Viber</label>
+{{--                <input type="radio" name="messenger" value="Viber" id="viber">--}}
+{{--                <label for="viber">Viber</label>--}}
 
-                <input type="radio" name="messenger" value="Telegram" id="telegram">
-                <label for="telegram">Telegram</label>
-            </div>
+{{--                <input type="radio" name="messenger" value="Telegram" id="telegram">--}}
+{{--                <label for="telegram">Telegram</label>--}}
+{{--            </div>--}}
 
             <div class="block_buttons">
                 <button class="button">@lang('pages.send')</button>

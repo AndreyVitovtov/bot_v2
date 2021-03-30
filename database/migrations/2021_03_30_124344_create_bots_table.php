@@ -33,6 +33,14 @@ class CreateBotsTable extends Migration
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
         });
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->index('bots_id');
+            $table->foreign('bots_id')
+                ->references('id')->on('bots')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+        });
     }
 
     /**

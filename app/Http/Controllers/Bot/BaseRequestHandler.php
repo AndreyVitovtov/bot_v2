@@ -79,8 +79,10 @@ class BaseRequestHandler
             $botUsers->username = $name['username'] ?? "No name";
             $botUsers->country = ($this->messenger == "Viber") ? $this->bot->getCountry() : '';
             $botUsers->messengers_id = $messenger->id;
+            $botUsers->messengers_id = $messenger->id;
             $botUsers->date = date("Y-m-d");
             $botUsers->time = date("H:i:s");
+            $botUsers->bots_id = BOT['id'];
             $botUsers->save();
             $this->userId = $botUsers->id;
         } else {

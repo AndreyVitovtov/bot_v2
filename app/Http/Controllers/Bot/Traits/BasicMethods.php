@@ -3,6 +3,7 @@
 
 namespace App\Http\Controllers\Bot\Traits;
 
+use App\Models\Bot;
 use App\Models\BotUsers;
 use App\Models\buttons\ButtonsFacebook;
 use App\Models\buttons\ButtonsTelegram;
@@ -36,7 +37,6 @@ trait BasicMethods
         }
 
         define("MESSENGER", $this->messenger);
-        parent::__construct();
 
         if ($this->messenger == "Facebook") {
             $this->mark_seen();
@@ -61,8 +61,14 @@ trait BasicMethods
         }
     }
 
-    public function index()
+    public function index($id)
     {
+        $bot = Bot::find($id);
+        define((MESSENGER == 'Telegram' ? 'TELEGRAM_TOKEN' : MESSENGER == 'Viber' ? 'VIBER_TOKEN' : 'FACEBOOK_TOKEN'),
+            $bot->token ?? '0');
+        define('BOT', $bot->toArray());
+        parent::__construct();
+
         file_put_contents(public_path("json/request.json"), $this->getRequest());
 
         if ($this->getType() == "started") {

@@ -30,14 +30,16 @@ class Mailing
         $taskJson = file_get_contents($this->pathTask);
         $task = json_decode($taskJson);
 
+        $bot = Bot::find($task->bot);
+        $messenger = $bot->messenger->name;
+
         if ($task->performed == "true") return json_encode([
             'status' => 'fail',
             'message' => 'Mailing performed'
         ]);
 
         $db = DB::table('users')
-            ->join('messengers', 'users.messengers_id', '=', 'messengers.id')
-            ->where('messengers.name', 'LIKE', $task->messenger);
+            ->where('bots_id', $task->bot);
 
         if ($task->country !== 'all') {
             $db = $db->where('country', $task->country);
@@ -47,7 +49,7 @@ class Mailing
 
         $users = $db->limit($this->countUsers)
             ->offset($task->start)
-            ->get(['id', 'chat', 'messengers.name AS messenger'])
+            ->get(['id', 'chat'])
             ->toArray();
 
         $task->performed = "true";
@@ -81,12 +83,13 @@ class Mailing
             $data = [];
             foreach ($uc as $user) {
                 if ($task->type == "text") {
-                    if ($user->messenger == "Telegram") {
+                    if ($messenger == "Telegram") {
                         $data[] = [
                             'key' => $user->chat,
-                            'messenger' => $user->messenger,
+                            'messenger' => $messenger,
                             'url' => "https://api.telegram.org/bot" .
-                                (defined('TELEGRAM_TOKEN') ? TELEGRAM_TOKEN : null) . "/sendMessage",
+                                (defined('TELEGRAM_TOKEN') ? TELEGRAM_TOKEN : ($bot->token ?? null)) .
+                                "/sendMessage",
                             'params' => [
                                 'text' => $task->text,
                                 'chat_id' => $user->chat,
@@ -103,10 +106,10 @@ class Mailing
                                 ]
                             ]
                         ];
-                    } elseif ($user->messenger == "Viber") {
+                    } elseif ($messenger == "Viber") {
                         $data[] = [
                             'key' => $user->chat,
-                            'messenger' => $user->messenger,
+                            'messenger' => $messenger,
                             'url' => "https://chatapi.viber.com/pa/send_message",
                             'params' => [
                                 'receiver' => $user->chat,
@@ -123,12 +126,12 @@ class Mailing
                                 ]
                             ]
                         ];
-                    } elseif ($user->messenger == "Facebook") {
+                    } elseif ($messenger == "Facebook") {
                         $data[] = [
                             'key' => $user->chat,
-                            'messenger' => $user->messenger,
+                            'messenger' => $messenger,
                             'url' => "https://graph.facebook.com/v3.2/me/messages?access_token=" .
-                                (defined('FACEBOOK_TOKEN') ? FACEBOOK_TOKEN : null),
+                                (defined('FACEBOOK_TOKEN') ? FACEBOOK_TOKEN : ($bot->token ?? null)),
                             'params' => [
                                 'recipient' => [
                                     'id' => $user->chat
@@ -140,12 +143,13 @@ class Mailing
                         ];
                     }
                 } elseif ($task->type == "img") {
-                    if ($user->messenger == "Telegram") {
+                    if ($messenger == "Telegram") {
                         $data[] = [
                             'key' => $user->chat,
-                            'messenger' => $user->messenger,
+                            'messenger' => $messenger,
                             'url' => 'https://api.telegram.org/bot' .
-                                (defined('TELEGRAM_TOKEN') ? TELEGRAM_TOKEN : null) . '/sendPhoto',
+                                (defined('TELEGRAM_TOKEN') ? TELEGRAM_TOKEN : ($bot->token ?? null)) .
+                                '/sendPhoto',
                             'params' => [
                                 'chat_id' => $user->chat,
                                 'photo' => $task->img,
@@ -162,10 +166,10 @@ class Mailing
                                 ]
                             ]
                         ];
-                    } elseif ($user->messenger == "Viber") {
+                    } elseif ($messenger == "Viber") {
                         $data[] = [
                             'key' => $user->chat,
-                            'messenger' => $user->messenger,
+                            'messenger' => $messenger,
                             'url' => "https://chatapi.viber.com/pa/send_message",
                             'params' => [
                                 'receiver' => $user->chat,
@@ -237,7 +241,8 @@ class Mailing
             ];
 
             if ($item['messenger'] == "Viber") {
-                $headers[] = 'X-Viber-Auth-Token: ' . (defined('VIBER_TOKEN') ? VIBER_TOKEN : null);
+                $headers[] = 'X-Viber-Auth-Token: ' . (defined('VIBER_TOKEN') ? VIBER_TOKEN :
+                        ($bot->token ?? null));
             }
 
             curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);

@@ -34,4 +34,9 @@ class Bot extends Model
     {
         return $this->belongsTo(Language::class, 'languages_id');
     }
+
+    public function users()
+    {
+        return $this->hasMany(BotUsers::class, 'bots_id');
+    }
 }

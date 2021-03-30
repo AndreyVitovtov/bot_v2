@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Developer;
 use App\Http\Controllers\Controller;
 use App\Models\API\Telegram;
 use App\Models\API\Viber;
+use App\Models\Bot;
 use App\Models\Curl;
 use App\Models\SettingsMain;
 use Illuminate\Http\Request;
@@ -30,10 +31,11 @@ class RequestJSON extends Controller {
             'menuItem' => 'send_request',
             'telegramToken' => SettingsMain::where('prefix', 'telegram_token')
                 ->limit(1)
-                ->get('value')[0]->value,
+                ->get('value')[0]->value ?? '',
             'viberToken' => SettingsMain::where('prefix', 'viber_token')
                 ->limit(1)
-                ->get('value')[0]->value
+                ->get('value')[0]->value ?? '',
+            'bots' => Bot::all()
         ]);
     }
 

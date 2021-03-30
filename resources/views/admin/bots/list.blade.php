@@ -24,9 +24,11 @@
                     <td>{{ $loop->iteration }}</td>
                     <td>
                         @if($bot->messenger->name == 'Telegram')
-                            <a href="https://t.me/{{ $bot->name }}" class="link">{{ $bot->name }}</a>
+                            <a href="https://t.me/{{ $bot->name }}" class="link" target="_blank">{{ $bot->name }}</a>
                         @elseif($bot->messenger->name == 'Viber')
-                            <a href="viber://pa?chatURI={{ $bot->name }}" class="link">{{ $bot->name }}</a>
+                            <a href="viber://pa?chatURI={{ $bot->name }}" class="link" target="_blank">
+                                {{ $bot->name }}
+                            </a>
                         @else
                             {{ $bot->name }}
                         @endif

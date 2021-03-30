@@ -35,6 +35,9 @@ class CreateMessengersTable extends Migration
      */
     public function down()
     {
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropForeign('messengers_id');
+        });
         Schema::dropIfExists('messengers');
     }
 }

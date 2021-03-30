@@ -24,6 +24,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property mixed messengers_id
  * @property mixed firstname
  * @property mixed lastname
+ * @property mixed bots_id
  */
 class BotUsers extends Model
 {
@@ -44,7 +45,8 @@ class BotUsers extends Model
         'start',
         'count_ref',
         'access_free',
-        'language'
+        'language',
+        'bots_id'
     ];
 
     public function language()
@@ -55,5 +57,10 @@ class BotUsers extends Model
     public function messenger()
     {
         return $this->belongsTo(Messenger::Class, 'messengers_id');
+    }
+
+    public function bot()
+    {
+        return $this->belongsTo(Bot::class, 'bots_id');
     }
 }

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Text extends Model {
     public static function valueSubstitution($user, $str, $type, $n = []) {
-        $language = Language::find($user->languages_id ?? 1);
+        $language = $user->bot->language ?? 1;
         if(file_exists(public_path()."/json/".$type."_".($language->code ?? 'ru').".json")) {
             $type = $type."_".($language->code ?? 'ru');
         }

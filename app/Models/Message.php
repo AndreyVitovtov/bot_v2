@@ -12,22 +12,18 @@ use App\Models\buttons\Menu;
 
 class Message
 {
-    private $tgm;
-    private $viber;
-    private $facebook;
+    private $messenger;
 
     public function __construct()
     {
         if (defined('TELEGRAM_TOKEN')) {
-            $this->tgm = new Telegram(TELEGRAM_TOKEN);
+            $this->messenger = new Telegram(TELEGRAM_TOKEN);
         }
-
         if (defined('VIBER_TOKEN')) {
-            $this->viber = new Viber(VIBER_TOKEN);
+            $this->messenger = new Viber(VIBER_TOKEN);
         }
-
         if (defined('FACEBOOK_TOKEN')) {
-            $this->facebook = new FacebookMessenger(FACEBOOK_TOKEN);
+            $this->messenger = new FacebookMessenger(FACEBOOK_TOKEN);
         }
     }
 
@@ -36,17 +32,12 @@ class Message
         $texts = new Text();
         $user = (new BotUsers)->where('chat', $chat)->get();
         $message = $texts->valueSubstitution($user, $message, 'pages', $n);
-        if ($messenger == "Telegram") {
-            $mainMenu = $texts->valueSubstitutionArray($user, Menu::main(['messenger' => 'Telegram']));
-            return $this->tgm->sendMessage($chat, $message, [
-                'buttons' => $mainMenu
-            ]);
-        } elseif ($messenger == "Viber") {
-            $mainMenu = $texts->valueSubstitutionArray($user, Menu::main(array('messenger' => 'Viber')));
-            return $this->viber->sendMessage($chat, $message, [
-                'buttons' => $mainMenu
-            ]);
+        $mainMenu = $texts->valueSubstitutionArray($user, Menu::main(['messenger' => $messenger]));
+        if (!$this->messenger) {
+            $this->messenger = new $messenger($user->bot->token);
         }
-        return null;
+        return $this->messenger->sendMessage($chat, $message, [
+            'buttons' => $mainMenu
+        ]);
     }
 }
