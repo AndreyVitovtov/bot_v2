@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Admin\Answers;
+use App\Http\Controllers\Admin\BotsController;
 use App\Http\Controllers\Admin\Contacts;
 use App\Http\Controllers\Admin\Languages;
 use App\Http\Controllers\Admin\Mailing;
@@ -98,6 +99,11 @@ Route::group(['middleware' => 'auth', 'prefix'=>'admin'], function() {
         Route::get('/add', [Languages::class, 'add'])->name('languages-add');
         Route::post('/add/save', [Languages::class, 'addSave'])->name('languages-add-save');
         Route::post('/delete', [Languages::class, 'delete'])->name('languages-delete');
+    });
+
+    Route::group(['prefix' => 'bots', 'middleware' => 'access:bots'], function () {
+        Route::get('/list', [BotsController::class, 'list'])->name('bots-list');
+        Route::get('/add', [BotsController::class, 'add'])->name('bots-add');
     });
 
     Route::group(['prefix' => 'contacts', 'middleware' => 'access:contacts'], function () {
