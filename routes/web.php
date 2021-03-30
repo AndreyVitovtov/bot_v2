@@ -104,6 +104,10 @@ Route::group(['middleware' => 'auth', 'prefix'=>'admin'], function() {
     Route::group(['prefix' => 'bots', 'middleware' => 'access:bots'], function () {
         Route::get('/list', [BotsController::class, 'list'])->name('bots-list');
         Route::get('/add', [BotsController::class, 'add'])->name('bots-add');
+        Route::post('/add/save', [BotsController::class, 'addSave'])->name('bots-add-save');
+        Route::post('/delete', [BotsController::class, 'delete'])->name('bots-delete');
+        Route::post('/edit', [BotsController::class, 'edit'])->name('bots-edit');
+        Route::post('/edit/save', [BotsController::class, 'editSave'])->name('bots-edit-save');
     });
 
     Route::group(['prefix' => 'contacts', 'middleware' => 'access:contacts'], function () {

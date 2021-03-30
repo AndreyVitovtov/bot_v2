@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * @method static where(string $string, $messenger)
+ * @method static find(mixed $messenger)
  */
 class Messenger extends Model
 {

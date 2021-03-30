@@ -121,10 +121,10 @@
     </script>
 @endif
 
-@if(isset($notification))
+@if(isset($notification) || (isset($message) && $message != null))
     <script>
         setTimeout(function() {
-            popUpWindow('{{ $notification }}')
+            popUpWindow('{{ $notification ?? $message }}')
         }, 300);
     </script>
 @endif

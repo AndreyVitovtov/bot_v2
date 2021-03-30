@@ -4,6 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * @property mixed messengers_id
+ * @property mixed languages_id
+ * @property mixed name
+ * @property mixed token
+ * @property mixed id
+ * @method static where(string $string, mixed $id)
+ * @method static find(mixed $id)
+ */
 class Bot extends Model
 {
     protected $table = 'bots';

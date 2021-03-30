@@ -7,6 +7,9 @@ use App\Http\Requests\SetWebhookRequest;
 use App\Models\API\Viber;
 use App\Models\API\Telegram;
 
+/**
+ * @method static set()
+ */
 class Webhook extends Controller {
     public function index() {
         //TODO: [DEV] GET WEBHOOK
