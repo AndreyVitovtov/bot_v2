@@ -30,7 +30,7 @@ class SettingsButtonsSeeder extends Seeder {
 
         $seeder = (count($dataFile) > count($data)) ? $dataFile : $data;
 
-        DB::table('settings_buttons_ru')->insert($seeder);
+        DB::table('settings_buttons_RU')->insert($seeder);
 
         $settingsButtons = SettingsButtons::all();
         foreach($settingsButtons as $sb) {

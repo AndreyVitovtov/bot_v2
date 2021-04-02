@@ -10,7 +10,7 @@ class CreateSettingsButtonsTable extends Migration
      * Schema table name to migrate
      * @var string
      */
-    public $tableName = 'settings_buttons_ru';
+    public $tableName = 'settings_buttons_RU';
 
     /**
      * Run the migrations.

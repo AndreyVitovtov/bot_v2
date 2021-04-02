@@ -42,7 +42,7 @@ class SettingsPagesSeeder extends Seeder {
 
         $seeder = (count($dataFile) > count($data)) ? $dataFile : $data;
 
-        DB::table('settings_pages_ru')->insert($seeder);
+        DB::table('settings_pages_RU')->insert($seeder);
 
         $settingsPages = SettingsPages::all();
         foreach($settingsPages as $sp) {
