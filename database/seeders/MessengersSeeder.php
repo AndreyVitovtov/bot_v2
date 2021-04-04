@@ -17,7 +17,7 @@ class MessengersSeeder extends Seeder
         DB::table('messengers')->insert([
             ['id' => 1, 'name' => 'Telegram'],
             ['id' => 2, 'name' => 'Viber'],
-            ['id' => 3, 'name' => 'Facebook']
+//            ['id' => 3, 'name' => 'Facebook']
         ]);
     }
 }
