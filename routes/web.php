@@ -179,6 +179,8 @@ Route::group(['middleware' => 'auth', 'prefix'=>'admin'], function() {
 });
 
 Route::group(['middleware' => 'auth', 'prefix'=>'developer'], function() {
+    Route::get('/', [Todo::class, 'index']);
+
     Route::prefix('/settings')->group(function () {
         Route::get('/main', [\App\Http\Controllers\Developer\Settings::class, 'settingsMain']);
         Route::get('/pages', [\App\Http\Controllers\Developer\Settings::class, 'settingsPages']);
@@ -232,8 +234,6 @@ Route::group(['middleware' => 'auth', 'prefix'=>'developer'], function() {
         Route::post('/add', [Permissions::class, 'add'])->name('permission-add');
         Route::post('/delete', [Permissions::class, 'delete'])->name('permission-delete');
     });
-
-    Route::get('/', [\App\Http\Controllers\Developer\Settings::class, 'index']);
 
     Route::prefix('/request')->group(function () {
         Route::get('/', [RequestJSON::class, 'index'])->name('request');

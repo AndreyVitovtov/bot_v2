@@ -55,7 +55,7 @@ class BotsController extends Controller
 
             DB::commit();
         } catch (Exception $e) {
-            $message = $e;
+            $message = $e->getMessage();
             DB::rollBack();
         }
         return redirect()->to(route('bots-list', [

@@ -61,6 +61,7 @@
             <br>
             <label for="items">Items</label>
             <br>
+        <div class="sortable">
             @foreach($menu['items'] as $keyItem => $item)
                 <div class="item-border">
                     <div>
@@ -78,6 +79,7 @@
                 </div>
                 <br>
             @endforeach
+        </div>
             <div id="menu-items"></div>
             <div class="button" id="add_item">Add item</div>
             <br>
@@ -117,6 +119,9 @@
                 '</div><br>';
 
             $('#menu-items').append(html);
+            $('.sortable').sortable();
         });
+
+        $('.sortable').sortable();
     </script>
 @endsection
