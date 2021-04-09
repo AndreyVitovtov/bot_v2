@@ -15,6 +15,8 @@
             padding: 5px;
             background-color: #fbfbfb;
             transition: 0.1s;
+            margin: 10px 0;
+            cursor: n-resize;
         }
 
         .item-border:hover {
@@ -77,7 +79,6 @@
                         <input type="text" name="itemUrl[]" value="{{ $item['url'] }}" id="itemRoute">
                     </div>
                 </div>
-                <br>
             @endforeach
         </div>
             <div id="menu-items"></div>
@@ -122,6 +123,6 @@
             $('.sortable').sortable();
         });
 
-        $('.sortable').sortable();
+        $('.sortable').sortable({ axis: 'y' });
     </script>
 @endsection
