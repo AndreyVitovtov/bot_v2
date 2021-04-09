@@ -15,6 +15,8 @@
             padding: 5px;
             background-color: #fbfbfb;
             transition: 0.1s;
+            margin: 10px 0;
+            cursor: move;
         }
 
         .item-border:hover {
@@ -44,7 +46,6 @@
                 <label for="route">Route</label>
                 <input type="text" name="url" value="{{ $menu['url'] }}" id="route">
             </div>
-            <br>
         @else
             <div>
                 <label for="nameItem">Name item</label>
@@ -61,23 +62,25 @@
             <br>
             <label for="items">Items</label>
             <br>
-            @foreach($menu['items'] as $keyItem => $item)
-                <div class="item-border">
-                    <div>
-                        <label for="itemName">Item name</label>
-                        <input type="text" name="itemName[]" value="{{ $item['name'] }}" id="itemName">
+            <div class="sortable">
+                @foreach($menu['items'] as $keyItem => $item)
+                    <div class="item-border">
+                        <div>
+                            <label for="itemName">Item name</label>
+                            <input type="text" name="itemName[]" value="{{ $item['name'] }}" id="itemName">
+                        </div>
+                        <div>
+                            <label for="itemMenu">Item menu</label>
+                            <input type="text" name="itemMenu[]" value="{{ $item['menu'] }}" id="itemMenu">
+                        </div>
+                        <div>
+                            <label for="itemRoute">Item route</label>
+                            <input type="text" name="itemUrl[]" value="{{ $item['url'] }}" id="itemRoute">
+                        </div>
+                        <br>
                     </div>
-                    <div>
-                        <label for="itemMenu">Item menu</label>
-                        <input type="text" name="itemMenu[]" value="{{ $item['menu'] }}" id="itemMenu">
-                    </div>
-                    <div>
-                        <label for="itemRoute">Item route</label>
-                        <input type="text" name="itemUrl[]" value="{{ $item['url'] }}" id="itemRoute">
-                    </div>
-                </div>
-                <br>
-            @endforeach
+                @endforeach
+            </div>
             <div id="menu-items"></div>
             <div class="button" id="add_item">Add item</div>
             <br>
@@ -117,6 +120,9 @@
                 '</div><br>';
 
             $('#menu-items').append(html);
+            $('.sortable').sortable();
         });
+
+        $('.sortable').sortable();
     </script>
 @endsection
