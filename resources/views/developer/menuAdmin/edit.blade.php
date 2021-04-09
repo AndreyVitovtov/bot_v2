@@ -120,7 +120,6 @@
                 '</div><br>';
 
             $('#menu-items').append(html);
-            $('.sortable').sortable();
         });
 
         $('.sortable').sortable({ axis: 'y' });
