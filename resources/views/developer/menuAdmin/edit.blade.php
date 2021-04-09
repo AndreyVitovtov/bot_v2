@@ -16,7 +16,7 @@
             background-color: #fbfbfb;
             transition: 0.1s;
             margin: 10px 0;
-            cursor: move;
+            cursor: n-resize;
         }
 
         .item-border:hover {
@@ -123,6 +123,6 @@
             $('.sortable').sortable();
         });
 
-        $('.sortable').sortable();
+        $('.sortable').sortable({ axis: 'y' });
     </script>
 @endsection
