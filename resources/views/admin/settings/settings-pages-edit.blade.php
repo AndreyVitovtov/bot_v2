@@ -17,7 +17,9 @@
         <div class="settings">
             <div>
                 <label for="text">@lang('pages.text')</label>
-                <input type="text" name="text" value="{{ base64_decode($page->text) }}" id="text">
+                <br>
+                <textarea name="text" id="text">{{ base64_decode($page->text) }}</textarea>
+{{--                <input type="text" name="text" value="{{ base64_decode($page->text) }}" id="text">--}}
             </div>
             <input type="hidden" name="lang" value="{{ $lang }}">
             <div class="block_buttons">
