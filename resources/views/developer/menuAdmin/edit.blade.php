@@ -17,11 +17,23 @@
             transition: 0.1s;
             margin: 10px 0;
             cursor: n-resize;
+            position: relative;
         }
 
         .item-border:hover {
             background-color: #dcdcdc;
             transition: 0.1s;
+        }
+
+        .close {
+            right: 0;
+            top: 2px;
+            position: absolute;
+        }
+
+        .close i {
+            color: #d66c5b;
+            cursor: pointer;
         }
     </style>
 
@@ -46,6 +58,7 @@
                 <label for="route">Route</label>
                 <input type="text" name="url" value="{{ $menu['url'] }}" id="route">
             </div>
+            <br>
         @else
             <div>
                 <label for="nameItem">Name item</label>
@@ -65,6 +78,7 @@
             <div class="sortable">
                 @foreach($menu['items'] as $keyItem => $item)
                     <div class="item-border">
+                        <div class="close"><i class="icon-cancel-4"></i></div>
                         <div>
                             <label for="itemName">Item name</label>
                             <input type="text" name="itemName[]" value="{{ $item['name'] }}" id="itemName">
@@ -77,7 +91,6 @@
                             <label for="itemRoute">Item route</label>
                             <input type="text" name="itemUrl[]" value="{{ $item['url'] }}" id="itemRoute">
                         </div>
-                        <br>
                     </div>
                 @endforeach
             </div>
@@ -109,20 +122,29 @@
 
         $('body').on('click', '#add_item', function() {
             let html = '<div class="item-border">'+
+                '<div class="close"><i class="icon-cancel-4"></i></div>'+
+                '<div>'+
                 '<label for="item-name-rolled">Item name</label>'+
                 '<input type="text" name="itemName[]" class="m-rolled">'+
-                '<br>'+
+                '</div>'+
+                '<div>'+
                 '<label for="item-menu-rolled">Item menu</label>'+
                 '<input type="text" name="itemMenu[]" class="m-rolled">'+
-                '<br>'+
+                '</div>'+
+                '<div>'+
                 '<label for="item-route-rolled">Item route</label>'+
                 '<input type="text" name="itemUrl[]" class="m-rolled">'+
-                '</div><br>';
+                '</div>'+
+                '</div>';
 
             $('#menu-items').append(html);
-            $('.sortable').sortable();
         });
 
         $('.sortable').sortable({ axis: 'y' });
+
+        $('body').on('click', '.close i', function() {
+            $(this).parent().parent().remove();
+        });
+
     </script>
 @endsection
