@@ -256,6 +256,7 @@ Route::group(['middleware' => 'auth', 'prefix'=>'developer'], function() {
         Route::post('/admin/edit', [MenuAdmin::class, 'edit'])->name('menu-admin-edit');
         Route::post('/admin/edit/save', [MenuAdmin::class, 'editSave'])->name('menu-admin-edit-save');
         Route::post('/admin/delete', [MenuAdmin::class, 'delete'])->name('menu-admin-delete');
+        Route::post('/admin/sort', [MenuAdmin::class, 'sortSave'])->name('menu-admin-sort');
     });
 
     Route::prefix('/lang')->group(function () {
