@@ -10,10 +10,13 @@
 
 @section("main")
     <table>
-        <tr>
-            <td>@lang('pages.menu')</td>
-            <td>@lang('pages.actions')</td>
-        </tr>
+        <thead>
+            <tr>
+                <td>@lang('pages.menu')</td>
+                <td>@lang('pages.actions')</td>
+            </tr>
+        </thead>
+        <tbody class="sortable">
         @foreach($menus as $key => $menu)
             <tr>
                 <td style="text-align: left;">{{ ucfirst($menu['name']) }}</td>
@@ -37,5 +40,12 @@
                 </td>
             </tr>
         @endforeach
+        </tbody>
     </table>
+
+    <script>
+        $('.sortable').sortable({
+            axis: 'y'
+        });
+    </script>
 @endsection

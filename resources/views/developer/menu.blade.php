@@ -122,6 +122,12 @@
     'menu' => 'permissions',
     'url' => '/developer/permissions'
 ])@endcomponent
+@component('menu.menu-item', [
+    'name' => 'developer_info',
+    'icon' => 'icon-info-2',
+    'menu' => 'info',
+    'url' => '/developer/info'
+])@endcomponent
 @component('menu.menu-rolled', [
     'nameItem' => 'settings',
     'icon' => 'icon-cog-alt',

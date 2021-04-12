@@ -50,6 +50,9 @@ class CreateBotsTable extends Migration
      */
     public function down()
     {
+//        Schema::table('users', function (Blueprint $table) {
+//            $table->dropForeign('users_bots_id_foreign');
+//        });
         Schema::dropIfExists('bots');
     }
 }
