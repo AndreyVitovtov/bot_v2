@@ -159,7 +159,6 @@ main .content table tr:nth-child(1) {
 main .content table td {
     padding: 10px;
     border: 1px solid #ccc;
-    width: 100%;
 }
 
 .pagination {

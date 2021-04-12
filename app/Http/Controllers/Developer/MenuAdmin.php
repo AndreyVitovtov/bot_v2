@@ -137,6 +137,20 @@ class MenuAdmin extends Controller {
         return redirect()->to(route('menu-admin-list'));
     }
 
+    public function sortSave(Request $request)
+    {
+        $request = $request->post();
+        $menuAdmin = json_decode(file_get_contents(public_path('json/menu-admin.json')), true);
+
+        $newMenu = [];
+
+        foreach($request['ids'] as $key) {
+            $newMenu[$key] = $menuAdmin[$key];
+        }
+        file_put_contents(public_path('json/menu-admin.json'), json_encode($newMenu));
+        print_r($request['ids']);
+    }
+
     private function getMenu() {
         return json_decode(file_get_contents(public_path('json/menu-admin.json')), true);
     }
