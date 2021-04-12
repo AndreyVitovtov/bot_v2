@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\Settings;
 use App\Http\Controllers\Admin\Statistics;
 use App\Http\Controllers\Admin\Users;
 use App\Http\Controllers\Bot\RequestHandler;
+use App\Http\Controllers\Developer\InfoController;
 use App\Http\Controllers\Developer\Lang;
 use App\Http\Controllers\Developer\Menu;
 use App\Http\Controllers\Developer\MenuAdmin;
@@ -270,6 +271,12 @@ Route::group(['middleware' => 'auth', 'prefix'=>'developer'], function() {
         Route::post('/to/performed', [Todo::class, 'toPerformed'])->name('todo-to-performed');
         Route::post('/delete', [Todo::class, 'delete'])->name('todo-delete');
     });
+
+    Route::prefix('/info')->group(function() {
+        Route::get('/', [InfoController::class, 'index'])->name('info');
+        Route::post('/save', [InfoController::class, 'save'])->name('info-save');
+    });
+
 });
 
 Route::get('logout', [LoginController::class, 'logout']);
