@@ -61,7 +61,11 @@ class Statistics extends Controller {
         }
 
         //Статистика по мессенджерам
-        $messenger = DB::select("SELECT messenger, COUNT(*) as count FROM users GROUP BY messenger");
+        $messenger = DB::select("
+            SELECT m.name, COUNT(*) as count
+            FROM users u
+            JOIN messengers m ON u.messengers_id = m.id
+            GROUP BY m.name");
         $messengers = [];
         foreach($messenger as $m) {
             $messengers[$m->messenger] = $m->count;

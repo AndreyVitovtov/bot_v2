@@ -26,7 +26,7 @@ class CreateAdminTable extends Migration
             $table->string('login');
             $table->string('password');
             $table->string('name');
-            $table->string('email');
+            $table->string('chat_id')->nullable();
             $table->string('language')->default('us');
             $table->integer('roles_id')->unsigned();
 

@@ -24,7 +24,7 @@
         @endforeach
 
     //Messengers
-            chart.options.title = "@lang('pages.statistics_count_users_messengers')";
+        chart.options.title = "@lang('pages.statistics_count_users_messengers')";
         chart.options.colors = ['#0088cc', '#665CAC', '#4e8094', '#55516a', '#686868'];
         chart.data = [
             [

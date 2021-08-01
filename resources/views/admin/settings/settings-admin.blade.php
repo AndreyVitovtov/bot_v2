@@ -30,8 +30,13 @@
                 <input type="password" name="confirm_password" id="confirm_password">
             </div>
             <div>
-                <label for="email">Email</label>
-                <input type="text" name="email" value="{{ Auth::user()->email }}" id="email">
+                <label for="chat_id">Chat ID</label>
+                <input type="text" name="chat_id" value="{{ Auth::user()->chat_id }}" id="chat_id" list="chats_ids">
+                <datalist id="chats_ids">
+                    @foreach($users as $user)
+                        <option value="{{ $user->chat }}">{{ $user->username }}</option>
+                    @endforeach
+                </datalist>
             </div>
             <div>
                 <label for="name_bot">@lang('pages.name_bot')</label>

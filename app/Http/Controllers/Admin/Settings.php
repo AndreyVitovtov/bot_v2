@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 
 
 use App\Http\Controllers\Controller;
+use App\Models\BotUsers;
 use App\Models\Language;
 use App\Models\Seeder;
 use App\Models\SettingsButtons;
@@ -208,7 +209,9 @@ class Settings extends Controller
 
     public function admin()
     {
-        return view('admin.settings.settings-admin');
+        return view('admin.settings.settings-admin', [
+            'users' => BotUsers::all(['username', 'chat'])
+        ]);
     }
 
     public function adminUpdate(Request $request)
@@ -228,8 +231,8 @@ class Settings extends Controller
             User::where('login', Auth::user()->login)->update(['login' => $params['login']]);
         }
 
-        if (!empty($params['email'])) {
-            User::where('login', Auth::user()->login)->update(['email' => $params['email']]);
+        if (!empty($params['chat_id'])) {
+            User::where('login', Auth::user()->login)->update(['chat_id' => $params['chat_id']]);
         }
 
         if (!empty($params['name_bot'])) {
