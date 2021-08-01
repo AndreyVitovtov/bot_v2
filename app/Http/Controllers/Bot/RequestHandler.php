@@ -16,4 +16,10 @@ class RequestHandler extends BaseRequestHandler
     use HelperMethods;
 
     // TODO: bot commands
+
+    public function f()
+    {
+        $this->getParams();
+    }
 }
+

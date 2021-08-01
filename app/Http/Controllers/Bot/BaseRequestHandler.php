@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Bot;
 
 use App\Http\Controllers\Bot\Traits\MethodsMessengers;
+use App\Http\Controllers\Controller;
 use App\Models\Answer;
 use App\Models\BotUsers;
 use App\Models\Interaction;
@@ -16,7 +17,7 @@ use Exception;
  * @method performAnActionRef($id)
  * @method methodFromGroupAndChat()
  */
-abstract class BaseRequestHandler
+class BaseRequestHandler extends Controller
 {
     private $bot;
     private $chat = null;

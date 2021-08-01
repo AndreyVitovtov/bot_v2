@@ -9,8 +9,10 @@ use App\Models\BotUsers;
 use App\Models\buttons\Menu;
 use App\Models\Visit;
 
-trait MethodsMessengers {
-    public function __construct() {
+trait MethodsMessengers
+{
+    public function __construct()
+    {
 
         $this->messenger = $this->getMessenger();
 
@@ -36,7 +38,8 @@ trait MethodsMessengers {
         $visit->add(date("Y-m-d"), $this->getUserId());
     }
 
-    public function setUserId(): void {
+    public function setUserId(): void
+    {
         if ($this->messenger == "Viber") {
             $botUsers = new BotUsers();
             $res = $botUsers->where('chat', $this->chat)->first();
@@ -133,7 +136,8 @@ trait MethodsMessengers {
         }
     }
 
-    private function setType() {
+    private function setType()
+    {
         if ($this->messenger == "Viber") {
             $this->type = $this->getTypeReq();
         } elseif ($this->messenger == "Facebook") {
@@ -147,12 +151,14 @@ trait MethodsMessengers {
         }
     }
 
-    public function getTypeChat(): ? string {
+    public function getTypeChat(): ?string
+    {
         $request = json_decode($this->getRequest());
         return $request->message->chat->type ?? $request->channel_post->chat->type ?? null;
     }
 
-    private function getTypeReq($arrProperties = null): ? string {
+    private function getTypeReq($arrProperties = null): ?string
+    {
         if ($this->messenger == "Viber") {
             $req = json_decode($this->getRequest());
             if (isset($req->message->type)) {
@@ -198,7 +204,8 @@ trait MethodsMessengers {
         return 'other';
     }
 
-    private function getProperties($obj, $names = []): array {
+    private function getProperties($obj, $names = []): array
+    {
         if (is_object($obj) || is_array($obj)) foreach ($obj as $name => $el) {
             $names[$name] = $name;
             if (is_object($el) || is_array($el)) {
@@ -208,7 +215,8 @@ trait MethodsMessengers {
         return $names;
     }
 
-    public function getDataByType() {
+    public function getDataByType()
+    {
         $request = json_decode($this->getRequest());
         if ($this->messenger == "Viber") {
             if (empty($request)) return null;
@@ -486,7 +494,8 @@ trait MethodsMessengers {
         return [];
     }
 
-    public function saveFile($path = null, $name = null, $folderName = null): ? string {
+    public function saveFile($path = null, $name = null, $folderName = null): ?string
+    {
         $filePath = $this->getFilePath();
         if ($this->messenger == "Telegram") {
             $ext = explode(".", $filePath);
@@ -512,7 +521,8 @@ trait MethodsMessengers {
         return null;
     }
 
-    public function getMethodName(): ? string {
+    public function getMethodName(): ?string
+    {
         $data = $this->getDataByType();
         if ($this->messenger == "Viber") {
             if ($this->type == "text") {
@@ -578,7 +588,8 @@ trait MethodsMessengers {
         return null;
     }
 
-    public function getLocation(): ? array {
+    public function getLocation(): ?array
+    {
         if ($this->type == "location") {
             return $this->getDataByType();
         } else {
@@ -586,11 +597,18 @@ trait MethodsMessengers {
         }
     }
 
-    public function getParams($assoc = false) {
+    public function getParams($assoc = false)
+    {
         return json_decode($this->getInteraction()['params'], $assoc ?? false);
     }
 
-    public function getFilePath($thumb = false) {
+    public function setParams(array $params): void
+    {
+        $this->setInteraction('', $params);
+    }
+
+    public function getFilePath($thumb = false)
+    {
         $data = $this->getDataByType();
         if ($this->messenger == "Telegram") {
             if (isset($data['photo'][0]['file_id'])) {
@@ -620,7 +638,8 @@ trait MethodsMessengers {
         return [];
     }
 
-    public function unknownTeam() {
+    public function unknownTeam()
+    {
         if ($this->messenger == "Viber") {
             if (substr($this->getBot()->getMessage(), 0, 4) == "http") return;
             $this->send("{unknown_team}", Menu::main());
