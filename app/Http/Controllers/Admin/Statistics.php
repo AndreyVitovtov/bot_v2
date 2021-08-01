@@ -61,29 +61,44 @@ class Statistics extends Controller {
         }
 
         //Статистика по мессенджерам
-        $messenger = DB::select("
-            SELECT m.name, COUNT(*) as count
-            FROM users u
-            JOIN messengers m ON u.messengers_id = m.id
-            GROUP BY m.name");
+        $messenger = DB::select("SELECT messengers.name, COUNT(*) as count
+            FROM users JOIN messengers ON users.messengers_id = messengers.id
+            AND start = 1 GROUP BY messengers.name");
         $messengers = [];
-        foreach($messenger as $m) {
-            $messengers[$m->messenger] = $m->count;
+        foreach ($messenger as $m) {
+            $messengers[$m->name] = $m->count;
         }
-        if(empty($messengers)) {
+        if (empty($messengers)) {
             $messengers = [
                 'Viber' => 0,
                 'Telegram' => 0
             ];
+        } else {
+            $messengers['Viber'] = $messengers['Viber'] ?? 0;
+            $messengers['Telegram'] = $messengers['Telegram'] ?? 0;
         }
-        else {
-            if(!isset($messengers['Viber'])) {
-                $messengers['Viber'] = 0;
-            }
-            elseif(!isset($messengers['Telegram'])) {
-                $messengers['Telegram'] = 0;
-            }
+
+        $messenger = DB::select("SELECT messengers.name, COUNT(*) as count
+            FROM users
+            JOIN messengers ON users.messengers_id = messengers.id
+            WHERE unsubscribed = 1 GROUP BY messengers.name");
+        foreach ($messenger as $m) {
+            $messengers[$m->messenger . '_U'] = $m->count;
         }
+        if (empty($messengers)) {
+            $messengers = [
+                'Viber_U' => 0,
+                'Telegram_U' => 0
+            ];
+        } else {
+            $messengers['Viber_U'] = $messengers['Viber_U'] ?? 0;
+            $messengers['Telegram_U'] = $messengers['Telegram_U'] ?? 0;
+        }
+
+        $messenger = DB::select("SELECT COUNT(*) as count
+            FROM users WHERE start = 0 AND unsubscribed = 0");
+
+        $messengers['not_start'] = $messenger[0]->count ?? 0;
 
         //Статистика по доступу
         $accessNo = DB::select("SELECT COUNT(*) AS count FROM users WHERE access = '0'");
