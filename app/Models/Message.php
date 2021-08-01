@@ -34,18 +34,30 @@ class Message
     public function send($messenger, $chat, $message, $n = []): ?string
     {
         $texts = new Text();
+        $substituteText = false;
+        if (strpos($message, '{') !== false && strpos($message, '}') !== false) {
+            $substituteText = true;
+        }
         $user = (new BotUsers)->where('chat', $chat)->get();
-        $message = $texts->valueSubstitution($user, $message, 'pages', $n);
-        if ($messenger == "Telegram") {
-            $mainMenu = $texts->valueSubstitutionArray($user, Menu::main(['messenger' => 'Telegram']));
-            return $this->tgm->sendMessage($chat, $message, [
-                'buttons' => $mainMenu
-            ]);
-        } elseif ($messenger == "Viber") {
-            $mainMenu = $texts->valueSubstitutionArray($user, Menu::main(array('messenger' => 'Viber')));
-            return $this->viber->sendMessage($chat, $message, [
-                'buttons' => $mainMenu
-            ]);
+        if ($substituteText) {
+            $message = $texts->valueSubstitution($user, $message, 'pages', $n);
+            if ($messenger == "Telegram") {
+                $mainMenu = $texts->valueSubstitutionArray($user, Menu::main(['messenger' => 'Telegram']));
+                return $this->tgm->sendMessage($chat, $message, [
+                    'buttons' => $mainMenu
+                ]);
+            } elseif ($messenger == "Viber") {
+                $mainMenu = $texts->valueSubstitutionArray($user, Menu::main(array('messenger' => 'Viber')));
+                return $this->viber->sendMessage($chat, $message, [
+                    'buttons' => $mainMenu
+                ]);
+            }
+        } else {
+            if ($messenger == "Telegram") {
+                return $this->tgm->sendMessage($chat, $message);
+            } elseif ($messenger == "Viber") {
+                return $this->viber->sendMessage($chat, $message);
+            }
         }
         return null;
     }
