@@ -64,7 +64,7 @@ class Statistics extends Controller {
         $messenger = DB::select("SELECT messenger, COUNT(*) as count FROM users GROUP BY messenger");
         $messengers = [];
         foreach($messenger as $m) {
-            $messengers[$m->name] = $m->count;
+            $messengers[$m->messenger] = $m->count;
         }
         if(empty($messengers)) {
             $messengers = [

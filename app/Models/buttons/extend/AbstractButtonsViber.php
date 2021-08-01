@@ -16,7 +16,8 @@ abstract class AbstractButtonsViber {
         $this->btnSize = $viewButtons->size_text;
     }
 
-    public function button($columns, $rows, $actionBody, $text, $silent = "false") {
+    public function button($columns, $rows, $actionBody, $text, $silent = "false"): array
+    {
         return [
             'Columns' => $columns,
             'Rows' => $rows,
@@ -31,7 +32,8 @@ abstract class AbstractButtonsViber {
         ];
     }
 
-    public function buttonUrl($columns, $rows, $url, $text, $silent = "true") {
+    public function buttonUrl($columns, $rows, $url, $text, $silent = "true"): array
+    {
         return [
             'Columns' => $columns,
             'Rows' => $rows,
@@ -45,7 +47,8 @@ abstract class AbstractButtonsViber {
         ];
     }
 
-    public function buttonImg($columns, $rows, $actionType, $actionBody, $image, $text = "", $params = []) {
+    public function buttonImg($columns, $rows, $actionType, $actionBody, $image, $text = "", $params = []): array
+    {
         if(isset($params['text-color']) && isset($params['text-size'])) {
             $text = '<font color="'.$params['text-color'].'" size="'.$params['text-size'].'">'.$text.'</font>';
         }
@@ -62,7 +65,8 @@ abstract class AbstractButtonsViber {
         ];
     }
 
-    public function buttonLocation($columns, $rows, $text, $silent = false) {
+    public function buttonLocation($columns, $rows, $text, $silent = false): array
+    {
         return [
             'Columns' => $columns,
             'Rows' => $rows,
@@ -77,7 +81,8 @@ abstract class AbstractButtonsViber {
         ];
     }
 
-    public function buttonPhone($columns, $rows, $text, $silent = false) {
+    public function buttonPhone($columns, $rows, $text, $silent = false): array
+    {
         return [
             'Columns' => $columns,
             'Rows' => $rows,
@@ -92,26 +97,30 @@ abstract class AbstractButtonsViber {
         ];
     }
 
-    public function start() {
+    public function start(): array
+    {
         return [
             $this->button(6, 1, 'start', '{start}')
         ];
     }
 
-    public function back() {
+    public function back(): array
+    {
         return [
             $this->button(6, 1, 'back', '{back}')
         ];
     }
 
-    protected function getPhone() {
+    protected function getPhone(): array
+    {
         return [
             $this->buttonPhone(6, 1, '{send_phone}'),
             $this->button(6, 1, 'back', '{back}')
         ];
     }
 
-    protected function getLocation() {
+    protected function getLocation(): array
+    {
         return [
             $this->buttonLocation(6, 1, '{send_location}'),
             $this->button(6, 1, 'back', '{back}')

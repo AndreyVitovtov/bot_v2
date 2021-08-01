@@ -3,19 +3,27 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class Role extends Model {
+/**
+ * @method static find(int $id)
+ */
+class Role extends Model
+{
     protected $table = "roles";
     public $timestamps = false;
     public $fillable = [
         'name'
     ];
 
-    public function admins() {
+    public function admins(): HasMany
+    {
         return $this->hasMany(Admin::class, 'roles_id');
     }
 
-    public function permissions() {
+    public function permissions(): BelongsToMany
+    {
         return $this->belongsToMany(
             Permission::class,
             'role_has_permissions',

@@ -13,7 +13,8 @@ class Pages {
     ], $params = [
         'id' => 'id',
         'name' => 'name'
-    ]) {
+    ]): array
+    {
         if (is_string($data)) {
             $data = $data::all()->toArray();
         }

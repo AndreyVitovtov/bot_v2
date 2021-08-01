@@ -31,7 +31,7 @@ class CreateUsersTable extends Migration
             $table->time('time');
             $table->integer('count_ref')->default(0);
             $table->string('country')->nullable();
-            $table->string('messenger');
+            $table->bigInteger('messengers_id')->unsigned();
             $table->integer('access')->default(0);
             $table->integer('active')->nullable();
             $table->integer('start')->default(0);

@@ -17,7 +17,18 @@
             @foreach($fields as $field)
                 <div>
 {{--                    <label for="{{ $field['prefix'] }}">{{ $field['name'] }}</label>--}}
-                    <label for="{{ $field['prefix'] }}">@lang('settings_main.'.$field['prefix'])</label>
+                    <label for="{{ $field['prefix'] }}">
+                        @lang('settings_main.'.$field['prefix'])
+                        @if($field['prefix'] === 'name_telegram_bot' && !empty($field['value']))
+                            <a href="https://t.me/{{ $field['value'] }}" class="link" target="_blank">
+                                {{ $field['value'] }}
+                            </a>
+                        @elseif($field['prefix'] === 'name_viber_bot' && !empty($field['value']))
+                            <a href="viber://pa?chatURI={{ $field['value'] }}" class="link" target="_blank">
+                                {{ $field['value'] }}
+                            </a>
+                        @endif
+                    </label>
                     <input type="{{ $field['type'] }}" name="input[{{ $field['id'] }}]" value="{{ $field['value'] }}">
                 </div>
             @endforeach

@@ -9,11 +9,13 @@ use App\Http\Controllers\Admin\Settings;
 use App\Http\Controllers\Admin\Statistics;
 use App\Http\Controllers\Admin\Users;
 use App\Http\Controllers\Bot\RequestHandler;
+use App\Http\Controllers\Developer\InfoController;
 use App\Http\Controllers\Developer\Lang;
 use App\Http\Controllers\Developer\Menu;
 use App\Http\Controllers\Developer\MenuAdmin;
 use App\Http\Controllers\Developer\Permissions;
 use App\Http\Controllers\Developer\RequestJSON;
+use App\Http\Controllers\Developer\Todo;
 use App\Http\Controllers\Developer\Webhook;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\Migrate;
@@ -76,7 +78,7 @@ Route::group(['middleware' => 'auth', 'prefix'=>'admin'], function() {
         Route::get('/', [Mailing::class, 'index'])->name('mailing');
         Route::post('/send', [Mailing::class, 'send']);
         Route::post('/cancel', [Mailing::class, 'cancel']);
-        Route::get('/analize', [Mailing::class, 'analize']);
+        Route::get('/analize', [Mailing::class, 'analize'])->name('mailing-analize');
         Route::get('/log', [Mailing::class, 'log']);
         Route::post('/mark-inactive-users', [Mailing::class, 'markInactiveUsers']);
     });
@@ -168,6 +170,8 @@ Route::group(['middleware' => 'auth', 'prefix'=>'admin'], function() {
 });
 
 Route::group(['middleware' => 'auth', 'prefix'=>'developer'], function() {
+    Route::get('/', [Todo::class, 'index']);
+
     Route::prefix('/settings')->group(function () {
         Route::get('/main', [\App\Http\Controllers\Developer\Settings::class, 'settingsMain']);
         Route::get('/pages', [\App\Http\Controllers\Developer\Settings::class, 'settingsPages']);
@@ -222,8 +226,6 @@ Route::group(['middleware' => 'auth', 'prefix'=>'developer'], function() {
         Route::post('/delete', [Permissions::class, 'delete'])->name('permission-delete');
     });
 
-    Route::get('/', [\App\Http\Controllers\Developer\Settings::class, 'index']);
-
     Route::prefix('/request')->group(function () {
         Route::get('/', [RequestJSON::class, 'index'])->name('request');
         Route::post('/send', [RequestJSON::class, 'send'])->name('send-request');
@@ -260,6 +262,21 @@ Route::group(['middleware' => 'auth', 'prefix'=>'developer'], function() {
         Route::post('/pages/edit/save', [Lang::class, 'pagesEditSave'])->name('lang-pages-edit-save');
         Route::post('/pages/delete', [Lang::class, 'pagesDelete'])->name('lang-pages-delete');
     });
+
+    Route::prefix('/todo')->group(function() {
+        Route::get('/', [Todo::class, 'index'])->name('todo');
+        Route::post('/add', [Todo::class, 'add'])->name('todo-add');
+        Route::post('/to/make', [Todo::class, 'toMake'])->name('todo-to-make');
+        Route::post('/to/work', [Todo::class, 'toWork'])->name('todo-to-work');
+        Route::post('/to/performed', [Todo::class, 'toPerformed'])->name('todo-to-performed');
+        Route::post('/delete', [Todo::class, 'delete'])->name('todo-delete');
+    });
+
+    Route::prefix('/info')->group(function() {
+        Route::get('/', [InfoController::class, 'index'])->name('info');
+        Route::post('/save', [InfoController::class, 'save'])->name('info-save');
+    });
+
 });
 
 Route::get('logout', [LoginController::class, 'logout']);

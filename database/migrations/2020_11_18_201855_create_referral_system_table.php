@@ -24,8 +24,7 @@ class CreateReferralSystemTable extends Migration
             $table->engine = 'InnoDB';
             $table->integer('referrer')->unsigned();
             $table->integer('referral')->unsigned();
-            $table->date('date');
-            $table->time('time');
+            $table->dateTime('datetime');
 
             $table->index(['referrer', 'referral']);
 

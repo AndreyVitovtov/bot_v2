@@ -9,12 +9,14 @@ use App\Models\API\Payment\QIWI;
 use App\Models\PaymentData;
 use Illuminate\Http\Request;
 
-class Payment extends Controller {
-    public function qiwi() {
+class Payment extends Controller
+{
+    public function qiwi()
+    {
         $view = view('admin.payment.qiwi-index');
         $view->menuItem = "payqiwi";
         $paymentData = PaymentData::first();
-        if($paymentData != null) {
+        if ($paymentData != null) {
             $view->token = $paymentData->qiwi_token;
             $view->webhookId = $paymentData->qiwi_webhook_id;
             $view->publicKey = $paymentData->qiwi_public_key;
@@ -23,60 +25,63 @@ class Payment extends Controller {
         return $view;
     }
 
-    public function yandex() {
+    public function yandex()
+    {
         $view = view('admin.payment.yandex-index');
         $view->menuItem = "payyandex";
         $paymentData = PaymentData::first();
-        if($paymentData != null) {
+        if ($paymentData != null) {
             $view->secret = $paymentData->yandex_money_secret_key;
             $view->wallet = $paymentData->yandex_money_wallet;
         }
         return $view;
     }
 
-    public function webmoney() {
+    public function webmoney()
+    {
         $view = view('admin.payment.webmoney-index');
         $view->menuItem = "paywebmoney";
         $paymentData = PaymentData::first();
-        if($paymentData != null) {
+        if ($paymentData != null) {
             $view->secret = $paymentData->webmoney_secret_key;
             $view->wallet = $paymentData->webmoney_wallet;
         }
         return $view;
     }
 
-    public function paypal() {
+    public function paypal()
+    {
         $view = view('admin.payment.paypal-index');
         $view->menuItem = "paypaypal";
         $paymentData = PaymentData::first();
-        if($paymentData != null) {
+        if ($paymentData != null) {
             $view->facilitator = $paymentData->paypal_facilitator;
         }
         return $view;
     }
 
-    public function qiwiSave(Request $request) {
+    public function qiwiSave(Request $request)
+    {
         $token = trim($request->post('token'));
         $paymentData = PaymentData::first();
-        if($paymentData == null) {
+        if ($paymentData == null) {
             $paymentData = new PaymentData();
         }
 
         $qiwi = new QIWI($token);
         $res = json_decode($qiwi->setWebhook(url('/payment/qiwi/handler')));
 
-        if(isset($res->errorCode)) {
-            if($res->errorCode == "hook.already.exists") {
+        if (isset($res->errorCode)) {
+            if ($res->errorCode == "hook.already.exists") {
                 $res = json_decode($qiwi->getWebhook());
-                if(isset($res->hookId)) {
+                if (isset($res->hookId)) {
                     $qiwi = new QIWI($token, $res->hookId);
                     $qiwi->deleteWebhook();
                     $res = json_decode($qiwi->setWebhook(url('/payment/qiwi/handler')));
                     $webhookId = $res->hookId;
                 }
             }
-        }
-        else {
+        } else {
             $webhookId = $res->hookId;
         }
         $paymentData->qiwi_token = $token;
@@ -86,9 +91,10 @@ class Payment extends Controller {
         return redirect()->to(route('admin-qiwi'));
     }
 
-    public function yandexSave(Request $request) {
+    public function yandexSave(Request $request)
+    {
         $paymentData = PaymentData::first();
-        if($paymentData == null) {
+        if ($paymentData == null) {
             $paymentData = new PaymentData();
         }
         $paymentData->yandex_money_secret_key = $request->post('secret');
@@ -97,9 +103,10 @@ class Payment extends Controller {
         return redirect()->to(route('admin-yandex'));
     }
 
-    public function webmoneySave(Request $request) {
+    public function webmoneySave(Request $request)
+    {
         $paymentData = PaymentData::first();
-        if($paymentData == null) {
+        if ($paymentData == null) {
             $paymentData = new PaymentData();
         }
         $paymentData->webmoney_wallet = $request->wallet;
@@ -108,9 +115,10 @@ class Payment extends Controller {
         return redirect()->to(route('admin-webmoney'));
     }
 
-    public function paypalSave(Request $request) {
+    public function paypalSave(Request $request)
+    {
         $paymentData = PaymentData::first();
-        if($paymentData == null) {
+        if ($paymentData == null) {
             $paymentData = new PaymentData();
         }
         $paymentData->paypal_facilitator = $request->facilitator;

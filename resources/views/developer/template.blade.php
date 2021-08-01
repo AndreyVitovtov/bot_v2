@@ -17,6 +17,7 @@
     <script src="{{asset('https://www.gstatic.com/charts/loader.js')}}"></script>
     <script src="{{asset('js/charts/Chart.js')}}"></script>
     <script src="{{asset('js/jquery.json-browse.js')}}"></script>
+    <script src="{{asset('js/jquery-ui.js')}}"></script>
 
     @if(isset($menuItem))
         <script>

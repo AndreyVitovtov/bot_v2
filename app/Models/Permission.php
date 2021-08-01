@@ -4,7 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Permission extends Model {
+/**
+ * @property mixed|string name
+ * @property mixed id
+ * @method static where(string $string, int $id)
+ */
+class Permission extends Model
+{
     protected $table = "permissions";
     public $timestamps = false;
     public $fillable = [

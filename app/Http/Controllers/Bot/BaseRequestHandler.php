@@ -11,10 +11,7 @@ use App\Models\RefSystem;
 use Exception;
 
 
-/**
- * @method methodFromGroupAndChat()
- */
-class BaseRequestHandler {
+abstract class BaseRequestHandler {
     private $bot;
     private $chat = null;
     private $userId = null;

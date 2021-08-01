@@ -15,11 +15,24 @@
             padding: 5px;
             background-color: #fbfbfb;
             transition: 0.1s;
+            margin: 10px 0;
+            position: relative;
         }
 
         .item-border:hover {
             background-color: #dcdcdc;
             transition: 0.1s;
+        }
+
+        .close {
+            right: 0;
+            top: 2px;
+            position: absolute;
+        }
+
+        .close i {
+            color: #d66c5b;
+            cursor: pointer;
         }
     </style>
 
@@ -44,18 +57,23 @@
             <input type="text" name="url" class="m-item" id="url-item">
         </div>
         <div id="rolled" class="hidden">
-            <label for="name-rolled">Name item</label>
-            <input type="text" name="nameItem" class="m-rolled" id="name-rolled" disabled>
-            <br>
-            <label for="icon-rolled">Icon</label>
-            <input type="text" name="icon" class="m-rolled" id="icon-rolled" disabled>
-            <br>
-            <label for="name-rolled">Name</label>
-            <input type="text" name="name" class="m-rolled" id="name-rolled" disabled>
+            <div>
+                <label for="name-rolled">Name item</label>
+                <input type="text" name="nameItem" class="m-rolled" id="name-rolled" disabled>
+            </div>
+            <div>
+                <label for="icon-rolled">Icon</label>
+                <input type="text" name="icon" class="m-rolled" id="icon-rolled" disabled>
+            </div>
+            <div>
+                <label for="name-rolled">Name</label>
+                <input type="text" name="name" class="m-rolled" id="name-rolled" disabled>
+            </div>
             <br>
             <label for="items">Items</label>
             <br>
             <div class="item-border">
+                <div class="close"><i class="icon-cancel-4"></i></div>
                 <label for="item-name-rolled">Item name</label>
                 <input type="text" name="item_name[]" class="m-rolled" disabled>
                 <br>
@@ -98,19 +116,27 @@
         });
 
         $('body').on('click', '#add_item', function() {
-            let html = '<br>'+
-            '<div class="item-border">'+
+            let html = '<div class="item-border">'+
+                '<div class="close"><i class="icon-cancel-4"></i></div>'+
+                '<div>'+
                 '<label for="item-name-rolled">Item name</label>'+
                 '<input type="text" name="item_name[]" class="m-rolled">'+
-                '<br>'+
+                '</div>'+
+                '<div>'+
                 '<label for="item-menu-rolled">Item menu</label>'+
                 '<input type="text" name="item_menu[]" class="m-rolled">'+
-                '<br>'+
+                '</div>'+
+                '<div>'+
                 '<label for="item-route-rolled">Item route</label>'+
                 '<input type="text" name="item_url[]" class="m-rolled">'+
+                '</div>'+
             '</div>';
 
             $('#menu-items').append(html);
+        });
+
+        $('body').on('click', '.close i', function() {
+            $(this).parent().parent().remove();
         });
     </script>
 @endsection
