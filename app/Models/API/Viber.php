@@ -23,6 +23,7 @@ class Viber {
         return (
             $this->request->sender->id ??
             $this->request->user->id ??
+            $this->request->user_id ??
             null
         );
     }

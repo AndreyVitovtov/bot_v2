@@ -156,6 +156,7 @@ trait MethodsMessengers {
         if ($this->messenger == "Viber") {
             $req = json_decode($this->getRequest());
             if (isset($req->message->type)) {
+
                 return $req->message->type; //text, picture
             }
             if ($req->event == "conversation_started") {

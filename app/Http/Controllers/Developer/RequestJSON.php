@@ -30,10 +30,10 @@ class RequestJSON extends Controller {
             'menuItem' => 'send_request',
             'telegramToken' => SettingsMain::where('prefix', 'telegram_token')
                 ->limit(1)
-                ->get('value')[0]->value,
+                ->get('value')[0]->value ?? null,
             'viberToken' => SettingsMain::where('prefix', 'viber_token')
                 ->limit(1)
-                ->get('value')[0]->value
+                ->get('value')[0]->value ?? null
         ]);
     }
 

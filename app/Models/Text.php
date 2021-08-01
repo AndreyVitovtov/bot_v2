@@ -32,7 +32,8 @@ class Text extends Model {
         return $str;
     }
 
-    public function valueSubstitutionArray($user, $array, $n = []) {
+    public function valueSubstitutionArray($user, $array, $n = []): array
+    {
         $new_array = [];
         foreach($array as $key => $item) {
             if(is_array($item)) {
