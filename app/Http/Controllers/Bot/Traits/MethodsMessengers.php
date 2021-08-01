@@ -630,4 +630,17 @@ trait MethodsMessengers {
             $this->send("{unknown_team}", Menu::main());
         }
     }
+
+    public function forwardMessage($whomChat, $fromChat = null, $messageId = null): string
+    {
+        if ((MESSENGER ?? null) == 'Telegram') {
+            return $this->getBot()->forwardMessage(
+                $whomChat,
+                $fromChat ?? $this->getChat(),
+                $messageId ?? $this->getMessageId()
+            );
+        } else {
+            return 'In developing';
+        }
+    }
 }

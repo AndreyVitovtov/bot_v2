@@ -11,7 +11,13 @@ use App\Models\RefSystem;
 use Exception;
 
 
-abstract class BaseRequestHandler {
+/**
+ * @method start()
+ * @method performAnActionRef($id)
+ * @method methodFromGroupAndChat()
+ */
+abstract class BaseRequestHandler
+{
     private $bot;
     private $chat = null;
     private $userId = null;
@@ -21,7 +27,8 @@ abstract class BaseRequestHandler {
 
     use MethodsMessengers;
 
-    public function getType() {
+    public function getType()
+    {
         if ((MESSENGER ?? null) == 'Telegram' && $this->type == 'document') {
             if (preg_match('/("mime_type":"video)/m', $this->getRequest())) {
                 return 'video';
@@ -30,19 +37,23 @@ abstract class BaseRequestHandler {
         return $this->type;
     }
 
-    public function getRequest(): ? string {
+    public function getRequest(): ?string
+    {
         return $this->bot->getRequest();
     }
 
-    public function getBot() {
+    public function getBot()
+    {
         return $this->bot;
     }
 
-    public function getChat(): string {
+    public function getChat(): string
+    {
         return $this->chat ?? '-';
     }
 
-    public function getUserId(): ? int {
+    public function getUserId(): ?int
+    {
         if ($this->userId) {
             return $this->userId;
         } else {
@@ -51,14 +62,16 @@ abstract class BaseRequestHandler {
         }
     }
 
-    public function getUser() {
+    public function getUser()
+    {
         if ($this->user == null) {
             return BotUsers::find($this->getUserId());
         }
         return $this->user;
     }
 
-    public function callMethodIfExists(): void {
+    public function callMethodIfExists(): void
+    {
         if (substr($this->getChat(), 0, 1) == '-') {
             $this->methodFromGroupAndChat();
             return;
@@ -152,7 +165,8 @@ abstract class BaseRequestHandler {
         }
     }
 
-    private function getCommandFromMessage($message) {
+    private function getCommandFromMessage($message): array
+    {
         $user = $this->getUser();
         $language = Language::where('id', $user->languages_id)->first();
         if ($language === null) {
@@ -185,8 +199,9 @@ abstract class BaseRequestHandler {
 
     public function send(string $message, array $buttons = [], bool $inline = false, array $params = [
         'input' => 'hidden'
-    ], array $n = []): string {
-        $message = $this->valueSubstitution($message, "pages", $n);
+    ], array $n = []): string
+    {
+        $message = $this->valueSubstitution($message, 'pages', $n);
         $buttons = $this->valueSubstitutionArray($buttons, $n);
         if ($inline) {
             $params['inlineButtons'] = $buttons;
@@ -209,8 +224,9 @@ abstract class BaseRequestHandler {
         bool $inline = false,
         array $params = [],
         array $n = []
-    ): string {
-        $message = $this->valueSubstitution($message, "pages", $n);
+    ): string
+    {
+        $message = $this->valueSubstitution($message, 'pages', $n);
         $buttons = $this->valueSubstitutionArray($buttons, $n);
         if ($inline) {
             $params['inlineButtons'] = $buttons;
@@ -234,7 +250,8 @@ abstract class BaseRequestHandler {
         ],
         array $buttons = [],
         array $n = []
-    ): string {
+    ): string
+    {
         $buttons = $this->valueSubstitutionArray($buttons, $n);
         $richMedia = $this->valueSubstitutionArray($richMedia, $n);
 
@@ -249,7 +266,8 @@ abstract class BaseRequestHandler {
         return $this->bot->sendCarousel($this->chat, $richMedia, $buttons ?? []);
     }
 
-    private function valueSubstitution($str, $type, $n = []) {
+    private function valueSubstitution($str, $type, $n = [])
+    {
         $user = BotUsers::find($this->getUserId());
         $language = Language::find($user->languages_id ?? 1);
         if (file_exists(public_path() . "/json/" . $type . "_" . ($language->code ?? 'ru') . ".json")) {
@@ -276,7 +294,8 @@ abstract class BaseRequestHandler {
         return $str;
     }
 
-    private function valueSubstitutionArray($array, $n = []) {
+    private function valueSubstitutionArray($array, $n = []): array
+    {
         $new_array = [];
         foreach ($array as $key => $item) {
             if (is_array($item)) {
@@ -288,40 +307,47 @@ abstract class BaseRequestHandler {
         return $new_array;
     }
 
-    public function sendPhoto($img, $message = null, $params = [], $n = []) {
+    public function sendPhoto($img, $message = null, $params = [], $n = [])
+    {
         $message = $this->valueSubstitution($message, "pages", $n);
         $params = $this->valueSubstitutionArray($params, $n);
         return $this->bot->sendPhoto($this->chat, $img, $message, $params);
     }
 
-    public function sendImage($img, $message = null, $params = [], $n = []) {
+    public function sendImage($img, $message = null, $params = [], $n = [])
+    {
         $message = $this->valueSubstitution($message, "pages", $n);
         $params = $this->valueSubstitutionArray($params, $n);
         return $this->bot->sendImage($this->chat, $img, $message, $params);
     }
 
-    public function deleteMessage($messageId, $chat = null) {
+    public function deleteMessage($messageId, $chat = null)
+    {
         $chat = empty($chat) ? $this->chat : $chat;
         return $this->bot->deleteMessage($chat, $messageId);
     }
 
-    public function getIdSendMessage($res) {
+    public function getIdSendMessage($res)
+    {
         $res = json_decode($res);
         return $res->result->message_id;
     }
 
-    public function setIdSendMessage($command = '', $params = []) {
+    public function setIdSendMessage($command = '', $params = [])
+    {
         $this->setInteraction($command, array_merge($params, [
             'messageId' => $this->getMessageId()
         ]));
     }
 
-    public function delInteraction(): void {
+    public function delInteraction(): void
+    {
         $interaction = new Interaction();
         $interaction->where('users_id', $this->getUserId())->delete();
     }
 
-    public function setInteraction(string $command, array $params = []): void {
+    public function setInteraction(string $command, array $params = []): void
+    {
         $this->delInteraction();
         $interaction = new Interaction();
         $interaction->users_id = $this->getUserId();
@@ -330,39 +356,45 @@ abstract class BaseRequestHandler {
         $interaction->save();
     }
 
-    public function getInteraction(): ? array {
+    public function getInteraction(): ?array
+    {
         $interaction = new Interaction();
         $res = $interaction->where('users_id', $this->getUserId())->get()->toArray();
         if (empty($res[0])) return null;
         return $res[0];
     }
 
-    public function getCallbackQueryId() {
+    public function getCallbackQueryId()
+    {
         $request = json_decode($this->getRequest());
         return $request->callback_query->id;
 
     }
 
-    public function answerCallbackQuery($text, $n = []) {
+    public function answerCallbackQuery($text, $n = [])
+    {
         $callbackQueryId = $this->getCallbackQueryId();
         $text = $this->valueSubstitution($text, "pages", $n);
         return $this->bot->answerCallbackQuery($callbackQueryId, $text);
     }
 
-    public function editMessage($messageId, $message, $inlineKeyboard = null, $n = []) {
+    public function editMessage($messageId, $message, $inlineKeyboard = null, $n = [])
+    {
         $message = $this->valueSubstitution($message, "pages", $n);
         $inlineKeyboard = $this->valueSubstitutionArray($inlineKeyboard, $n);
         return $this->getBot()->editMessageText($this->getChat(), $messageId, $message, $inlineKeyboard);
     }
 
-    public function editMessageReplyMarkup($chat, $messageId, $inlineButtons = []) {
+    public function editMessageReplyMarkup($chat, $messageId, $inlineButtons = [])
+    {
         $reply_markup = [
             'inline_keyboard' => $inlineButtons
         ];
         return $this->bot->editMessageReplyMarkup($chat, $messageId, $reply_markup);
     }
 
-    public function startRef($chat) {
+    public function startRef($chat)
+    {
         try {
             $referral = $this->getUserId();
             $referrer = BotUsers::where('chat', $chat)->first();
@@ -387,12 +419,14 @@ abstract class BaseRequestHandler {
         }
     }
 
-    public function setUserStart() {
+    public function setUserStart()
+    {
         $botUsers = BotUsers::find($this->getUserId());
         $botUsers->update(['start' => "1"]);
     }
 
-    public function delMessage() {
+    public function delMessage()
+    {
         $params = json_decode($this->getInteraction()['params'] ?? '{}');
         if (isset($params->messageId)) {
             $this->deleteMessage($params->messageId, $this->getChat());
@@ -400,29 +434,35 @@ abstract class BaseRequestHandler {
         $this->delInteraction();
     }
 
-    public function typing_on() {
+    public function typing_on()
+    {
         return $this->bot->senderAction($this->chat, 'typing_on');
     }
 
-    public function typing_off() {
+    public function typing_off()
+    {
         return $this->bot->senderAction($this->chat, 'typing_off');
     }
 
-    public function mark_seen() {
+    public function mark_seen()
+    {
         return $this->bot->senderAction($this->chat, 'mark_seen');
     }
 
-    public function sendButton($message, $buttons, $n = []) {
+    public function sendButton($message, $buttons, $n = [])
+    {
         $message = $this->valueSubstitution($message, "pages", $n);
         $buttons = $this->valueSubstitutionArray($buttons, $n);
         return $this->bot->sendButton($this->chat, $message, $buttons);
     }
 
-    public function getMessage() {
+    public function getMessage()
+    {
         return $this->getBot()->getMessage();
     }
 
-    public function getChatMember($idUser, $chat, $status = false) {
+    public function getChatMember($idUser, $chat, $status = false)
+    {
         $result = json_decode($this->getBot()->getChatMember($idUser, $chat))->result->status ?? null;
         if ($status) {
             return $result;
@@ -433,19 +473,8 @@ abstract class BaseRequestHandler {
         return false;
     }
 
-    public function getMessageId() {
+    public function getMessageId()
+    {
         return $this->getDataByType()['message_id'] ?? null;
-    }
-
-    public function forwardMessage($whomChat, $fromChat = null, $messageId = null) {
-        if ((MESSENGER ?? null) == 'Telegram') {
-            return $this->getBot()->forwardMessage(
-                $whomChat,
-                $fromChat ?? $this->getChat(),
-                $messageId ?? $this->getMessageId()
-            );
-        } else {
-            return 'In developing';
-        }
     }
 }
