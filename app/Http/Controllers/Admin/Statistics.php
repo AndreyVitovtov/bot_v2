@@ -67,7 +67,7 @@ class Statistics extends Controller
             AND start = 1 GROUP BY messengers.name");
         $messengers = [];
         foreach ($messenger as $m) {
-            $messengers[$m->messenger] = $m->count;
+            $messengers[$m->name] = $m->count;
         }
         if (empty($messengers)) {
             $messengers = [

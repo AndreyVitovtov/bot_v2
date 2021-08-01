@@ -796,7 +796,7 @@ class BaseRequestHandler
         'input' => 'hidden'
     ], array $n = []): string
     {
-        $message = Text::valueSubstitution($this->getUser(), $message, "page", $n);
+        $message = Text::valueSubstitution($this->getUser(), $message, "pages", $n);
         $buttons = Text::valueSubstitutionArray($this->getUser(), $buttons, $n);
         if ($inline) {
             $params['inlineButtons'] = $buttons;
