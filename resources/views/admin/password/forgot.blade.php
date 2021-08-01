@@ -22,18 +22,18 @@
             cursor: pointer;
         }
 
-        .forgot-password {
+        .login {
             font-size: 12px;
             text-align: left;
             padding-left: 27px;
             margin-top: 5px;
         }
 
-        .forgot-password a {
+        .login a {
             color: #ddd;
         }
 
-        .forgot-password a:hover {
+        .login a:hover {
             color: #3C8DBC;
             text-decoration: underline;
         }
@@ -59,22 +59,17 @@
             @endif
         </div>
     </div>
-    <h3><b>@lang('auth.authorization')</b></h3>
+    <h3><b>@lang('auth.password_recovery')</b></h3>
     <div class="auth">
-        <form action="{{ route('login') }}" method="POST">
-            @csrf
+        <form action="{{ route('password-send') }}">
             <div>
-                <input type="text" name="login" id="inputLogin" placeholder="@lang('auth.login')" value="{{ old('login') }}" required autofocus>
+                <input type="text" name="login" id="inputLogin" placeholder="@lang('auth.login')" required autofocus>
                 <i class="icon-user-8"></i>
             </div>
-            <div>
-                <input type="password" name="password" id="inputPassword" placeholder="@lang('auth.password')">
-                <i class="icon-lock-filled"></i>
+            <div class="login">
+                <a href="{{ route('login') }}">@lang('auth.login_with_username_and_password')</a>
             </div>
-            <div class="forgot-password">
-                <a href="{{ route('password-forgot') }}">@lang('auth.forgot_password')</a>
-            </div>
-            <button id="login">@lang('auth.sign_in')</button>
+            <button id="login">@lang('auth.send')</button>
         </form>
     </div>
 @endsection

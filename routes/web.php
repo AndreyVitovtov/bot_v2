@@ -3,8 +3,10 @@
 use App\Http\Controllers\Admin\Answers;
 use App\Http\Controllers\Admin\Contacts;
 use App\Http\Controllers\Admin\Languages;
+use App\Http\Controllers\Admin\Locale;
 use App\Http\Controllers\Admin\Mailing;
 use App\Http\Controllers\Admin\Moderators;
+use App\Http\Controllers\Admin\Password;
 use App\Http\Controllers\Admin\Settings;
 use App\Http\Controllers\Admin\Statistics;
 use App\Http\Controllers\Admin\Users;
@@ -24,7 +26,6 @@ use App\Http\Controllers\Payment;
 use App\Http\Controllers\Seed;
 use App\Http\Controllers\Send;
 use App\Http\Controllers\Test;
-use App\Http\Controllers\Admin\Locale;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -46,7 +47,12 @@ Route::get('/admin', function () {
     return view('admin');
 })->middleware(['auth'])->name('admin');
 
-require __DIR__.'/auth.php';
+Route::group(['prefix' => '/password'], function () {
+    Route::get('/forgot', [Password::class, 'forgot'])->name('password-forgot');
+    Route::get('/send', [Password::class, 'send'])->name('password-send');
+});
+
+require __DIR__ . '/auth.php';
 
 Route::get('test', [Test::class, 'index'])->name('test');
 
@@ -69,7 +75,7 @@ Route::get('bot/send/mailing', [Send::class, 'mailing']); // Рассылка (�
 
 Route::match(['get', 'post'], 'pay/handler', [Payment::class, 'handler']);
 
-Route::group(['middleware' => 'auth', 'prefix'=>'admin'], function() {
+Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
     Route::group(['middleware' => 'access:statistics'], function () {
         Route::get('/', [Statistics::class, 'index'])->name('statistics');
     });
@@ -169,7 +175,7 @@ Route::group(['middleware' => 'auth', 'prefix'=>'admin'], function() {
     });
 });
 
-Route::group(['middleware' => 'auth', 'prefix'=>'developer'], function() {
+Route::group(['middleware' => 'auth', 'prefix' => 'developer'], function () {
     Route::get('/', [Todo::class, 'index']);
 
     Route::prefix('/settings')->group(function () {
@@ -263,7 +269,7 @@ Route::group(['middleware' => 'auth', 'prefix'=>'developer'], function() {
         Route::post('/pages/delete', [Lang::class, 'pagesDelete'])->name('lang-pages-delete');
     });
 
-    Route::prefix('/todo')->group(function() {
+    Route::prefix('/todo')->group(function () {
         Route::get('/', [Todo::class, 'index'])->name('todo');
         Route::post('/add', [Todo::class, 'add'])->name('todo-add');
         Route::post('/to/make', [Todo::class, 'toMake'])->name('todo-to-make');
@@ -272,7 +278,7 @@ Route::group(['middleware' => 'auth', 'prefix'=>'developer'], function() {
         Route::post('/delete', [Todo::class, 'delete'])->name('todo-delete');
     });
 
-    Route::prefix('/info')->group(function() {
+    Route::prefix('/info')->group(function () {
         Route::get('/', [InfoController::class, 'index'])->name('info');
         Route::post('/save', [InfoController::class, 'save'])->name('info-save');
     });
@@ -281,11 +287,11 @@ Route::group(['middleware' => 'auth', 'prefix'=>'developer'], function() {
 
 Route::get('logout', [LoginController::class, 'logout']);
 
-Route::match(['get', 'post'], 'register', function() {
+Route::match(['get', 'post'], 'register', function () {
     return redirect('admin/');
 });
 
-Route::match(['get', 'post'], '/', function() {
+Route::match(['get', 'post'], '/', function () {
     return redirect('/admin');
 });
 

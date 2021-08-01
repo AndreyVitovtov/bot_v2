@@ -228,6 +228,10 @@ class Settings extends Controller
             User::where('login', Auth::user()->login)->update(['login' => $params['login']]);
         }
 
+        if (!empty($params['email'])) {
+            User::where('login', Auth::user()->login)->update(['email' => $params['email']]);
+        }
+
         if (!empty($params['name_bot'])) {
             $textsRu = json_decode(file_get_contents(public_path('json/lang/ru/pages.json')), true);
             $textsRu['bot_name'] = $params['name_bot'];

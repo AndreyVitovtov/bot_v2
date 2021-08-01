@@ -30,6 +30,10 @@
                 <input type="password" name="confirm_password" id="confirm_password">
             </div>
             <div>
+                <label for="email">Email</label>
+                <input type="text" name="email" value="{{ Auth::user()->email }}" id="email">
+            </div>
+            <div>
                 <label for="name_bot">@lang('pages.name_bot')</label>
                 <input type="text" name="name_bot" value="@lang('pages.bot_name')" id="name_bot">
             </div>
