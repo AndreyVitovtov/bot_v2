@@ -64,7 +64,7 @@ trait BasicMethods
     public function index($id)
     {
         $bot = Bot::find($id);
-        define((MESSENGER == 'Telegram' ? 'TELEGRAM_TOKEN' : MESSENGER == 'Viber' ? 'VIBER_TOKEN' : 'FACEBOOK_TOKEN'),
+        define(((MESSENGER == 'Telegram') ? 'TELEGRAM_TOKEN' : ((MESSENGER == 'Viber') ? 'VIBER_TOKEN' : 'FACEBOOK_TOKEN')),
             $bot->token ?? '0');
         define('BOT', $bot->toArray());
         parent::__construct();
