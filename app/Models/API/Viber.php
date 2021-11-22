@@ -10,11 +10,8 @@ class Viber
     public function __construct(string $token = null)
     {
         $this->request = json_decode(file_get_contents('php://input'));
-        if ($token === null) {
-            $this->token = (defined('VIBER_TOKEN') ? VIBER_TOKEN : null);
-        } else {
-            $this->token = $token;
-        }
+        $this->token = ((defined('VIBER_TOKEN') && VIBER_TOKEN != 'NULL' &&
+            VIBER_TOKEN != null) ? VIBER_TOKEN : $token);
     }
 
     public function getContext(): ?string

@@ -38,11 +38,11 @@ class Languages extends Controller
 
             $nameTablePages = "settings_pages_" . $request->post('code');
             $nameTableButtons = "settings_buttons_" . $request->post('code');
-            DB::connection()->statement("CREATE TABLE IF NOT EXISTS $nameTablePages LIKE settings_pages");
-            DB::connection()->statement("INSERT INTO $nameTablePages SELECT * FROM settings_pages");
+            DB::connection()->statement("CREATE TABLE IF NOT EXISTS $nameTablePages LIKE settings_pages_ru");
+            DB::connection()->statement("INSERT INTO $nameTablePages SELECT * FROM settings_pages_ru");
 
-            DB::connection()->statement("CREATE TABLE IF NOT EXISTS $nameTableButtons LIKE settings_buttons");
-            DB::connection()->statement("INSERT INTO $nameTableButtons SELECT * FROM settings_buttons");
+            DB::connection()->statement("CREATE TABLE IF NOT EXISTS $nameTableButtons LIKE settings_buttons_ru");
+            DB::connection()->statement("INSERT INTO $nameTableButtons SELECT * FROM settings_buttons_ru");
 
             DB::commit();
         } catch (Exception $e) {

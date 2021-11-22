@@ -10,7 +10,8 @@ class Telegram
     public function __construct(string $token = null)
     {
         $this->request = json_decode(file_get_contents('php://input'));
-        $this->token = (defined('TELEGRAM_TOKEN') ? TELEGRAM_TOKEN : $token);
+        $this->token = ((defined('TELEGRAM_TOKEN') && TELEGRAM_TOKEN != 'NULL' &&
+            TELEGRAM_TOKEN != null) ? TELEGRAM_TOKEN : $token);
     }
 
     public function getId(): ?string

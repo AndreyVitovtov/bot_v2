@@ -22,6 +22,7 @@ use Exception;
  * @method methodFromGroupAndChat()
  * @method performAnActionRef(mixed $id)
  * @method start()
+ * @method getEmojiLanguage()
  */
 class BaseRequestHandler
 {
@@ -72,6 +73,8 @@ class BaseRequestHandler
         if (empty($res)) {
             $messenger = Messenger::where('name', $this->messenger)->first();
 
+            $bot = $this->getBotModel();
+
             $name = ($this->messenger == "Facebook") ? $this->bot->getName($this->chat) : $this->bot->getName();
             $botUsers->chat = $this->chat;
             $botUsers->first_name = $name['first_name'] ?? "No name";
@@ -79,10 +82,10 @@ class BaseRequestHandler
             $botUsers->username = $name['username'] ?? "No name";
             $botUsers->country = ($this->messenger == "Viber") ? $this->bot->getCountry() : '';
             $botUsers->messengers_id = $messenger->id;
-            $botUsers->messengers_id = $messenger->id;
+            $botUsers->languages_id = $bot['languages_id'];
             $botUsers->date = date("Y-m-d");
             $botUsers->time = date("H:i:s");
-            $botUsers->bots_id = BOT['id'];
+            $botUsers->bots_id = $bot['id'];
             $botUsers->save();
             $this->userId = $botUsers->id;
         } else {
@@ -593,7 +596,7 @@ class BaseRequestHandler
         if ($this->messenger == "Facebook") {
             $this->send("{unknown_team}");
         } else {
-            $this->send("{unknown_team}", Menu::main());
+            $this->send("{unknown_team}", Menu::main($this->getUser()));
         }
     }
 
@@ -642,6 +645,17 @@ class BaseRequestHandler
         return $this->user;
     }
 
+    private function methodLanguage($methodName)
+    {
+        $arrayMethodName = explode(' ', $methodName);
+        $emoji = json_decode(file_get_contents(public_path('json/emoji.json')), true);
+        if(in_array(base64_encode($arrayMethodName[0]), $emoji)) {
+            return $arrayMethodName[1];
+        } else {
+            return $methodName;
+        }
+    }
+
     public function callMethodIfExists(): void
     {
         if (substr($this->getChat(), 0, 1) == '-') {
@@ -660,6 +674,7 @@ class BaseRequestHandler
                 );
             }
         } else {
+
             //Start referrals
             if (substr($nameCommand, 0, 5) == "start" && $nameCommand != "start") {
                 $r = explode(" ", $nameCommand);
@@ -687,6 +702,7 @@ class BaseRequestHandler
                     );
                 }
             } else {
+                $nameCommand = $this->methodLanguage($nameCommand);
                 $command = $this->getCommandFromMessage($nameCommand);
                 if ($command['command']) {
                     $nameCommand = $command['command'];
