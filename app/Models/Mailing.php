@@ -31,6 +31,7 @@ class Mailing
         $task = json_decode($taskJson);
 
         $bot = Bot::find($task->bot);
+        define('MESSENGER', $bot->messenger->name);
         $messenger = $bot->messenger->name;
 
         if ($task->performed == "true") return json_encode([
@@ -45,7 +46,7 @@ class Mailing
             $db = $db->where('country', $task->country);
         }
 
-        $db = MailingParameters::apply($db, $task);
+//        $db = MailingParameters::apply($db, $task);
 
         $users = $db->limit($this->countUsers)
             ->offset($task->start)
@@ -80,6 +81,7 @@ class Mailing
         $handle = fopen(public_path() . "/txt/log.txt", "a");
 
         foreach ($usersChunk as $uc) {
+
             $data = [];
             foreach ($uc as $user) {
                 if ($task->type == "text") {
@@ -96,9 +98,7 @@ class Mailing
                                 'parse_mode' => 'HTML',
                                 'disable_web_page_preview' => true,
                                 'reply_markup' => [
-                                    'keyboard' => Text::valueSubstitutionArray($user, Menu::main(
-                                        ['messenger' => 'Telegram']
-                                    )),
+                                    'keyboard' => Text::valueSubstitutionArray($user, Menu::back()),
                                     'resize_keyboard' => true,
                                     'one_time_keyboard' => false,
                                     'parse_mode' => 'HTML',
@@ -120,9 +120,7 @@ class Mailing
                                     'Type' => 'keyboard',
                                     'InputFieldState' => 'hidden',
                                     'DefaultHeight' => 'false',
-                                    'Buttons' => Text::valueSubstitutionArray($user, Menu::main(
-                                        ['messenger' => 'Viber']
-                                    ))
+                                    'Buttons' => Text::valueSubstitutionArray($user, Menu::back())
                                 ]
                             ]
                         ];
@@ -156,9 +154,7 @@ class Mailing
                                 'caption' => $task->text,
                                 'parse_mode' => 'Markdown',
                                 'reply_markup' => [
-                                    'keyboard' => Text::valueSubstitutionArray($user, Menu::main(
-                                        ['messenger'=> 'Telegram']
-                                    )),
+                                    'keyboard' => Text::valueSubstitutionArray($user, Menu::back()),
                                     'resize_keyboard' => true,
                                     'one_time_keyboard' => false,
                                     'parse_mode' => 'HTML',
@@ -181,9 +177,7 @@ class Mailing
                                     'Type' => 'keyboard',
                                     'InputFieldState' => 'hidden',
                                     'DefaultHeight' => 'false',
-                                    'Buttons' => Text::valueSubstitutionArray($user, Menu::main(
-                                        ['messenger' => 'Viber']
-                                    ))
+                                    'Buttons' => Text::valueSubstitutionArray($user, Menu::back())
                                 ]
                             ]
                         ];
@@ -191,7 +185,7 @@ class Mailing
                 }
             }
 
-            $res = $this->multiCurl($data);
+            $res = $this->multiCurl($data, $bot);
 
             if (!is_array($res['response'])) {
                 json_encode([
@@ -221,7 +215,7 @@ class Mailing
         ]);
     }
 
-    private function multiCurl($data): array
+    private function multiCurl($data, $bot): array
     {
         $mh = curl_multi_init();
         $connectionArray = [];
